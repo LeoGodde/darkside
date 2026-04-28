@@ -1,0 +1,7 @@
+{
+  "name": "darkside",
+  "version": "1.0.0",
+  "description": "Internal development toolkit — Claude Code plugin",
+  "license": "UNLICENSED",
+  "private": true
+}

@@ -1,6 +1,6 @@
 ---
 name: sith-agents
-description: Edit existing sith-agent system prompts in .darkside/sith-agents/. Lists available agents, asks the user which one to modify and what change to make, confirms in plain language, and applies on approval.
+description: Edita os system prompts dos sith-agents em .darkside/sith-agents/. Lista os agentes disponíveis, pergunta qual modificar e o que alterar, confirma em linguagem simples e aplica mediante aprovação.
 ---
 
 # Sith Agents Editor
@@ -32,7 +32,6 @@ Read the list of `.md` files in `.darkside/sith-agents/`. Display them as a numb
 - `coder.md` → 💻 coder
 - `security.md` → 🔒 security
 - `reviewer.md` → 🔍 reviewer
-- `architect.md` → 🏛️ architect
 - Any other `.md` file → 🤖 [filename without extension]
 
 **Display format:**
@@ -44,7 +43,6 @@ Os seguintes sith-agents foram encontrados:
 3. 💻 coder
 4. 🔒 security
 5. 🔍 reviewer
-6. 🏛️ architect
 
 Qual agente você deseja alterar?
 ```

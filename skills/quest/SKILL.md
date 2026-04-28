@@ -1,6 +1,6 @@
 ---
 name: quest
-description: Structured discovery conversation for development tasks — reduces uncertainty before writing code by covering problem understanding, context, alternatives, technical direction, risks, implementation plan, and validation. Saves findings to .darkside/holomaps/.
+description: Conversa estruturada de discovery para tarefas de desenvolvimento — reduz incerteza antes de escrever código cobrindo entendimento do problema, contexto, alternativas, direção técnica, riscos, plano de implementação e validação. Salva os resultados em .darkside/holomaps/.
 ---
 
 # Quest — Discovery Session

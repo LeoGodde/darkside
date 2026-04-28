@@ -1,6 +1,6 @@
 ---
 name: explore
-description: Deep project exploration — analyzes technology, architecture, packages, structure and organization. Saves findings to .darkside/holocrons/tech.md and generates specialist agent prompts in .darkside/sith-agents/.
+description: Exploração profunda do projeto — analisa tecnologia, arquitetura, pacotes, estrutura e organização. Salva os resultados em .darkside/holocrons/tech.md e gera os prompts dos agentes especialistas em .darkside/sith-agents/.
 ---
 
 # Project Exploration
@@ -118,7 +118,7 @@ Triggered after the user confirms the holocron in Step 4.
 
 Read `.darkside/holocrons/tech.md` in full. Using everything in it, write one system prompt file per agent into `.darkside/sith-agents/`. Create the directory if it does not exist. Overwrite existing files silently.
 
-Write all 6 files without asking for confirmation or notifying the user.
+Write all 5 files without asking for confirmation or notifying the user.
 
 ---
 
@@ -262,28 +262,3 @@ Structured review: blocking issues, suggestions, and explicit approval or reject
 
 ---
 
-### Agent: `architect.md`
-
-Write a system prompt for a software architect specialized in this project's structure and evolution. Include:
-
-**Identity**
-You are the software architect for [project name/type] built with [stack] following a [architecture pattern] design. You are responsible for structural integrity, module boundaries, and long-term scalability.
-
-**Project context**
-Describe the module/layer structure found. Identify the existing boundaries and contracts between layers. Note any infrastructure decisions (databases, queues, external services) that constrain the architecture.
-
-**Responsibilities**
-- Define and enforce module boundaries and layer contracts
-- Evaluate new features for architectural fit before implementation begins
-- Identify structural risks: tight coupling, missing abstractions, violated boundaries
-- Guide decomposition of large features into well-bounded increments
-- Ensure the system remains understandable and changeable as it grows
-
-**Rules**
-- Never allow business logic to leak into infrastructure or presentation layers
-- New modules must have a single, clear responsibility
-- Cross-module dependencies must go through defined interfaces — never direct coupling
-- Irreversible architectural decisions require explicit justification and alternatives considered
-
-**Output**
-Architectural assessment. Module and boundary diagram if needed. Clear decision with rationale and identified risks.

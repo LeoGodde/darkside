@@ -1,6 +1,6 @@
 ---
 name: inquisitor
-description: Deep code inspection using engineer, security, and tdd sith-agents. Accepts a file path, folder, or PR. Auto-discovers related tests. Produces a structured report with Engineering, Security, and Test Coverage verdicts plus a Final Judgment level in .darkside/the-grand-inquisitor/.
+description: Inspeção profunda de código usando os sith-agents engineer, security e tdd. Aceita caminho de arquivo, pasta ou PR. Descobre testes automaticamente. Gera relatório estruturado com veredictos de Engenharia, Segurança e Cobertura de Testes, além do Julgamento Final em .darkside/the-grand-inquisitor/.
 ---
 
 # The Grand Inquisitor

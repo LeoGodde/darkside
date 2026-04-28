@@ -2,6 +2,14 @@
   "name": "darkside",
   "version": "1.0.0",
   "description": "Internal development toolkit — Claude Code plugin",
-  "license": "UNLICENSED",
-  "private": true
+  "author": "Léo Godde",
+  "private": true,
+  "skills": {
+    "/explore": "Deep project analysis → tech.md + sith-agents",
+    "/quest": "Structured discovery conversation → holomap",
+    "/sith-agents": "Edit sith-agent system prompts",
+    "/order66": "Full development orchestration → spec, TDD, code, review",
+    "/inquisitor": "Deep code inspection → verdict report with final judgment",
+    "/guide": "Help — explains all skills and storage structure"
+  }
 }

@@ -1,6 +1,6 @@
 ---
 name: order66
-description: Orchestrates the full development process — spec conversation (engineer + security), plan generation, task breakdown, TDD, coding, and review with fallback to fallen-order on repeated failure. Saves to .darkside/imperial-orders/.
+description: Orquestra o processo completo de desenvolvimento — conversa de spec (engineer + security), geração de plano, quebra em tarefas, TDD, codificação e revisão com fallback para fallen-order em caso de falha repetida. Salva em .darkside/imperial-orders/.
 ---
 
 # Order 66 — Development Orchestration

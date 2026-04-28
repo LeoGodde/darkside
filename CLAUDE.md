@@ -9,7 +9,7 @@ This plugin provides skills for standardized team development workflows.
 
 - **explore** — Deep project analysis. Scans technology, architecture, packages,
   folder structure, and conventions. Saves findings to `.darkside/holocrons/tech.md`
-  and generates 6 specialist agent prompts in `.darkside/sith-agents/`.
+  and generates 5 specialist agent prompts in `.darkside/sith-agents/`.
   Invoke with: `/explore`
 
 - **quest** — Structured discovery conversation for a development task. Covers problem
@@ -59,7 +59,6 @@ Editable via `/sith-agents`.
 - 💻 `coder.md` — Coder: clean implementation, project conventions, naming
 - 🔒 `security.md` — Security specialist: OWASP, input validation, auth, secrets
 - 🔍 `reviewer.md` — Code reviewer: correctness, consistency, standards enforcement
-- 🏛️ `architect.md` — Software architect: structure, module boundaries, scalability
 
 ### Imperial Orders — `.darkside/imperial-orders/`
 

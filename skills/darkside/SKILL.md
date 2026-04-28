@@ -1,6 +1,6 @@
 ---
 name: darkside
-description: Darkside plugin entry point — displays the logo and lists all available skills.
+description: Ponto de entrada do plugin Darkside — exibe o logo e lista todas as skills disponíveis.
 ---
 
 # Darkside
@@ -18,16 +18,16 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 
 ---
 
-**Available skills:**
+**Skills disponíveis:**
 
 | Skill | Description |
 |-------|-------------|
-| `/explore` | Deep project analysis → `tech.md` + 6 sith-agents |
-| `/quest` | Structured discovery conversation → holomap |
-| `/sith-agents` | Edit sith-agent system prompts |
-| `/order66` | Full development orchestration → spec, TDD, code, review |
-| `/inquisitor` | Deep code inspection → verdict report with final judgment |
-| `/guide` | Help — explains all skills and storage structure |
+| `/explore` | Inicialização e análise profunda do projeto → `tech.md` + 5 agentes |
+| `/quest` | Conversa estruturada de descoberta → holomap |
+| `/sith-agents` | Editar agentes especialistas |
+| `/order66` | Orquestração completa do ciclo de desenvolvimento → spec, TDD, código e revisão |
+| `/inquisitor` | Inspeção profunda de código → relatório de veredicto com julgamento final |
+| `/guide` | Ajuda |
 
 ---
 

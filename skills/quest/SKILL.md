@@ -20,15 +20,15 @@ Check if `.darkside/holocrons/tech.md` exists.
 
 Ask these questions one at a time, in order. Wait for the answer before asking the next:
 
-1. "What problem are we solving?"
+1. "Qual problema estamos resolvendo?"
    - ⚠️ After receiving this answer: derive the holomap filename from it (see Filename Rules below), create the `.darkside/holomaps/` directory if it does not exist, and write the initial holomap file (see Initial Document below). Do this silently — do not announce it to the user yet.
-2. "What is the expected outcome?"
-3. "Is this a bug fix, improvement, spike, or new feature?"
-4. "What constraints exist? For example: time, stack, architecture, or business rules."
-5. "What does done look like?"
-6. "How will we know it worked?"
+2. "Qual é o resultado esperado?"
+3. "Isso é uma correção de bug, melhoria, spike ou nova feature?"
+4. "Quais restrições existem? Por exemplo: tempo, stack, arquitetura ou regras de negócio."
+5. "Como é o pronto?"
+6. "Como saberemos que funcionou?"
 
-After the last answer: write everything learned in Step 1 into the `## 1. Problem Understanding` section of the holomap. Then say: "Got it. Let's map the existing context."
+After the last answer: write everything learned in Step 1 into the `## 1. Problem Understanding` section of the holomap. Then say: "Entendido. Vamos mapear o contexto existente."
 
 ---
 
@@ -38,13 +38,13 @@ After the last answer: write everything learned in Step 1 into the `## 1. Proble
 
 Ask these questions one at a time, in order:
 
-1. "How does this work today? Describe the current behavior or state."
-2. "Is there anything similar already in the project?"
-3. "Which modules, services, or areas will be impacted?"
-4. "Are there hidden business rules involved that aren't obvious from the code?"
-5. "Are there external dependencies to consider? For example: APIs, databases, third-party libraries."
+1. "Como isso funciona hoje? Descreva o comportamento ou estado atual."
+2. "Existe algo similar já no projeto?"
+3. "Quais módulos, serviços ou áreas serão impactados?"
+4. "Existem regras de negócio ocultas que não são óbvias pelo código?"
+5. "Há dependências externas a considerar? Por exemplo: APIs, bancos de dados, bibliotecas de terceiros."
 
-After the last answer: write everything learned in Step 2 into the `## 2. Context` section of the holomap. Then say: "Good. Now let's explore the options."
+After the last answer: write everything learned in Step 2 into the `## 2. Context` section of the holomap. Then say: "Ótimo. Agora vamos explorar as opções."
 
 ---
 
@@ -56,11 +56,11 @@ Based on everything learned so far, propose 2 to 3 distinct approaches. For each
 
 Then ask, one at a time:
 
-1. "Do these alternatives cover the options you see, or is there another approach worth considering?"
-2. "Which option feels closest to the right direction, and why?"
-3. "What is the simplest solution that actually solves the problem?"
+1. "Essas alternativas cobrem as opções que você vê, ou há outra abordagem que vale considerar?"
+2. "Qual opção parece mais próxima da direção certa e por quê?"
+3. "Qual é a solução mais simples que realmente resolve o problema?"
 
-After the last answer: write the alternatives and the chosen direction into the `## 3. Alternatives` section of the holomap. Then say: "Let's validate the technical direction."
+After the last answer: write the alternatives and the chosen direction into the `## 3. Alternatives` section of the holomap. Then say: "Vamos validar a direção técnica."
 
 ---
 
@@ -70,14 +70,14 @@ After the last answer: write the alternatives and the chosen direction into the 
 
 Ask these questions one at a time, in order. Use the project context from `tech.md` to make questions specific — reference actual frameworks, patterns, and modules found in the project:
 
-1. "What does the data model look like? Describe the entities and their relationships."
-2. "What is the main flow? Walk me through the sequence of operations."
-3. "What are the contracts or interfaces involved? For example: API endpoints, function signatures, events."
-4. "What edge cases need to be handled?"
-5. "What is the state management strategy?"
-6. "How are errors and fallbacks handled?"
+1. "Como é o modelo de dados? Descreva as entidades e seus relacionamentos."
+2. "Qual é o fluxo principal? Me guie pela sequência de operações."
+3. "Quais são os contratos ou interfaces envolvidos? Por exemplo: endpoints de API, assinaturas de funções, eventos."
+4. "Quais edge cases precisam ser tratados?"
+5. "Qual é a estratégia de gerenciamento de estado?"
+6. "Como erros e fallbacks são tratados?"
 
-After the last answer: write everything into the `## 4. Technical Direction` section of the holomap. Then say: "Now let's surface risks and unknowns."
+After the last answer: write everything into the `## 4. Technical Direction` section of the holomap. Then say: "Agora vamos identificar riscos e incógnitas."
 
 ---
 
@@ -87,9 +87,9 @@ After the last answer: write everything into the `## 4. Technical Direction` sec
 
 Ask these questions one at a time:
 
-1. "Is a spike needed to validate any assumption before starting?"
-2. "Are there untested premises — things we're assuming are true but haven't confirmed?"
-3. "Which decisions in this design are reversible? Which are not?"
+1. "É necessário um spike para validar alguma premissa antes de começar?"
+2. "Há premissas não testadas — coisas que assumimos serem verdadeiras mas ainda não confirmamos?"
+3. "Quais decisões neste design são reversíveis? Quais não são?"
 
 After the last answer: categorize findings into three groups and write them into `## 5. Risks & Unknowns`:
 
@@ -97,7 +97,7 @@ After the last answer: categorize findings into three groups and write them into
 - **Known unknown** — gaps we are aware of
 - **Critical risk** — unknowns that could block or derail the work
 
-Then say: "Almost there. Let's break down the implementation."
+Then say: "Quase lá. Vamos detalhar a implementação."
 
 ---
 
@@ -107,13 +107,13 @@ Then say: "Almost there. Let's break down the implementation."
 
 Ask these questions one at a time:
 
-1. "What are the domain changes needed? For example: new entities, updated business logic."
-2. "What infrastructure changes are needed? For example: migrations, new services, configuration."
-3. "What UI or API changes are needed?"
-4. "What is the test strategy? What will be unit tested, integration tested, or end-to-end tested?"
-5. "What is the rollout approach? For example: feature flag, gradual rollout, direct deploy."
+1. "Quais mudanças de domínio são necessárias? Por exemplo: novas entidades, lógica de negócio atualizada."
+2. "Quais mudanças de infraestrutura são necessárias? Por exemplo: migrations, novos serviços, configuração."
+3. "Quais mudanças de UI ou API são necessárias?"
+4. "Qual é a estratégia de testes? O que será testado unitariamente, por integração ou end-to-end?"
+5. "Qual é a estratégia de rollout? Por exemplo: feature flag, rollout gradual, deploy direto."
 
-After the last answer: write a numbered increment list into `## 6. Implementation Plan` following this order: domain changes → infrastructure → UI/API → tests → rollout. Then say: "Last step — let's define what success looks like."
+After the last answer: write a numbered increment list into `## 6. Implementation Plan` following this order: domain changes → infrastructure → UI/API → tests → rollout. Then say: "Último passo — vamos definir como o sucesso se parece."
 
 ---
 
@@ -123,15 +123,15 @@ After the last answer: write a numbered increment list into `## 6. Implementatio
 
 Ask these questions one at a time:
 
-1. "What tests will cover this work?"
-2. "What are the acceptance criteria? List them as checkable conditions."
-3. "What observability is needed? For example: logs, metrics, alerts."
-4. "Is there a rollback plan if something goes wrong?"
+1. "Quais testes cobrirão este trabalho?"
+2. "Quais são os critérios de aceite? Liste como condições verificáveis."
+3. "Qual observabilidade é necessária? Por exemplo: logs, métricas, alertas."
+4. "Há um plano de rollback caso algo dê errado?"
 
 After the last answer: write everything into `## 7. Validation`. Then:
 
 1. Replace the first line of the holomap (`⚠️ Discovery in progress — not completed.`) with the completion line: `✅ Discovery completed — DD/MM/YYYY HH:MM` using the current date and time.
-2. Say: "Quest complete. Holomap saved to `.darkside/holomaps/<filename>`. Review it and use it as the foundation for your implementation plan."
+2. Say: "Quest concluído. Holomap salvo em `.darkside/holomaps/<filename>`. Revise e use como base para o seu plano de implementação."
 
 ---
 
@@ -188,3 +188,5 @@ Write this to `.darkside/holomaps/<filename>` immediately after receiving the an
 - Never propose code, implementation artifacts, or solutions during the conversation — this skill produces only the holomap
 - If the user stops mid-quest, the partial holomap is preserved with the "in progress" header — do not delete it
 - Always write each section to the holomap before moving to the next step
+- All messages to the user are in Brazilian Portuguese
+- All generated files (holomaps) are written in English

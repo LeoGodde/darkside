@@ -253,4 +253,5 @@ If the target was a **file or folder path** (not a PR), ask:
 - If the Details table has no findings for a verdict, write "No issues found" in the table
 - The report file is created silently in Step 4 and filled in Step 8
 - All messages to the user are in Brazilian Portuguese
+- All generated files (inspection reports) are written in English
 - Source files are read-only during inspection — the only exception is Step 10 TODO annotations, applied only with explicit user confirmation

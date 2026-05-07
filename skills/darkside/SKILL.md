@@ -22,13 +22,14 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 
 | Skill | Description |
 |-------|-------------|
-| `/explore` | Inicialização e análise profunda do projeto → `tech.md` + 5 agentes |
-| `/quest` | Conversa estruturada de descoberta → holomap |
-| `/sith-agents` | Editar agentes especialistas |
-| `/order66` | Orquestração completa do ciclo de desenvolvimento → spec, TDD, código e revisão |
-| `/inquisitor` | Inspeção profunda de código → relatório de veredicto com julgamento final |
+| `/explore` | Inicialização e análise profunda do projeto |
+| `/quest` | Para uma conversa estruturada de descoberta |
+| `/sith-agents` | Editar os agentes especialistas |
+| `/order66` | Orquestração completa do ciclo de desenvolvimento |
+| `/inquisitor` | Inspeção profunda de código, PR e reviews |
+| `/war-room` | Engineering discovery estruturado → plano técnico |
 | `/guide` | Ajuda |
 
 ---
 
-Type any skill to get started.
+Digite qualquer skill para começar.

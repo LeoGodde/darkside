@@ -108,7 +108,7 @@ Create or overwrite the file `.darkside/holocrons/tech.md`.
 
 After writing the file, say:
 
-> "Holocron created at `.darkside/holocrons/tech.md`. Please review it and confirm it looks correct before we proceed."
+> "Holocron criado em `.darkside/holocrons/tech.md`. Por favor revise e confirme se está correto para prosseguirmos."
 
 Wait for the user to confirm before taking any further action.
 
@@ -262,3 +262,7 @@ Structured review: blocking issues, suggestions, and explicit approval or reject
 
 ---
 
+## Rules
+
+- All messages to the user are in Brazilian Portuguese
+- All generated files (`.darkside/holocrons/tech.md` and all `.darkside/sith-agents/*.md`) are written in English

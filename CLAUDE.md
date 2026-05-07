@@ -21,9 +21,9 @@ This plugin provides skills for standardized team development workflows.
   asks which one to modify and what change to make, confirms, and applies.
   Invoke with: `/sith-agents`
 
-- **order66** — Full development orchestration. Spec (engineer + security), plan,
-  tasks, TDD, code, and review cycle. Saves to `.darkside/imperial-orders/`.
-  Creates fallen-order report on repeated review failure.
+- **order66** — Full development orchestration. Reads a war-room plan, generates
+  the order (engineer + security), tasks, TDD, code, and review cycle. Saves to
+  `.darkside/imperial-orders/`. Creates fallen-order report on repeated review failure.
   Invoke with: `/order66`
 
 - **inquisitor** — Deep code inspection using engineer, security, and tdd agents.
@@ -34,6 +34,13 @@ This plugin provides skills for standardized team development workflows.
 
 - **guide** — Help. Explains all skills and storage structure.
   Invoke with: `/guide`
+
+- **war-room** — Structured engineering discovery for a feature. Covers functional
+  understanding (main flow, states, rules, edge cases), technical impact (systems,
+  data, APIs, dependencies), and implementation strategy (architecture, order,
+  compatibility, security). Uses `tech.md` as context. Saves the plan to
+  `.darkside/war-room/YYYY-MM-DD-<plan-name>-plan.md`.
+  Invoke with: `/war-room`
 
 ## Storage
 
@@ -64,7 +71,7 @@ Editable via `/sith-agents`.
 
 Full development lifecycle documents written by `/order66`.
 
-- `YYYY-MM-DD-<feature-name>-order.md` — spec + plan + tasks for a feature
+- `YYYY-MM-DD-<feature-name>-order.md` — order + tasks for a feature
 - `fallen-orders/YYYY-MM-DD-<feature-name>-fallen-order.md` — failure report after 2 rejected reviews
 
 ### The Grand Inquisitor — `.darkside/the-grand-inquisitor/`
@@ -72,3 +79,9 @@ Full development lifecycle documents written by `/order66`.
 Deep inspection reports written by `/inquisitor`.
 
 - `YYYY-MM-DD-<target-name>-report.md` — engineering + security + test coverage verdicts and final judgment
+
+### War Room — `.darkside/war-room/`
+
+Engineering discovery plans written by `/war-room`.
+
+- `YYYY-MM-DD-<plan-name>-plan.md` — functional understanding + technical impact + implementation strategy

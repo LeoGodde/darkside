@@ -32,12 +32,29 @@ Após a instalação, as skills ficam disponíveis em toda nova sessão do Claud
 | Skill | Descrição |
 |-------|-----------|
 | `/darkside` | Exibe o logo e lista todas as skills disponíveis |
-| `/explore` | Análise profunda do projeto → `tech.md` + 6 sith-agents |
+| `/explore` | Análise profunda do projeto |
 | `/quest` | Conversa estruturada de discovery → holomap |
+| `/war-room` | Engineering discovery estruturado → plano técnico completo |
 | `/sith-agents` | Edita os system prompts dos sith-agents |
-| `/order66` | Orquestração completa de desenvolvimento → spec, TDD, código, revisão |
+| `/order66` | Orquestração completa de desenvolvimento → plano de implementação, TDD, código, revisão |
 | `/inquisitor` | Inspeção profunda de código → relatório com julgamento final |
-| `/guide` | Ajuda — explica todas as skills e a estrutura de armazenamento |
+| `/guide` | Ajuda |
+
+## Fluxo recomendado
+
+```
+/explore → /quest (opcional) → /war-room → /order66 → /inquisitor
+```
+
+| Etapa | Skill | O que produz |
+|-------|-------|--------------|
+| 1. Mapear o projeto | `/explore` | `tech.md` + sith-agents |
+| 2. Discovery da tarefa | `/quest` | holomap |
+| 3. Plano técnico | `/war-room` | plan.md |
+| 4. Implementação | `/order66` | ordem imperial + tarefas + código revisado |
+| 5. Auditoria | `/inquisitor` | relatório com julgamento final |
+
+> `/order66` executa o `/war-room` automaticamente se nenhum plano for encontrado.
 
 ## Armazenamento
 
@@ -59,6 +76,14 @@ Documentos de discovery para tarefas específicas. Um arquivo por tarefa, criado
 |---------|-----------|----------|
 | `YYYY-MM-DD-<tarefa>.md` | `/quest` | Discovery completo de uma tarefa de desenvolvimento |
 
+### War Room — `.darkside/war-room/`
+
+Planos técnicos de engineering discovery criados pelo `/war-room`.
+
+| Arquivo | Criado por | Conteúdo |
+|---------|-----------|----------|
+| `YYYY-MM-DD-<plano>-plan.md` | `/war-room` | Entendimento funcional, impacto técnico e estratégia de implementação |
+
 ### Sith Agents — `.darkside/sith-agents/`
 
 System prompts de agentes especialistas gerados pelo `/explore`. Editáveis via `/sith-agents`.
@@ -77,7 +102,7 @@ Documentos do ciclo completo de desenvolvimento, criados pelo `/order66`.
 
 | Arquivo | Conteúdo |
 |---------|----------|
-| `YYYY-MM-DD-<feature>-order.md` | Spec + plano + tarefas de uma feature |
+| `YYYY-MM-DD-<feature>-order.md` | Ordem imperial + tarefas de uma feature |
 | `fallen-orders/YYYY-MM-DD-<feature>-fallen-order.md` | Relatório de falha após 2 revisões rejeitadas |
 
 ### The Grand Inquisitor — `.darkside/the-grand-inquisitor/`
@@ -87,9 +112,3 @@ Relatórios de inspeção profunda criados pelo `/inquisitor`.
 | Arquivo | Conteúdo |
 |---------|----------|
 | `YYYY-MM-DD-<alvo>-report.md` | Veredictos de engenharia, segurança e cobertura + julgamento final |
-
-## Contribuindo
-
-Adicione novas skills em `skills/<nome-da-skill>/SKILL.md`.
-Atualize o `CLAUDE.md` para listar a nova skill.
-Incremente a versão em `package.json` e `.claude-plugin/plugin.json`.

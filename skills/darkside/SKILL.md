@@ -28,6 +28,7 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 | `/order66` | Orquestração completa do ciclo de desenvolvimento |
 | `/inquisitor` | Inspeção profunda de código, PR e reviews |
 | `/war-room` | Engineering discovery estruturado → plano técnico |
+| `/interrogate` | Interroga e refina o plano do war-room |
 | `/guide` | Ajuda |
 
 ---

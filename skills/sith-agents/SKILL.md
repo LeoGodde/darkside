@@ -7,104 +7,62 @@ description: Edita os system prompts dos sith-agents em .darkside/sith-agents/. 
 
 Guide the user through selecting and editing a sith-agent file. Follow the steps in order.
 
+**Follow Shared Rules** from `skills/_shared-rules.md`.
+
 ## Step 1: Check for agents
 
-Check if the directory `.darkside/sith-agents/` exists and contains `.md` files.
+Check if `.darkside/sith-agents/` exists and contains `.md` files.
 
-**If the directory is missing or empty:**
+If missing or empty:
+> "Nenhum sith-agent encontrado em `.darkside/sith-agents/`. Rode `/explore` primeiro para gerar os agentes."
 
-Say:
-> "Nenhum sith-agent encontrado em `.darkside/sith-agents/`. Rode `/explore` primeiro para gerar os agentes com base no projeto."
-
-Stop. Do not continue.
-
-**If agents are found:** proceed to Step 2.
-
----
+Stop.
 
 ## Step 2: List agents
 
-Read the list of `.md` files in `.darkside/sith-agents/`. Display them as a numbered list using the icon mapping below. Show only the files that actually exist — do not hardcode the list.
+Read `.md` files from `.darkside/sith-agents/`. Display as numbered list:
 
-**Icon mapping:**
 - `tdd.md` → 🧪 tdd
 - `engineer.md` → ⚙️ engineer
 - `coder.md` → 💻 coder
 - `security.md` → 🔒 security
 - `reviewer.md` → 🔍 reviewer
-- Any other `.md` file → 🤖 [filename without extension]
+- Other `.md` → 🤖 [name]
 
-**Display format:**
-```
-Os seguintes sith-agents foram encontrados:
-
-1. 🧪 tdd
-2. ⚙️ engineer
-3. 💻 coder
-4. 🔒 security
-5. 🔍 reviewer
-
-Qual agente você deseja alterar?
-```
-
-Wait for the user's answer before continuing.
-
----
+> "Qual agente você deseja alterar?"
 
 ## Step 3: Confirm agent selection
 
-The user may answer with a number (e.g., "4") or a name (e.g., "security"). Resolve the selection to the corresponding file.
+Resolve number or name to file. If ambiguous, ask again.
 
-If the answer is ambiguous or does not match any agent, say:
-> "Não entendi a seleção. Por favor, informe o número ou o nome do agente."
-
-Wait for a valid answer before continuing.
-
-Once resolved, say:
 > "O que deve ser alterado no agente `[icon] [name]`?"
-
-Wait for the user's answer.
-
----
 
 ## Step 4: Describe the change
 
-Read the full content of the selected agent file. Based on the user's description, determine exactly what will change: which section will be affected and what text will be added, removed, or modified.
-
-Describe the change in plain language. Do not show code or the full file. Say:
+Read the agent file. Describe changes in plain language:
 
 > "Vou fazer as seguintes alterações no agente `[icon] [name]`:
 >
-> - [one-line description of each change]
+> - [one-line description per change]
 >
 > Confirma?"
 
-Wait for the user's answer.
-
-- If the user confirms (yes / sim / confirma / ok): proceed to Step 5.
-- If the user cancels (no / não / cancela): say "Alteração cancelada." then ask "Deseja modificar outro agente?" and restart from Step 2 if yes, or stop if no.
-
----
+If confirmed: proceed. If cancelled: "Alteração cancelada." Ask if wants another agent.
 
 ## Step 5: Apply the change
 
-Edit the selected agent file applying exactly what was described in Step 4. Do not change anything else in the file.
+Edit the file applying exactly what was described. Do not change anything else.
 
-After writing, say:
 > "Alteração aplicada com sucesso no agente `[icon] [name]`."
-
-Then ask:
 > "Deseja modificar outro agente?"
 
-- If yes: restart from Step 2.
-- If no: stop.
+If yes: restart from Step 2. If no: stop.
 
 ---
 
 ## Rules
 
-- Never modify an agent file without explicit user confirmation in Step 4
-- Only change what was described — do not rewrite, reformat, or improve unrelated parts of the file
-- All messages to the user are in Brazilian Portuguese
-- If the user selects by number, resolve to the file at that position in the list shown in Step 2
-- The agent list is always read from disk — never assume which agents exist
+- Never modify without explicit confirmation in Step 4
+- Only change what was described — no reformatting or unrelated improvements
+- If selected by number, resolve to position in the list shown in Step 2
+- Agent list is always read from disk

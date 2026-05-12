@@ -42,6 +42,11 @@ This plugin provides skills for standardized team development workflows.
   `.darkside/war-room/YYYY-MM-DD-<plan-name>-plan.md`.
   Invoke with: `/war-room`
 
+- **interrogate** — Interrogates a war-room plan to find weak, vague, or contradictory
+  points. Reads the plan and `tech.md`, identifies gaps, and grills the user with
+  targeted questions one at a time. Rewrites improved sections directly in the plan file.
+  Invoke with: `/interrogate`
+
 ## Storage
 
 ### Holocrons — `.darkside/holocrons/`

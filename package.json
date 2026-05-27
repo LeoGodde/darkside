@@ -11,6 +11,7 @@
     "/order66": "Full development orchestration → spec, TDD, code, review",
     "/inquisitor": "Deep code inspection → verdict report with final judgment",
     "/guide": "Help — explains all skills and storage structure",
-    "/war-room": "Structured engineering discovery → technical plan"
+    "/war-room": "Structured engineering discovery → technical plan",
+    "/mission": "Guided brainstorming → problem, objective, boundaries, solution, risks"
   }
 }

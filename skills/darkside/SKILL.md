@@ -27,6 +27,7 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 | `/sith-agents` | Editar os agentes especialistas |
 | `/order66` | Orquestração completa do ciclo de desenvolvimento |
 | `/inquisitor` | Inspeção profunda de código, PR e reviews |
+| `/mission` | Quest compacto para tarefas menores |
 | `/war-room` | Engineering discovery estruturado → plano técnico |
 | `/interrogate` | Interroga e refina o plano do war-room |
 | `/guide` | Ajuda |

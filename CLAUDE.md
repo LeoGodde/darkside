@@ -47,6 +47,13 @@ This plugin provides skills for standardized team development workflows.
   targeted questions one at a time. Rewrites improved sections directly in the plan file.
   Invoke with: `/interrogate`
 
+- **mission** — Guided brainstorming to understand what needs to be done before
+  implementing. Asks structured questions with 3 options (A/B/C) covering problem,
+  objective, boundaries, solution direction, execution plan, affected areas, and risks.
+  Offers to invoke `/order66` at the end. Saves to
+  `.darkside/missions/YYYY-MM-DD-<name>-mission.md`.
+  Invoke with: `/mission`
+
 ## Storage
 
 ### Holocrons — `.darkside/holocrons/`
@@ -84,6 +91,12 @@ Full development lifecycle documents written by `/order66`.
 Deep inspection reports written by `/inquisitor`.
 
 - `YYYY-MM-DD-<target-name>-report.md` — engineering + security + test coverage verdicts and final judgment
+
+### Missions — `.darkside/missions/`
+
+Brainstorming documents written by `/mission`.
+
+- `YYYY-MM-DD-<name>-mission.md` — problem + objective + boundaries + solution + execution plan + risks
 
 ### War Room — `.darkside/war-room/`
 

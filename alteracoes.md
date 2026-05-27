@@ -1,8 +1,8 @@
 # Alterações — Darkside Plugin
 
-**Data:** 2026-05-11
+**Data:** 2026-05-26
 
-Duas frentes de mudança: (1) nova skill `/interrogate` e (2) otimização de tokens em todas as skills.
+Nova skill `/mission` — brainstorming guiado com perguntas estruturadas (texto + 3 opções A/B/C).
 
 ---
 
@@ -10,450 +10,291 @@ Duas frentes de mudança: (1) nova skill `/interrogate` e (2) otimização de to
 
 | Alteração | Tipo |
 |-----------|------|
-| Nova skill `/interrogate` | Feature |
-| Arquivo `_shared-rules.md` com regras compartilhadas | Otimização |
-| Todas as skills otimizadas (~50% menos tokens) | Otimização |
-| `CLAUDE.md`, `guide`, `darkside` atualizados com `/interrogate` | Documentação |
-| `/war-room` sugere `/interrogate` ao final | Integração |
-
-**Redução total:** de ~2.397 linhas para ~1.184 linhas (~50%)
+| Nova skill `/mission` | Feature |
+| `package.json` atualizado | Registro |
+| `CLAUDE.md` atualizado — skill + storage | Documentação |
+| `skills/darkside/SKILL.md` atualizado | Documentação |
+| `skills/guide/SKILL.md` atualizado | Documentação |
 
 ---
 
-## 1. Novo arquivo: `skills/_shared-rules.md`
+## 1. Novo arquivo: `skills/mission/SKILL.md`
 
-Regras comuns extraídas de todas as skills para evitar repetição. Cada skill referencia com `**Follow Shared Rules** from skills/_shared-rules.md`.
+Brainstorming guiado para entender o que deve ser feito antes de implementar. Toda interação segue o formato: parágrafo de contexto + 3 opções (A, B, C).
 
-### Conteúdo completo:
+### Fluxo:
 
-```markdown
-# Shared Rules
+1. Pergunta aberta: "Me explique um pouco o que vamos fazer"
+2. **Problem** — texto + A/B/C (3 interpretações do problema)
+3. **Objective** — texto + A/B/C (minimal / balanced / comprehensive)
+4. **Boundaries** — texto + A/B/C (strict / moderate / wider scope)
+5. **Solution Direction** — texto + A/B/C (3 abordagens técnicas)
+6. **Execution Plan** — texto + A/B/C (3 planos concretos de execução)
+7. **Affected Areas & Risks** — lista de impactos + A/B/C (conservative / balanced / aggressive)
+8. **Validation** — exibe resumo completo, pede confirmação
+9. **Next Step** — oferece chamar `/order66`
 
-Rules referenced by all Darkside skills. When a skill says "Follow Shared Rules", apply everything below.
+### Storage:
 
----
-
-## Communication
-
-- All messages to the user are in Brazilian Portuguese
-- All generated files are written in English
-
-## Interaction
-
-- One question or block at a time — never ask two questions in the same message
-- Wait for the user's answer before continuing
-- One follow-up allowed if the answer is ambiguous — do not interrogate
-- Never propose code during discovery conversations (quest, war-room, interrogate)
-
-## Files
-
-- If the user stops mid-session, preserve the partial file with its "in progress" header — do not delete it
-- Always write each section to the file before moving to the next
-- Communication is simple, direct, and easy to understand — no unnecessary jargon, without compromising technical precision
-
-## Filename Derivation
-
-When a skill says "derive filename", apply these steps:
-
-1. Lowercase
-2. Remove accents (`ã` → `a`, `ç` → `c`)
-3. Spaces → `-`
-4. Remove non-alphanumeric except `-`
-5. Collapse consecutive `-`
-6. Prepend `YYYY-MM-DD-`
-7. Append the suffix specified by the skill (e.g., `-plan.md`, `-order.md`, `.md`)
-
-## Prerequisite Check
-
-When a skill says "check prerequisite [path]", do:
-
-- If the file/directory does not exist: say the message specified by the skill and stop
-- If it exists: read it in full and use as context throughout the session
-```
-
----
-
-## 2. Nova skill: `skills/interrogate/SKILL.md`
-
-Interrogatório focado do plano do war-room. Lê o plano e tech.md, identifica pontos fracos, vagos ou contraditórios, e desafia o usuário com perguntas direcionadas. Reescreve as seções melhoradas diretamente no arquivo do plano.
+`.darkside/missions/YYYY-MM-DD-<name>-mission.md`
 
 ### Conteúdo completo:
 
 ```markdown
 ---
-name: interrogate
-description: Interrogatório focado do plano do war-room — lê o plano e tech.md, identifica pontos fracos, vagos ou contraditórios, e desafia o usuário com perguntas direcionadas. Reescreve as seções melhoradas diretamente no arquivo do plano.
+name: mission
+description: Brainstorming guiado para entender o que deve ser feito antes de implementar — faz perguntas estruturadas com 3 opções (A/B/C) para mapear problema, objetivo, limites, solução, riscos e partes afetadas. Salva em .darkside/missions/.
 ---
 
-# Interrogate — Plan Refinement
+# Mission — Guided Brainstorming
 
-Read a war-room plan, identify weak spots, and grill the user with targeted questions to strengthen the plan. Follow every step in order.
+Guide the user through a structured brainstorming conversation to fully understand what needs to be done before any implementation. Every interaction follows the pattern: context text + 3 options (A, B, C). Follow each step in order. Do not skip steps.
 
 **Follow Shared Rules** from `skills/_shared-rules.md`.
 
 ---
 
-## Step 1 — Select the Plan
+## Before You Begin
 
-Check prerequisite `.darkside/holocrons/tech.md`. If missing:
+If `.darkside/holocrons/tech.md` exists, read it and use as project context. If not, proceed without it.
 
-> "O tech.md não foi encontrado. Rode `/explore` primeiro para mapear o projeto."
+---
 
-Look for `-plan.md` files in `.darkside/war-room/`.
+## Step 1 — Opening
 
-**If found:** identify the most recent. Ask:
+Ask:
 
-> "Encontrei um plano recente: **`[filename]`**
+> "Me explique um pouco o que vamos fazer."
+
+Wait for the answer. Use it as primary context for the entire session. Derive filename (suffix: `-mission.md`). Silently create `.darkside/missions/` and the mission file with empty sections (see Mission Document).
+
+---
+
+## Step 2 — Problem
+
+Based on the user's answer, write a short paragraph summarizing your understanding of the problem. Then present 3 interpretations of the core problem as options:
+
+> [Summary paragraph of what you understood]
 >
-> É esse que vamos interrogar?
+> **A.** [Problem interpretation 1]
+> **B.** [Problem interpretation 2]
+> **C.** [Problem interpretation 3]
+
+After the user picks or refines: write into `## 1. Problem`.
+
+---
+
+## Step 3 — Objective
+
+Based on the confirmed problem, write a short paragraph about what success looks like. Then present 3 possible objectives:
+
+> [Paragraph contextualizing the objective]
 >
-> **A.** Sim, usar esse
-> **B.** Não, quero informar outro caminho"
+> **A.** [Objective 1 — e.g., minimal viable solution]
+> **B.** [Objective 2 — e.g., balanced approach]
+> **C.** [Objective 3 — e.g., comprehensive solution]
 
-- **A:** Read the file in full.
-- **B:** Ask for path, read the file.
-
-**If none found:**
-
-> "Nenhum plano encontrado em `.darkside/war-room/`. Rode `/war-room` primeiro."
-
-Stop.
+After the user picks or refines: write into `## 2. Objective`.
 
 ---
 
-## Step 2 — Silent Analysis
+## Step 4 — Boundaries
 
-Read the entire plan and tech.md. Silently identify:
+Based on what was confirmed, write a short paragraph about scope boundaries. Then present 3 sets of constraints:
 
-1. **Vague language** — imprecise, generic wording
-2. **Missing details** — sections too short or superficial
-3. **Internal contradictions** — conflicts between sections
-4. **Unaddressed edge cases** — scenarios mentioned but not covered in the Technical Plan
-5. **Gaps with tech.md** — plan assumes something that doesn't match the project
-6. **Weak acceptance criteria** — not verifiable or too broad
-7. **Missing risk mitigation** — risks without clear mitigation
-8. **Ambiguous responsibilities** — unclear which layer owns the logic
-
-Order by severity. Do not share the list — address them one by one.
-
----
-
-## Step 3 — Interrogation
-
-For each issue, ask **one question at a time**:
-
-1. **Quote the specific part** of the plan
-2. **Explain why it's a problem**
-3. **Suggest a concrete improvement**
-
-Example:
-
-> O plano diz: *"Erros serão tratados adequadamente."*
+> [Paragraph about what should be kept out of scope]
 >
-> Isso é vago demais para implementar. Que tipo de erro pode acontecer aqui? O usuário vê uma mensagem? Tem retry? Tem fallback?
+> **A.** [Boundary set 1 — strict scope, minimal changes]
+> **B.** [Boundary set 2 — moderate scope, some flexibility]
+> **C.** [Boundary set 3 — wider scope, more included]
+
+After the user picks or refines: write into `## 3. Boundaries`.
+
+---
+
+## Step 5 — Solution Direction
+
+Based on the problem, objective, and boundaries, write a short paragraph exploring the solution space. Then present 3 technical approaches:
+
+> [Paragraph analyzing the solution space given what was decided]
 >
-> Minha sugestão: definir os 2-3 cenários de erro mais prováveis e o comportamento esperado para cada um.
+> **A.** [Approach 1 — with brief trade-off]
+> **B.** [Approach 2 — with brief trade-off]
+> **C.** [Approach 3 — with brief trade-off]
 
-After a clear answer, immediately rewrite the affected section in the plan file.
-
-If the user disagrees with a valid reason, accept and move on.
-
-If no issues found: say "Analisei o plano em detalhe e não encontrei pontos fracos relevantes. O plano está sólido." and skip to Step 5.
+After the user picks or refines: write into `## 4. Solution Direction`.
 
 ---
 
-## Step 4 — Final Sweep
+## Step 6 — Execution Options
 
-> "Tem algo que ficou de fora ou que você quer reforçar antes de fecharmos?"
+Synthesize everything into 3 concrete execution plans. Each must include: what will be built, in what order, and what the trade-off is.
 
-If new point: discuss and update. If not: proceed.
+> Baseado em tudo que definimos, aqui estao 3 caminhos de execucao:
+>
+> **A.** [Execution plan 1 — summary + order + trade-off]
+>
+> **B.** [Execution plan 2 — summary + order + trade-off]
+>
+> **C.** [Execution plan 3 — summary + order + trade-off]
 
----
-
-## Step 5 — Close
-
-1. Add after the first line of the plan (`✅ Engineering discovery completed`):
-
-   ```
-   🔍 Plan refined by /interrogate — DD/MM/YYYY HH:MM
-   ```
-
-2. Say:
-
-   > "Interrogatório concluído. Plano refinado e salvo em `.darkside/war-room/<filename>`."
-```
+After the user picks or refines: write into `## 5. Execution Plan`.
 
 ---
 
-## 3. Alteração: `skills/war-room/SKILL.md`
+## Step 7 — Affected Areas & Risks
 
-### O que mudou:
-- **Otimizado** — removidas regras duplicadas, explicações triviais, "Goal:" headers
-- **Adicionada sugestão do `/interrogate`** ao final da execução
-- **Referencia `_shared-rules.md`** em vez de repetir regras
-- De 373 linhas → 302 linhas
+Based on the chosen execution plan, list the affected parts of the system and the risks. Present as text + 3 risk postures:
 
-### Mudança principal — final do Step 3.5:
+> **Partes afetadas:**
+> - [list of affected files, modules, systems, APIs]
+>
+> **Riscos identificados:**
+> - [risk 1]
+> - [risk 2]
+> - [risk 3]
+>
+> Como tratar esses riscos?
+>
+> **A.** [Conservative — mitigate all, slower delivery]
+> **B.** [Balanced — mitigate critical, accept minor risks]
+> **C.** [Aggressive — accept most risks, fastest delivery]
 
-Antes:
-```
-2. Say: "War Room concluído. Plano salvo em `.darkside/war-room/<filename>`."
-```
-
-Depois:
-```
-2. Say: "War Room concluído. Plano salvo em `.darkside/war-room/<filename>`."
-3. Say: "Se quiser refinar ainda mais seu plano, execute `/interrogate`."
-```
-
-### Padrão de otimização aplicado (exemplo — Plan Name):
-
-Antes (17 linhas):
-```markdown
-## Plan Name
-
-Based on the opening answer, propose a candidate name. Ask:
-
-> "Como vamos chamar esse plano? Sugiro: **[candidate name]**"
-
-Wait for the answer — the user may confirm or provide a different name.
-Derive the filename from the final answer:
-
-1. Convert to lowercase
-2. Remove accents (`ã` → `a`, `ç` → `c` etc.)
-3. Replace spaces with `-`
-4. Remove non-alphanumeric characters except `-`
-5. Collapse consecutive `-`
-6. Prefix with current date: `YYYY-MM-DD-`
-7. Suffix with `-plan.md`
-
-Create `.darkside/war-room/` if it does not exist. Create the plan file immediately
-with empty sections (see Plan Structure below) — do this silently.
-```
-
-Depois (5 linhas):
-```markdown
-## Plan Name
-
-Propose a candidate name. Ask:
-
-> "Como vamos chamar esse plano? Sugiro: **[candidate name]**"
-
-Derive filename (suffix: `-plan.md`). Create `.darkside/war-room/` and the plan file
-with empty sections (see Plan Structure) silently.
-```
+After the user picks or refines: write into `## 6. Affected Areas & Risks`.
 
 ---
 
-## 4. Alteração: `skills/quest/SKILL.md`
+## Step 8 — Validation
 
-### O que mudou:
-- **Otimizado** — removidos "Goal:" headers, regras duplicadas, filename rules inline
-- **Referencia `_shared-rules.md`**
-- De 193 linhas → 137 linhas
+Write the complete mission summary as it exists in the file. Ask:
 
-### Padrão aplicado em todos os steps:
+> "Esse e o resumo completo da missao. Revise e confirme se esta tudo certo, ou me diga o que ajustar."
 
-Antes:
-```markdown
-## Step 1 — Problem Understanding
+If changes requested: update the file and ask again.
 
-**Goal:** Understand what is really being solved.
+If confirmed:
 
-Ask these questions one at a time, in order. Wait for the answer before asking the next:
-```
-
-Depois:
-```markdown
-## Step 1 — Problem Understanding
-
-Ask one at a time:
-```
-
-### Regras removidas do final (agora em _shared-rules.md):
-```
-- One question at a time — never ask two questions in the same message
-- Wait for the user's answer before continuing
-- One follow-up allowed per answer if the response is ambiguous — do not interrogate
-- Never propose code, implementation artifacts, or solutions during the conversation
-- If the user stops mid-quest, the partial holomap is preserved with the "in progress" header
-- Always write each section to the holomap before moving to the next step
-- All messages to the user are in Brazilian Portuguese
-- All generated files (holomaps) are written in English
-```
+1. Replace the first line (`⚠️ Mission in progress — not completed.`) with: `✅ Mission completed — DD/MM/YYYY HH:MM`
+2. Say: "Missao definida. Arquivo salvo em `.darkside/missions/<filename>`."
 
 ---
 
-## 5. Alteração: `skills/explore/SKILL.md`
+## Step 9 — Next Step
 
-### O que mudou:
-- **Maior otimização** — de 269 linhas → 90 linhas (-67%)
-- **Referencia `_shared-rules.md`**
-- **Agentes sith:** substituído 5 blocos verbosos (~140 linhas) por um template + tabela
-- Removidas explicações óbvias de como criar diretórios
+Ask:
 
-### Mudança principal — geração de agentes:
+> "Deseja executar `/order66` para implementar essa missao?"
 
-Antes (140 linhas, cada agente com Identity/Context/Responsibilities/Rules/Output expandidos):
-```markdown
-### Agent: `tdd.md`
-
-Write a system prompt for a TDD specialist fully grounded in this project. Include:
-
-**Identity**
-You are a TDD specialist for [project stack and framework]. State the test framework...
-
-**Project context**
-List the main testable layers found in this project...
-
-**Responsibilities**
-- Define the test strategy before any implementation begins
-- Write the first failing test for every new behavior
-...
-
-**Rules**
-- Never write implementation code before the failing test exists
-...
-
-**Output**
-Failing test files ready to run...
-```
-(repetido 5 vezes)
-
-Depois (15 linhas total):
-```markdown
-Each agent follows this template — customize entirely based on the project:
-
-**Identity** — role + project stack
-**Project context** — relevant layers, tools, patterns from tech.md
-**Responsibilities** — 4-5 key duties
-**Rules** — 3-4 strict constraints
-**Output** — what the agent produces
-
-| File | Role | Focus |
-|------|------|-------|
-| `tdd.md` | TDD specialist | test strategy, red-green-refactor, coverage |
-| `engineer.md` | Software engineer | design decisions, trade-offs, architecture fit |
-| `coder.md` | Coder | clean implementation, conventions, naming |
-| `security.md` | Security specialist | OWASP, input validation, auth, secrets |
-| `reviewer.md` | Code reviewer | correctness, consistency, standards |
-```
+If yes: invoke the order66 skill. If no: stop.
 
 ---
 
-## 6. Alteração: `skills/order66/SKILL.md`
+## Interaction Rule
 
-### O que mudou:
-- **Otimizado** — de 243 linhas → 193 linhas
-- **Referencia `_shared-rules.md`**
-- Comprimidos prerequisite checks, filename derivation, fallen order template
-- Removidas explicações redundantes
+Every question to the user follows the same structure:
 
-### Regras removidas do final (agora em _shared-rules.md):
-```
-- All messages to the user are in Brazilian Portuguese
-- All generated files (order files, fallen-order files) are written in English
-```
+1. A short paragraph providing context, analysis, or synthesis
+2. Three options: **A**, **B**, **C**
+
+The user can pick one, combine elements, or provide their own answer. If the user provides a free-form answer, incorporate it and move to the next step.
 
 ---
 
-## 7. Alteração: `skills/inquisitor/SKILL.md`
+## Mission Document
 
-### O que mudou:
-- **Otimizado** — de 258 linhas → 192 linhas
-- **Referencia `_shared-rules.md`**
-- Comprimidos: prerequisite check, test discovery, filename derivation
-- Mantida estrutura do report (necessária como template)
-
-### Exemplo de compressão — test discovery:
-
-Antes (11 linhas):
-```markdown
-After collecting the target, automatically search for related test files using these patterns:
-
-1. Files with the same base name matching `*.spec.*` or `*.test.*` anywhere in the project
-2. Files inside `__tests__/` directories adjacent to or above the target path
-3. Files inside `tests/` or `test/` directories that mirror the target path structure
-
-Read all found test files. Note them for the report.
-
-If no test files are found: record "None found" — do not stop.
-```
-
-Depois (3 linhas):
-```markdown
-Search for related test files: `*.spec.*`, `*.test.*`, `__tests__/`, `tests/`, `test/`
-directories. Read all found. If none: record "None found".
-```
-
----
-
-## 8. Alteração: `skills/sith-agents/SKILL.md`
-
-### O que mudou:
-- **Otimizado** — de 111 linhas → 68 linhas
-- **Referencia `_shared-rules.md`**
-- Comprimidos steps e regras
-
-### Regras removidas do final:
-```
-- All messages to the user are in Brazilian Portuguese
-```
-
----
-
-## 9. Alteração: `skills/darkside/SKILL.md`
-
-### O que mudou:
-- Adicionada linha na tabela de skills:
+Created silently after the user provides the opening answer:
 
 ```markdown
-| `/interrogate` | Interroga e refina o plano do war-room |
+⚠️ Mission in progress — not completed.
+
+# Mission: <derived from user's opening answer>
+
+**Date:** YYYY-MM-DD
+
+---
+
+## 1. Problem
+
+## 2. Objective
+
+## 3. Boundaries
+
+## 4. Solution Direction
+
+## 5. Execution Plan
+
+## 6. Affected Areas & Risks
+```
 ```
 
 ---
 
-## 10. Alteração: `skills/guide/SKILL.md`
+## 2. Alteração: `package.json`
 
-### O que mudou:
-- Adicionada linha na tabela:
+Adicionada entrada na seção `skills`:
+
+```json
+"/mission": "Guided brainstorming → problem, objective, boundaries, solution, risks"
+```
+
+---
+
+## 3. Alteração: `CLAUDE.md`
+
+### Nova skill na seção Available Skills:
 
 ```markdown
-| `/interrogate` | Interroga o plano do war-room — identifica pontos fracos, vagos ou contraditórios e desafia com perguntas direcionadas. Reescreve as seções melhoradas diretamente no plano. **Use depois do `/war-room` para refinar o plano.** |
+- **mission** — Guided brainstorming to understand what needs to be done before
+  implementing. Asks structured questions with 3 options (A/B/C) covering problem,
+  objective, boundaries, solution direction, execution plan, affected areas, and risks.
+  Offers to invoke `/order66` at the end. Saves to
+  `.darkside/missions/YYYY-MM-DD-<name>-mission.md`.
+  Invoke with: `/mission`
 ```
 
----
-
-## 11. Alteração: `CLAUDE.md`
-
-### O que mudou:
-- Adicionada entrada na seção Available Skills:
+### Nova seção de storage (antes de War Room):
 
 ```markdown
-- **interrogate** — Interrogates a war-room plan to find weak, vague, or contradictory
-  points. Reads the plan and `tech.md`, identifies gaps, and grills the user with
-  targeted questions one at a time. Rewrites improved sections directly in the plan file.
-  Invoke with: `/interrogate`
+### Missions — `.darkside/missions/`
+
+Brainstorming documents written by `/mission`.
+
+- `YYYY-MM-DD-<name>-mission.md` — problem + objective + boundaries + solution + execution plan + risks
 ```
 
 ---
 
-## Como implementar
+## 4. Alteração: `skills/darkside/SKILL.md`
+
+Adicionada linha na tabela de skills:
+
+```markdown
+| `/mission` | Brainstorming guiado → problema, objetivo, solução, riscos |
+```
+
+---
+
+## 5. Alteração: `skills/guide/SKILL.md`
+
+Adicionada linha na tabela:
+
+```markdown
+| `/mission` | Brainstorming guiado com perguntas estruturadas (texto + 3 opções A/B/C). Mapeia problema, objetivo, limites, solução, plano de execução e riscos. Ao final, oferece chamar `/order66`. **Use quando tiver uma ideia e quiser entender o que fazer antes de planejar.** |
+```
+
+---
+
+## Como implementar em outro projeto
 
 ### Ordem de execução:
 
-1. **Criar** `skills/_shared-rules.md` (conteúdo na seção 1)
-2. **Criar** `skills/interrogate/SKILL.md` (conteúdo na seção 2)
-3. **Substituir** cada skill listada nas seções 3-8 pela versão otimizada
-4. **Adicionar** linha do `/interrogate` em `skills/darkside/SKILL.md` (seção 9)
-5. **Adicionar** linha do `/interrogate` em `skills/guide/SKILL.md` (seção 10)
-6. **Adicionar** entrada do `/interrogate` em `CLAUDE.md` (seção 11)
+1. **Criar** `skills/mission/SKILL.md` (conteúdo na seção 1)
+2. **Adicionar** `/mission` em `package.json` na seção `skills` (seção 2)
+3. **Adicionar** entrada do `/mission` em `CLAUDE.md` — skill + storage (seção 3)
+4. **Adicionar** linha do `/mission` em `skills/darkside/SKILL.md` (seção 4)
+5. **Adicionar** linha do `/mission` em `skills/guide/SKILL.md` (seção 5)
 
-### Princípios da otimização (para aplicar em novas skills):
+### Pré-requisitos:
 
-- **Referencia `_shared-rules.md`** em vez de repetir regras de comunicação, interação e files
-- **Usa "derive filename (suffix: X)"** em vez de listar os 7 passos
-- **Usa "check prerequisite [path]"** em vez de escrever o if/else completo
-- **Remove "Goal:" headers** — o título da seção é suficiente
-- **Não explica operações triviais** (criar diretório, converter para lowercase)
-- **Comprime listas** quando a semântica se mantém
+- `skills/_shared-rules.md` deve existir (contém regras de comunicação, interação e filename derivation)
+- Diretório `.darkside/missions/` será criado automaticamente pela skill na primeira execução

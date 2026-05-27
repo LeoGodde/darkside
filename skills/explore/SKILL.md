@@ -1,6 +1,6 @@
 ---
 name: explore
-description: Exploração profunda do projeto — analisa tecnologia, arquitetura, pacotes, estrutura e organização. Salva os resultados em .darkside/holocrons/tech.md e gera os prompts dos agentes especialistas em .darkside/sith-agents/.
+description: Deep exploration of the project — analyzes technology, architecture, packages, structure, and organization. Saves the results in .darkside/holocrons/tech.md and generates the prompts of the specialist agents in .darkside/sith-agents/.
 ---
 
 # Project Exploration
@@ -61,7 +61,7 @@ Create or overwrite `.darkside/holocrons/tech.md` with the exact structure:
 
 ## Step 4: Notify the user
 
-> "Holocron criado em `.darkside/holocrons/tech.md`. Revise e confirme para prosseguirmos."
+> "Holocron created in `.darkside/holocrons/tech.md`. Review and confirm to proceed."
 
 Wait for confirmation.
 

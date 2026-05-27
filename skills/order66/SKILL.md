@@ -50,9 +50,7 @@ Wait for confirmation.
 
 Read `engineer.md` and `security.md` from sith-agents.
 
-Ask:
-
-> "Como você chamaria essa feature ou tarefa?"
+Get name of the execution plan from the war-room plan file or mission plan file to use as the order name.
 
 Derive filename (suffix: `-order.md`). Create `.darkside/imperial-orders/` and the order file with empty sections (see Order File Structure) silently.
 

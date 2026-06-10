@@ -30,6 +30,7 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 | `/mission` | Quest compacto para tarefas menores |
 | `/war-room` | Engineering discovery estruturado → plano técnico |
 | `/interrogate` | Interroga e refina o plano do war-room |
+| `/verdict` | Verifica critérios de aceite de cards contra o código |
 | `/guide` | Ajuda |
 
 ---

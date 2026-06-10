@@ -54,6 +54,13 @@ This plugin provides skills for standardized team development workflows.
   `.darkside/missions/YYYY-MM-DD-<name>-mission.md`.
   Invoke with: `/mission`
 
+- **verdict** — Acceptance criteria verification. Requests links to task cards (Jira,
+  GitHub Projects, Trello, ClickUp, Asana, Azure Boards, or similar), checks MCP
+  availability, reads the cards, extracts or derives acceptance criteria, validates them
+  with the user, and verifies whether each criterion is met in the codebase. Generates a
+  detailed coverage report. Saves to `.darkside/verdicts/YYYY-MM-DD-<name>-verdict.md`.
+  Invoke with: `/verdict`
+
 ## Storage
 
 ### Holocrons — `.darkside/holocrons/`
@@ -103,3 +110,9 @@ Brainstorming documents written by `/mission`.
 Engineering discovery plans written by `/war-room`.
 
 - `YYYY-MM-DD-<plan-name>-plan.md` — functional understanding + technical impact + implementation strategy
+
+### Verdicts — `.darkside/verdicts/`
+
+Acceptance criteria coverage reports written by `/verdict`.
+
+- `YYYY-MM-DD-<name>-verdict.md` — criteria per card + per-item code verification + overall summary + critical gaps

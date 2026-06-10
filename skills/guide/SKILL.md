@@ -21,4 +21,5 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 | `/mission` | Quest compacto para tarefas menores. Cobre problema, objetivo, limites, solução, plano e riscos em 4 passos curtos. **Use quando quiser planejar uma tarefa que não precise de `/war-room`.** |
 | `/war-room` | Conduz um engineering discovery estruturado antes de implementar. Cobre entendimento funcional, impacto técnico e estratégia de implementação. Usa tech.md e quest como contexto. Gera um plano técnico completo. **Use antes do `/order66` para substituir a fase de spec.** |
 | `/interrogate` | Interroga o plano do war-room — identifica pontos fracos, vagos ou contraditórios e desafia com perguntas direcionadas. Reescreve as seções melhoradas diretamente no plano. **Use depois do `/war-room` para refinar o plano.** |
+| `/verdict` | Verifica se os critérios de aceite de cards (Jira, GitHub, Trello, etc.) estão atendidos no código. Lê o card, extrai ou cria critérios, valida com você e gera um relatório de cobertura por item. **Use para auditar a implementação contra os requisitos antes do merge.** |
 | `/guide` | Este guia. |

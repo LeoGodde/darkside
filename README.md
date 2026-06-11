@@ -33,7 +33,7 @@ Após a instalação, as skills ficam disponíveis em toda nova sessão do Claud
 |-------|-----------|
 | `/darkside` | Exibe o logo e lista todas as skills disponíveis |
 | `/explore` | Análise profunda do projeto |
-| `/quest` | Conversa estruturada de discovery → holomap |
+| `/quest` | Discovery e inception de produto, módulo, feature ou estória → holomap |
 | `/war-room` | Engineering discovery estruturado → plano técnico completo |
 | `/sith-agents` | Edita os system prompts dos sith-agents |
 | `/order66` | Orquestração completa de desenvolvimento → plano de implementação, TDD, código, revisão |
@@ -49,7 +49,7 @@ Após a instalação, as skills ficam disponíveis em toda nova sessão do Claud
 | Etapa | Skill | O que produz |
 |-------|-------|--------------|
 | 1. Mapear o projeto | `/explore` | `tech.md` + sith-agents |
-| 2. Discovery da tarefa | `/quest` | holomap |
+| 2. Discovery (o quê e por quê) | `/quest` | holomap |
 | 3. Plano técnico | `/war-room` | plan.md |
 | 4. Implementação | `/order66` | ordem imperial + tarefas + código revisado |
 | 5. Auditoria | `/inquisitor` | relatório com julgamento final |
@@ -70,11 +70,11 @@ Arquivos de conhecimento sobre o projeto. Escritos uma vez, atualizados quando o
 
 ### Holomaps — `.darkside/holomaps/`
 
-Documentos de discovery para tarefas específicas. Um arquivo por tarefa, criado pelo `/quest`.
+Documentos de discovery criados pelo `/quest`. Um arquivo por produto, módulo, feature ou estória.
 
 | Arquivo | Criado por | Conteúdo |
 |---------|-----------|----------|
-| `YYYY-MM-DD-<tarefa>.md` | `/quest` | Discovery completo de uma tarefa de desenvolvimento |
+| `YYYY-MM-DD-<nome>.md` | `/quest` | Discovery adaptada ao nível: problema, usuários, valor, escopo, alternativas, riscos, incrementos e validação |
 
 ### War Room — `.darkside/war-room/`
 

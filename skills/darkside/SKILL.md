@@ -23,7 +23,7 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 | Skill | Description |
 |-------|-------------|
 | `/explore` | Inicialização e análise profunda do projeto |
-| `/quest` | Para uma conversa estruturada de descoberta |
+| `/quest` | Discovery e inception de produto, módulo, feature ou estória |
 | `/sith-agents` | Editar os agentes especialistas |
 | `/order66` | Orquestração completa do ciclo de desenvolvimento |
 | `/inquisitor` | Inspeção profunda de código, PR e reviews |

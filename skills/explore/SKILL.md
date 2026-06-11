@@ -23,9 +23,11 @@ Read and collect information from all that exist:
 
 **Source code:** main entry points (`index.js`, `main.ts`, `app.ts`, `app.py`, `main.go`, etc.), a representative sample from each layer, barrel files revealing module structure
 
+**Test files:** scan for `*.spec.*`, `*.test.*`, and directories named `__tests__/`, `tests/`, `test/`, `spec/`. Read up to 5 representative files spread across different layers or modules.
+
 ## Step 2: Synthesize findings
 
-Organize into six sections:
+Organize into seven sections:
 
 **Stack** — language(s), runtime, main framework(s), secondary frameworks
 
@@ -38,6 +40,8 @@ Organize into six sections:
 **Conventions & Patterns** — naming, code style rules, recurring design patterns
 
 **Config & Infrastructure** — env vars, Docker setup, CI/CD summary, deployment targets
+
+**Testing Conventions** — test framework(s), description language (e.g., English, Portuguese), structural pattern (AAA, Given-When-Then, etc.), file naming conventions, suite/case naming conventions. If no tests found, write "No tests found".
 
 ## Step 3: Create the holocron
 
@@ -57,6 +61,8 @@ Create or overwrite `.darkside/holocrons/tech.md` with the exact structure:
 ## Conventions & Patterns
 
 ## Config & Infrastructure
+
+## Testing Conventions
 ```
 
 ## Step 4: Notify the user
@@ -83,7 +89,7 @@ Each agent follows this template — customize entirely based on the project:
 
 | File | Role | Focus |
 |------|------|-------|
-| `tdd.md` | TDD specialist | test strategy, red-green-refactor, coverage |
+| `tdd.md` | TDD specialist | test strategy, red-green-refactor, coverage — **must enforce the Testing Conventions from `tech.md`**: same language for descriptions, same structural pattern, same naming conventions |
 | `engineer.md` | Software engineer | design decisions, trade-offs, architecture fit |
 | `coder.md` | Coder | clean implementation, conventions, naming |
 | `security.md` | Security specialist | OWASP, input validation, auth, secrets |

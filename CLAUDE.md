@@ -63,6 +63,14 @@ This plugin provides skills for standardized team development workflows.
   detailed coverage report. Saves to `.darkside/verdicts/YYYY-MM-DD-<name>-verdict.md`.
   Invoke with: `/verdict`
 
+- **visual-fidelity** — Design-to-code fidelity check. Requests a Figma file link,
+  uses the Figma MCP to extract design properties screen by screen (colors, typography,
+  spacing, border/radius, shadows, components, images), then searches the codebase to
+  verify each element. Classifies each item as ✅ Completo, ⚠️ Parcial, or ❌ Ausente,
+  and generates a report with a similarity percentage per screen and overall. Saves to
+  `.darkside/verdicts/YYYY-MM-DD-<name>-visual-fidelity.md`.
+  Invoke with: `/visual-fidelity`
+
 ## Storage
 
 ### Holocrons — `.darkside/holocrons/`
@@ -115,6 +123,7 @@ Engineering discovery plans written by `/war-room`.
 
 ### Verdicts — `.darkside/verdicts/`
 
-Acceptance criteria coverage reports written by `/verdict`.
+Acceptance criteria coverage reports written by `/verdict`. Visual fidelity reports written by `/visual-fidelity` are also saved here.
 
 - `YYYY-MM-DD-<name>-verdict.md` — criteria per card + per-item code verification + overall summary + critical gaps
+- `YYYY-MM-DD-<name>-visual-fidelity.md` — design properties per screen + per-item code verification + similarity score + critical gaps

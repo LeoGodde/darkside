@@ -12,9 +12,11 @@ This plugin provides skills for standardized team development workflows.
   and generates 5 specialist agent prompts in `.darkside/sith-agents/`.
   Invoke with: `/explore`
 
-- **quest** — Structured discovery conversation for a development task. Covers problem
-  understanding, context, alternatives, technical direction, risks, implementation plan,
-  and validation. Saves findings to `.darkside/holomaps/<task-name>-<date>.md`.
+- **quest** — Discovery & inception for a product, module, feature, or user story.
+  Classifies the level of work, actively investigates the codebase to pre-fill answers,
+  and runs an adaptive track covering problem, users, value, scope, alternatives, risks,
+  increments, and validation. Answers "what and why" and feeds `/war-room` (the "how").
+  Saves findings to `.darkside/holomaps/YYYY-MM-DD-<name>.md`.
   Invoke with: `/quest`
 
 - **sith-agents** — Edit existing sith-agent system prompts. Lists available agents,
@@ -71,9 +73,9 @@ Knowledge files about the project itself. Written once, updated when the project
 
 ### Holomaps — `.darkside/holomaps/`
 
-Discovery documents for specific tasks. One file per task, written by `/quest`.
+Discovery documents written by `/quest`. One file per product, module, feature, or story.
 
-- `YYYY-MM-DD-<task-name>.md` — full discovery for a development task.
+- `YYYY-MM-DD-<name>.md` — adaptive discovery: problem, users, value, scope, alternatives, risks, increments, and validation.
 
 ### Sith Agents — `.darkside/sith-agents/`
 

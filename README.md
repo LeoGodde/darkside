@@ -74,7 +74,7 @@ Documentos de discovery criados pelo `/quest`. Um arquivo por produto, módulo, 
 
 | Arquivo | Criado por | Conteúdo |
 |---------|-----------|----------|
-| `YYYY-MM-DD-<nome>.md` | `/quest` | Discovery adaptada ao nível: problema, usuários, valor, escopo, alternativas, riscos, incrementos e validação |
+| `YYYY-MM-DD-<nome>.md` | `/quest` | Discovery adaptada ao nível: problema e North Star (OKR/KR), atores e impactos, escopo, alternativas, métricas, riscos, incrementos (ondas + MVP Canvas) e critérios de aceite por exemplos |
 
 ### War Room — `.darkside/war-room/`
 

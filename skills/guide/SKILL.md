@@ -14,7 +14,7 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 | Skill | Descrição |
 |-------|-----------|
 | `/explore` | Analisa o projeto em profundidade: stack, arquitetura, pastas e convenções. Gera um holocron e 5 agentes especialistas calibrados para o projeto. **Use na primeira vez que trabalhar em um projeto.** |
-| `/quest` | Discovery e inception de um produto, módulo, feature ou estória. Classifica o nível do trabalho, investiga o código e conduz uma trilha adaptativa cobrindo problema, usuários, valor, escopo, alternativas, riscos e validação. Responde "o quê e por quê" e alimenta o `/war-room`. **Use antes de planejar qualquer trabalho novo.** |
+| `/quest` | Discovery e inception de um produto, módulo, feature ou estória. Classifica o nível do trabalho, investiga o código e conduz uma trilha adaptativa: problema e North Star (OKR/KR), atores e impactos, escopo, alternativas, métricas, riscos, incrementos (ondas + MVP) e validação por exemplos. Baseada em BABOK Agile Extension, Lean Inception e Impact Mapping. Responde "o quê e por quê" e alimenta o `/war-room`. **Use antes de planejar qualquer trabalho novo.** |
 | `/sith-agents` | Edita os system prompts dos agentes especialistas gerados pelo `/explore`. **Use quando quiser ajustar o comportamento de um agente.** |
 | `/order66` | Orquestra o ciclo completo de desenvolvimento: spec, plano, tarefas, TDD, código e revisão. **Use para executar uma feature de ponta a ponta.** |
 | `/inquisitor` | Inspeciona código com os olhos do engineer, security e tdd. Aceita arquivo, pasta ou PR e emite um Julgamento Final. **Use para auditar código antes do merge ou investigar uma área suspeita.** |

@@ -13,10 +13,12 @@ This plugin provides skills for standardized team development workflows.
   Invoke with: `/explore`
 
 - **quest** — Discovery & inception for a product, module, feature, or user story.
-  Classifies the level of work, actively investigates the codebase to pre-fill answers,
-  and runs an adaptive track covering problem, users, value, scope, alternatives, risks,
-  increments, and validation. Answers "what and why" and feeds `/war-room` (the "how").
-  Saves findings to `.darkside/holomaps/YYYY-MM-DD-<name>.md`.
+  Classifies the level of work (mapped to BABOK Agile Extension planning horizons),
+  actively investigates the codebase to pre-fill answers, and runs an adaptive track:
+  problem & North Star (OKR/KR), actors & impacts (Impact Mapping), scope
+  (É–Não é–Faz–Não faz), alternatives, metrics, risks, increments (sequencer in waves,
+  MVP Canvas), and validation by examples. Answers "what and why" and feeds
+  `/war-room` (the "how"). Saves to `.darkside/holomaps/YYYY-MM-DD-<name>.md`.
   Invoke with: `/quest`
 
 - **sith-agents** — Edit existing sith-agent system prompts. Lists available agents,

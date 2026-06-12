@@ -5,49 +5,27 @@ description: Discovery e inception estruturados para produto, módulo, feature o
 
 # Quest — Discovery & Inception
 
-Guide the user through an adaptive discovery conversation to fully understand **what** should be built and **why**, before any engineering planning. Quest produces a holomap — the discovery document that `/war-room` later consumes to plan **how**.
+Guide the user through an adaptive discovery conversation to understand **what** should be built and **why**, before any engineering planning. Quest produces a holomap — the discovery document `/war-room` consumes to plan **how**. `/mission` remains the lightweight brainstorm for when the user doesn't yet know what they want.
+
+Grounding: **Agile Extension to the BABOK® Guide v2** (planning horizons, seven principles of agile analysis), **Lean Inception — Paulo Caroli** (vision, É–Não é–Faz–Não faz, personas, journeys, sequencer, MVP Canvas), and **OKRs + Impact Mapping — Gojko Adzic** (the chain **KR → ator → impacto → entregável** traces every deliverable back to the metric it must move).
+
+**The anti-pattern quest exists to avoid is the Feature Factory**: shipping features on time without knowing if they move any metric. Deliverables are hypotheses to be tested, never commitments to be batched.
 
 **Follow Shared Rules** from `skills/_shared-rules.md`.
 
 ---
 
-## Positioning
+## Operating Rules
 
-- `/quest` answers **what and why** — problem, users, value, scope, risks.
-- `/war-room` answers **how** — systems, data, APIs, implementation strategy.
-- `/mission` is a lightweight brainstorm when the user doesn't yet know what they want.
+**Minimum viable discovery.** The holomap is done when `/war-room` (or `/order66`) can proceed without guessing — not when every section is exhaustive. Depth is proportional to uncertainty and to the level: probe deeply where confidence is low; one confirmed line is enough where it is high. Don't ask what is already known, and don't document beyond what the next decision needs (Avoid Waste).
 
-Never propose code or detailed engineering design during a quest. If the conversation drifts into implementation details, capture the point briefly under Risks or Notes and steer back.
+**Investigate before asking.** When the codebase, `tech.md`, or prior darkside documents can answer a question (current behavior, similar features, impacted modules), read first, pre-fill the holomap, and present a summary to confirm — never ask from zero, and never invent. If a whole block is already answered, say so in one line and move on.
 
----
+**Interaction patterns.** One question per message, wording adapted to the project's stack and domain. Pick per moment: **open question** for territory only the user knows; **options A/B/C** when you can propose concrete alternatives; **confirmation loop** ("Está correto ou preciso ajustar algo?") after any synthesis or pre-fill.
 
-## Before You Begin
+**Stay on "what and why".** Never propose code or engineering design. Anchor on the customer's experience (Think as a Customer), connect everything to the bigger picture (See the Whole), prefer concrete examples to abstract statements (Get Real Using Examples), and surface doability constraints early (Understand What is Doable). If conversation drifts into implementation, capture the point under Risks and steer back.
 
-1. If `.darkside/holocrons/tech.md` exists, read it in full and use as project context. If not, proceed without it and note the absence in the holomap.
-2. Look at `.darkside/holomaps/` and `.darkside/missions/` for recent related documents. If one clearly relates to the topic, mention it and ask whether to use it as context.
-
----
-
-## Active Investigation Rule
-
-Quest is not a passive questionnaire. Throughout the session:
-
-- **Investigate before asking.** When a question can be answered by reading the codebase (current behavior, similar features, impacted modules, existing patterns), read the relevant code first.
-- **Pre-fill, then confirm.** Write what you found into the holomap and present it to the user as a summary to confirm or correct — instead of asking from zero.
-- **Never invent.** If the code doesn't answer it, ask. Pre-filled content must come from tech.md, the codebase, or prior darkside documents — and be marked as confirmed only after the user validates it.
-- **Skip what is known.** If every question in a block is already answered and confirmed, say so in one line and move on.
-
----
-
-## Interaction Model
-
-Three interaction patterns. Pick the right one for each moment:
-
-1. **Open question** — when exploring territory only the user knows (problem, users, business rules). One question at a time.
-2. **Options (A/B/C)** — when you can propose concrete alternatives (scope cuts, approaches, risk posture). Present a short context paragraph, then up to 3 options. The user can pick, combine, or answer freely.
-3. **Confirmation loop** — after synthesizing an answer or pre-filled findings, state your understanding and ask: "Está correto ou preciso ajustar algo?" Iterate until confirmed.
-
-Never ask two questions in the same message. Adapt question wording to the project's actual stack and domain (from tech.md).
+**Before you begin:** read `.darkside/holocrons/tech.md` if present (note its absence otherwise) and check `.darkside/holomaps/` and `.darkside/missions/` for related documents, offering them as context.
 
 ---
 
@@ -57,7 +35,7 @@ Ask:
 
 > "Me conte o que vamos descobrir. Pode ser uma ideia de produto, um módulo, uma feature ou uma estória — descreva do seu jeito."
 
-Wait for the answer. Then propose a classification with a one-line justification:
+Then propose a classification with a one-line justification:
 
 > "Pelo que você descreveu, isso parece ser **[Produto | Módulo | Feature | Estória]** — [justificativa].
 >
@@ -65,168 +43,185 @@ Wait for the answer. Then propose a classification with a one-line justification
 > **B.** É outro nível — vou te dizer qual
 > **C.** Não sei — me ajude a decidir"
 
-Level definitions (use to classify and to explain option C):
+Levels map to the Agile Extension planning horizons, which set the time frame and detail of the conversation — product discovery stops before feature details; story discovery doesn't reopen strategy:
 
-- **Produto** — something new with its own users, value proposition, and lifecycle.
-- **Módulo** — a bounded area inside an existing product, with its own domain and integration boundaries.
-- **Feature** — a new capability inside an existing module or product.
-- **Estória** — a small, well-bounded slice of a feature, deliverable in one iteration.
+- **Produto** *(Strategy Horizon)* — something new with its own users, value proposition, and lifecycle. Decides whether a need is worth satisfying; hypotheses to test, not facts.
+- **Módulo** *(Initiative Horizon)* — a bounded area inside an existing product, with its own domain and integration boundaries. Decides which solution option and which components deliver the outcome, in what order.
+- **Feature** *(Initiative Horizon)* — a new capability inside an existing module or product; a solution component evaluated by impact, cost, constraints, and risks.
+- **Estória** *(Delivery Horizon)* — a small, well-bounded slice deliverable in one iteration; value verified by concrete examples and rapid feedback.
 
-After the level is confirmed: derive filename (suffix: `.md`) from the user's description, silently create `.darkside/holomaps/[file]` with the sections of the chosen track (see Holomap Templates), and run your initial investigation (tech.md + relevant code) to pre-fill whatever you can.
-
-Say: "Nível confirmado. Vamos começar a discovery."
+After confirmation: derive filename (suffix: `.md`), silently create `.darkside/holomaps/[file]` with the track's sections (see Holomap Template), run the initial investigation, and say: "Nível confirmado. Vamos começar a discovery."
 
 ---
 
 ## Step 2 — The Track
 
-Run only the blocks listed for the confirmed level, in order. Each block lists its questions; apply the Active Investigation Rule and the Interaction Model to every block. Write each block into its holomap section before moving to the next.
+Run only the blocks for the confirmed level, in order. Write each block into its holomap section before moving on.
 
 | Block | Produto | Módulo | Feature | Estória |
 |---|---|---|---|---|
-| A. Problem & Value | ✅ | ✅ | ✅ | ✅ |
-| B. Users & Personas | ✅ | ✅ | — | — |
+| A. Problem & North Star | ✅ | ✅ | ✅ | ✅ |
+| B. Actors & Impacts | ✅ | ✅ | — | — |
 | C. Current Context | — | ✅ | ✅ | ✅ |
 | D. Scope & Boundaries | ✅ | ✅ | ✅ | ✅ |
 | E. Alternatives | ✅ | ✅ | ✅ | — |
 | F. Success Metrics | ✅ | ✅ | optional¹ | — |
-| G. Risks & Assumptions | ✅ | ✅ | ✅ | ✅ (short) |
+| G. Risks & Assumptions | ✅ | ✅ | ✅ | ✅ (Q1 only) |
 | H. Increments | ✅ | ✅ | ✅ | — |
 | I. Validation | ✅ | ✅ | ✅ | ✅ |
 
-¹ Ask block F for a feature only if its value is measurable (conversion, performance, adoption). Skip for purely internal changes.
+¹ Only if the feature's value is measurable (conversion, performance, adoption); skip for purely internal changes.
 
-### Block A — Problem & Value
-
-Open questions, one at a time:
-
-1. "Qual problema estamos resolvendo? Para quem esse problema dói?"
-2. "O que acontece se não fizermos nada?"
-3. "Qual é o resultado esperado quando isso existir?"
-
-For **Produto**, also ask:
-
-4. "Por que agora? O que torna esse o momento certo?"
-5. "Existe alternativa hoje — concorrente, planilha, processo manual?"
-
-Synthesize into a short value statement and run a confirmation loop. Write into `## Problem & Value`.
-
-### Block B — Users & Personas
+### Block A — Problem & North Star
 
 Open questions, one at a time:
 
-1. "Quem usa isso? Descreva os perfis principais."
-2. "O que cada perfil precisa conseguir fazer?"
-3. "Algum perfil tem restrições especiais — permissão, acessibilidade, contexto de uso?"
+1. "Qual problema ou oportunidade estamos endereçando? Para quem isso dói, e o que acontece se não fizermos nada?"
+2. "Qual é o resultado (outcome) esperado — o que muda no comportamento das pessoas ou no negócio quando isso existir?"
+3. "Existe um OKR ou Key Result que esse trabalho ajuda a mover? Qual indicador, de quanto para quanto?"
 
-Write into `## Users & Personas`.
+A confirmed KR becomes the quest's **North Star** — the root of the impact map (B), refined as metric (F), and the prioritization criterion (H). If none exists, don't block: derive a proposed KR in Block F.
+
+For **Estória**: capture the need as a job story — *Quando [situação], quero [motivação], para que [resultado]* — and, when it descends from a quest with an impact map, its traceability chain: *Como [ator], quero [entregável], para gerar [impacto] e mover [KR]*.
+
+For **Produto** and **Módulo**, the go/no-go check (skip what's already answered):
+
+4. "Por que agora? Como isso se alinha à estratégia da organização e o que torna esse o momento certo?"
+5. "Que alternativa existe hoje — concorrente, planilha, processo manual — e por que ela não basta?"
+
+For **Produto**, close with the vision statement (Lean Inception template), synthesized and confirmed: *Para [cliente final], cujo [problema], o [nome] é um [categoria] que [benefício-chave]; diferentemente de [alternativa], o nosso produto [diferencial-chave]*.
+
+Synthesize a short value statement distinguishing **output** (what we deliver) from **outcome** (the change it causes), confirm, and write into `## Problem & North Star`.
+
+### Block B — Actors & Impacts
+
+Build the impact map rooted in the North Star:
+
+> **[KR / North Star]** ───► **Atores** ───► **Impactos** ───► **Entregáveis**
+> (o que mover?) (quem afeta?) (como mudam?) (o que testar?)
+
+1. "Quem interage com isso ou influencia a métrica — incluindo perfis internos (operação, suporte) e quem pode atrapalhar?"
+2. For each main actor, a lightweight persona: "Quem é (nome fictício), como se comporta, o que precisa alcançar, o que dói hoje?" Then: "Qual perfil é o principal — aquele que decide prioridades em conflito?"
+3. Per actor, the impacts: "Que comportamento de [ator] nos impede hoje de mover a métrica? O que deveria **começar**, **parar** ou **mudar** de fazer?"
+
+**Critical rule: an impact is a change in actor behavior — observable, ideally measurable — never a screen or feature** (e.g., "completa o checkout em menos de 1 minuto", not "tela simplificada"). Leave the Entregáveis level empty — it is filled in Block H.
+
+Then map the **user journey** of the primary persona toward one goal: "Como é a jornada de [persona] até [objetivo]? Comece antes do contato com o produto — o que desperta a necessidade — e vá passo a passo." Keep it at synthesis level; prioritize if multiple journeys emerge. Journeys anchor features and increments in Block H.
+
+Confirm and write personas, impact map, and journey into `## Actors & Impacts`.
 
 ### Block C — Current Context
 
-**Investigate first.** Read the relevant code and pre-fill: current behavior, similar existing solutions, impacted modules, external dependencies. Present findings as a summary and run a confirmation loop. Then ask only what the code cannot answer:
+**Investigate first.** Read the relevant code and pre-fill: current behavior, similar solutions, impacted modules, external dependencies. Present a summary, confirm, then ask only what the code cannot answer:
 
 1. "Existem regras de negócio ocultas que não estão no código?"
-2. "Há algo no contexto atual — histórico, decisões passadas, dívidas — que eu deveria saber?"
+2. "Há histórico, decisões passadas ou dívidas que eu deveria saber?"
 
 Write into `## Current Context`.
 
 ### Block D — Scope & Boundaries
 
-Propose a scope cut based on everything learned, as options:
+For **Produto** and **Módulo**, run **É – Não é – Faz – Não faz** (Lean Inception) — it is often easier to define something by what it is not. Propose the four lists from everything learned and let the user correct and extend:
 
-> [Short paragraph framing the scope decision]
->
-> **A.** [Minimal cut — smallest version that solves the core problem]
-> **B.** [Balanced cut — core problem + the most valuable extensions]
-> **C.** [Complete cut — full vision]
+> - **É** (substantivos/adjetivos) | **Não é** | **Faz** (verbos/ações) | **Não faz**
 
-After the user picks or refines, ask:
+Distinguish "não faz **ainda**" (deferred) from "não faz **nunca**" (strategic boundary). Tag each in-scope item as **diferenciador** (deserves depth and investment) or **paridade** (solve in the simplest way — buy, reuse, standard pattern) — the Purpose Alignment Model.
 
-> "O que está explicitamente **fora** do escopo? Liste tudo que alguém poderia assumir que entra, mas não entra."
+For **Feature** and **Estória**, propose a scope cut as options when there's real choice:
 
-Write **In scope** and **Out of scope** lists into `## Scope & Boundaries`.
+> **A.** [Minimal — smallest version that solves the core problem]
+> **B.** [Balanced — core + most valuable extensions]
+> **C.** [Complete — full vision]
 
-### Block E — Alternatives
+For **Feature**, classify expectations when useful (Kano): **básico** (non-negotiable), **desempenho** (more is better), **encantamento** (first cut candidate).
 
-Propose 2–3 distinct approaches with trade-offs (simplicity, impact, maintainability, risk) — directions, not engineering designs. Then ask, one at a time:
+Always close with: "O que alguém poderia assumir que entra, mas **não entra**?" Write the resulting in/out lists (or ENFN quadrants) into `## Scope & Boundaries`.
 
-1. "Essas alternativas cobrem as opções que você vê, ou há outra?"
-2. "Qual parece a direção certa e por quê?"
-3. "Qual é a opção mais simples que ainda resolve o problema?"
+### Block E — Alternatives (Solution Options)
 
-Record the chosen direction and why the others were discarded. Write into `## Alternatives`.
+Propose 2–3 distinct solution options — directions, not engineering designs — all at the **same level of precision**: broad description, assumptions, constraints that could make it nonviable, risks, rough cost. Then, one at a time:
+
+1. "Essas opções cobrem as alternativas que você vê, ou há outra?"
+2. "Qual parece a direção certa e por quê? E qual é a opção mais simples que ainda resolve o problema?"
+
+A decision that can be kept open at low cost may be **deferred to the last responsible moment** (Real Options) — record the condition that will close it. Write the chosen (or deferred) direction and why the others were discarded into `## Alternatives`.
 
 ### Block F — Success Metrics
 
-Ask, one at a time:
+Refine the North Star (or derive a proposed KR if Block A found none). Key Results are **quantitative and based on behavior or business — never a task list** ("entregar a feature X" is not a metric). Ask, one at a time:
 
-1. "Como vamos medir que isso deu certo? Quais números mudam?"
-2. "Qual é o valor atual dessas métricas (baseline), se conhecido?"
-3. "Em quanto tempo esperamos ver o efeito?"
+1. "Qual é o baseline atual e qual a meta — de quanto para quanto, em quanto tempo?"
+2. "Existe uma métrica antecedente (leading) que mostra progresso antes do resultado final?"
+3. "Qual sinal nos diria para **parar ou pivotar**?"
 
-Write metrics as **metric → baseline → target → horizon**. Write into `## Success Metrics`.
+Write as **metric → baseline → target → horizon** plus the stop/pivot signal into `## Success Metrics`.
 
 ### Block G — Risks & Assumptions
 
-Ask, one at a time (for **Estória**, ask only question 1):
+Ask, one at a time (**Estória**: question 1 only):
 
-1. "Quais premissas estamos assumindo sem ter validado?"
-2. "Quais decisões são reversíveis? Quais não são?"
-3. "É necessário um spike para validar alguma premissa antes de seguir?"
+1. "Quais premissas estamos assumindo sem validar? Qual delas, se errada, derruba o plano?"
+2. "Quais decisões são irreversíveis? Para essas: dá para adiar até o último momento responsável, e que informação precisaríamos para decidir bem?" (Real Options)
+3. "Há restrições de viabilidade — tecnologia, habilidades do time, prazo — que tornam alguma direção impossível?"
 
-Categorize each item as **Assumption** (believed, unvalidated), **Known unknown** (we know we don't know), or **Critical risk** (can sink the work). For each critical risk, record a mitigation or a spike. Write into `## Risks & Assumptions`.
+Categorize as **Assumption** / **Known unknown** / **Critical risk**. Every critical risk gets a mitigation or a **spike** (the question it answers + timebox). Write into `## Risks & Assumptions`.
 
 ### Block H — Increments
 
-Propose a slicing into increments where **each increment delivers verifiable value** — never layer-by-layer (domain → infra → UI). Present as options when there are meaningfully different slicings, otherwise as a proposal with a confirmation loop.
+For **Produto** and **Módulo** (Lean Inception sequence):
 
-For **Produto**, the first increment is the MVP: ask explicitly "O que é o mínimo que já entrega o valor central?"
+1. **Entregáveis (feature brainstorm)** — fill the last level of the impact map: "O que podemos construir, automatizar ou experimentar para gerar [impacto] em [ator]?" Every feature must attach to an impact and a journey step; orphans are cut. **Golden rule: deliverables are hypotheses** — the goal is to find which one moves the metric with the least effort, not to build them all. Invite simple solutions the business hadn't imagined.
+2. **Review & routing** — rate each feature: **esforço (E)** 1–3, **valor** ($ negócio / ♥ UX) 1–3, and **confiança** combining "sabemos o quê?" and "sabemos como?": **verde** (both), **amarelo** (one), **vermelho** (neither). Route by value × effort: high value + low effort → next wave; high value + high effort or **vermelho** → discovery first (prototype, research, or spike) before sequencing; low value + high effort → discard. Record the decisions and assumptions that surface — they're as valuable as the ratings.
+3. **Sequencer (ondas)** — numbered waves, adapted rules: ≤3 features per wave; ≤1 red; never only yellows/reds; balanced effort; every wave carries real value; dependencies in earlier waves. Most impactful learning first. Mark on the sequencer which waves form the **MVP** and which are subsequent increments.
 
-Write a numbered increment list — each with a one-line value statement — into `## Increments`.
+For **Produto**, the MVP is an experiment: "Qual é o mínimo que entrega o valor central **e** testa a premissa mais arriscada?" Detail it in `## MVP Canvas` — proposta, personas segmentadas (podemos testar com um grupo menor?), resultado esperado (o aprendizado buscado), custo e cronograma — referencing the journeys, features, and metrics already in the holomap instead of repeating them.
+
+For **Feature**: skip the brainstorm; slice with Story Mapping — thin horizontal slices across the journey (walking skeleton first), never layer-by-layer (domain → infra → UI).
+
+For **Produto** and **Módulo**, close with the outcome roadmap: "Quais resultados buscamos **agora**, **em seguida** e **depois**?" — outcomes, not feature lists.
+
+Write the rated feature list, waves, and numbered increments — each with a one-line value statement — into `## Increments`.
 
 ### Block I — Validation
 
-Ask, one at a time (for **Estória**, questions 1 and 2 only):
+Derive acceptance criteria from concrete examples (Get Real Using Examples). Ask, one at a time (**Estória**: questions 1–3):
 
-1. "Quais são os critérios de aceite? Liste como condições verificáveis."
-2. "Como vamos testar isso?"
-3. "Qual observabilidade é necessária — logs, métricas, alertas?"
+1. "Me dê exemplos concretos: dado [contexto], quando [ação], então [resultado]. Comece pelo caminho feliz."
+2. "Agora os que quebram: entrada inválida, limite, exceção — o que deve acontecer?"
+3. "O que precisa ser verdade para estar pronto — e o que explicitamente NÃO precisa?"
+4. "Qual observabilidade é necessária — logs, métricas, alertas?"
 
-Write acceptance criteria as a checklist (`- [ ]`). Write into `## Validation`.
+Convert the examples into a checklist (`- [ ]`), keeping given/when/then where it adds clarity. Write into `## Validation`.
 
 ---
 
 ## Step 3 — Synthesis & Handoff
 
-1. Write an `## Executive Summary` at the top of the holomap (below the title): 5–8 lines covering problem, who it serves, chosen direction, scope cut, top risk, and first increment.
-2. Present the summary to the user and run a confirmation loop. Apply any corrections to the file.
-3. When confirmed, replace the first line (`⚠️ Discovery in progress — not completed.`) with: `✅ Discovery completed — DD/MM/YYYY HH:MM`
+1. Write `## Executive Summary` below the title: 5–8 lines — problem, who it serves, chosen direction, scope cut, top risk, first increment — ending with the traceability chain when an impact map exists: **KR → ator principal → impacto central → primeiro entregável**.
+2. Present the summary, run a confirmation loop, apply corrections.
+3. Replace the first line with: `✅ Discovery completed — DD/MM/YYYY HH:MM`
 4. Say: "Quest concluída. Holomap salvo em `.darkside/holomaps/<filename>`."
-5. Suggest the next step:
-   - **Produto / Módulo / Feature:** "Deseja executar `/war-room` para transformar essa discovery em um plano de engenharia? Ele vai usar este holomap como contexto."
-   - **Estória:** "Deseja executar `/order66` para implementar essa estória?"
-
-If yes, invoke the corresponding skill. If no, stop.
+5. Suggest the next step — **Produto/Módulo/Feature:** "Deseja executar `/war-room` para transformar essa discovery em um plano de engenharia?" **Estória:** "Deseja executar `/order66` para implementar essa estória?" If yes, invoke the skill.
 
 ---
 
-## Holomap Templates
+## Holomap Template
 
-Created silently after the level is confirmed. Include only the sections of the chosen track, in this order. `<Level>` is one of Product, Module, Feature, Story.
+Created silently after the level is confirmed, with only the sections of the chosen track, in this order. `<Level>` is Product, Module, Feature, or Story. `## MVP Canvas` exists only for Produto.
 
 ```markdown
 ⚠️ Discovery in progress — not completed.
 
-# Quest: <short title derived from the user's description>
+# Quest: <short title>
 
 **Level:** <Level>
 **Date:** YYYY-MM-DD
 
 ## Executive Summary
 
-## Problem & Value
+## Problem & North Star
 
-## Users & Personas
+## Actors & Impacts
 
 ## Current Context
 
@@ -240,7 +235,7 @@ Created silently after the level is confirmed. Include only the sections of the 
 
 ## Increments
 
+## MVP Canvas
+
 ## Validation
 ```
-
-Omit the sections not used by the track (e.g., a Story holomap has only Executive Summary, Problem & Value, Current Context, Scope & Boundaries, Risks & Assumptions, Validation).

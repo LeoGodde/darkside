@@ -1,31 +1,51 @@
 #!/usr/bin/env bash
+# Darkside — remote installer (curl-based)
+# Usage: curl -fsSL https://raw.githubusercontent.com/LeoGodde/darkside/main/install-remote.sh | bash
 set -euo pipefail
 
-PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO="LeoGodde/darkside"
 COMMANDS_DIR="$HOME/.claude/commands"
 DARKSIDE_HOME="$HOME/.darkside"
+TMP_DIR="$(mktemp -d)"
+
+cleanup() { rm -rf "$TMP_DIR"; }
+trap cleanup EXIT
+
+echo "Fetching latest Darkside release..."
+
+# Get latest release tag
+TAG="$(curl -sf "https://api.github.com/repos/$REPO/releases/latest" \
+  | grep '"tag_name"' \
+  | sed 's/.*"\(v\{0,1\}[^"]*\)".*/\1/')"
+
+if [ -z "$TAG" ]; then
+  echo "❌ Could not fetch latest release. Check your connection or visit:"
+  echo "   https://github.com/$REPO/releases"
+  exit 1
+fi
+
+VERSION="${TAG#v}"
+echo "Installing Darkside $TAG..."
+
+# Download and extract release tarball
+curl -sfL "https://github.com/$REPO/archive/refs/tags/$TAG.tar.gz" \
+  | tar -xz -C "$TMP_DIR"
+
+EXTRACTED="$TMP_DIR/darkside-$VERSION"
+[ -d "$EXTRACTED" ] || EXTRACTED="$(ls -d "$TMP_DIR"/darkside-* | head -1)"
 
 mkdir -p "$COMMANDS_DIR"
 mkdir -p "$DARKSIDE_HOME"
 
-echo "Installing Darkside skills to $COMMANDS_DIR..."
-
-for skill_dir in "$PLUGIN_DIR/skills"/*/; do
+# Install skills
+echo "Installing skills to $COMMANDS_DIR..."
+for skill_dir in "$EXTRACTED/skills"/*/; do
   skill_name="$(basename "$skill_dir")"
-
-  # Skip shared/internal files (prefixed with _)
-  if [[ "$skill_name" == _* ]]; then
-    continue
-  fi
+  [[ "$skill_name" == _* ]] && continue
 
   src="$skill_dir/SKILL.md"
+  [ -f "$src" ] || continue
 
-  if [[ ! -f "$src" ]]; then
-    echo "  ⚠ Skipping $skill_name — SKILL.md not found"
-    continue
-  fi
-
-  # Avoid overwriting /guide from another plugin
   if [[ "$skill_name" == "guide" ]]; then
     dest="$COMMANDS_DIR/darkside-guide.md"
     final_name="darkside-guide"
@@ -35,25 +55,19 @@ for skill_dir in "$PLUGIN_DIR/skills"/*/; do
   fi
 
   cp "$src" "$dest"
-
-  # Ensure the name: field in frontmatter matches the file name
   if grep -q "^name:" "$dest"; then
     sed -i.bak "s/^name:.*/name: $final_name/" "$dest" && rm -f "${dest}.bak"
   fi
-
   echo "  ✔ /$final_name"
 done
 
-# Save installed version
-if [ -f "$PLUGIN_DIR/VERSION" ]; then
-  cp "$PLUGIN_DIR/VERSION" "$DARKSIDE_HOME/VERSION"
-  VERSION="$(cat "$PLUGIN_DIR/VERSION")"
-  echo ""
-  echo "Version $VERSION saved to $DARKSIDE_HOME/VERSION"
-fi
+# Save version
+echo "$VERSION" > "$DARKSIDE_HOME/VERSION"
+echo ""
+echo "Version $VERSION saved to $DARKSIDE_HOME/VERSION"
 
 # Install update checker
-cp "$PLUGIN_DIR/scripts/check-update.sh" "$DARKSIDE_HOME/check-update.sh"
+cp "$EXTRACTED/scripts/check-update.sh" "$DARKSIDE_HOME/check-update.sh"
 chmod +x "$DARKSIDE_HOME/check-update.sh"
 echo "Update checker installed at $DARKSIDE_HOME/check-update.sh"
 
@@ -62,12 +76,8 @@ _add_hook() {
   local settings="$HOME/.claude/settings.json"
   local hook_cmd="[ -f \$HOME/.darkside/check-update.sh ] && bash \$HOME/.darkside/check-update.sh 2>/dev/null || true"
 
-  # Create settings.json if it doesn't exist
-  if [ ! -f "$settings" ]; then
-    echo '{}' > "$settings"
-  fi
+  [ -f "$settings" ] || echo '{}' > "$settings"
 
-  # Check if hook already registered
   if grep -q "check-update.sh" "$settings" 2>/dev/null; then
     echo "Update hook already registered in settings.json"
     return
@@ -86,7 +96,6 @@ hook_entry = {"type": "command", "command": hook_cmd}
 hooks = data.setdefault("hooks", {})
 submit_hooks = hooks.setdefault("UserPromptSubmit", [])
 
-# Find or create the catch-all matcher entry
 for entry in submit_hooks:
   if entry.get("matcher") == "":
     entry.setdefault("hooks", []).append(hook_entry)
@@ -105,4 +114,7 @@ EOF
 _add_hook
 
 echo ""
-echo "Done. Open Claude Code and type /darkside to verify."
+echo "✅ Darkside $VERSION installed. Open Claude Code and type /darkside to verify."
+echo ""
+echo "To update in the future:"
+echo "  curl -fsSL https://raw.githubusercontent.com/$REPO/main/install-remote.sh | bash"

@@ -9,35 +9,47 @@
 ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚═════╝ ╚══════╝
 ```
 
-Plugin interno para Claude Code — workflows padronizados de desenvolvimento para o time.
+Plugin para Claude Code — workflows padronizados de desenvolvimento para o time.
+
+Versão para Cursor: [darkside-cursor](https://github.com/LeoGodde/darkside-cursor)
 
 ## Instalação
 
-**1. Adicione o repositório como marketplace local:**
-
 ```bash
-claude plugin marketplace add /caminho/para/darkside
+curl -fsSL https://raw.githubusercontent.com/LeoGodde/darkside/main/install-remote.sh | bash
 ```
 
-**2. Instale o plugin:**
+O installer:
+- Instala todas as skills em `~/.claude/commands/`
+- Salva a versão instalada em `~/.darkside/VERSION`
+- Instala o update checker em `~/.darkside/check-update.sh`
+- Registra um hook no `~/.claude/settings.json` para checar atualizações automaticamente uma vez por dia
+
+Abra o Claude Code e digite `/darkside` para confirmar a instalação.
+
+## Atualização
 
 ```bash
-claude plugin install darkside@darkside
+curl -fsSL https://raw.githubusercontent.com/LeoGodde/darkside/main/install-remote.sh | bash
 ```
 
-Após a instalação, as skills ficam disponíveis em toda nova sessão do Claude Code.
+O mesmo comando sempre instala a versão mais recente. Quando uma nova versão estiver disponível, o Claude Code exibirá um alerta automaticamente ao abrir o menu `/darkside`.
 
 ## Skills
 
 | Skill | Descrição |
 |-------|-----------|
 | `/darkside` | Exibe o logo e lista todas as skills disponíveis |
-| `/explore` | Análise profunda do projeto |
+| `/explore` | Análise profunda do projeto → `tech.md` + sith-agents |
 | `/quest` | Discovery e inception de produto, módulo, feature ou estória → holomap |
 | `/war-room` | Engineering discovery estruturado → plano técnico completo |
-| `/sith-agents` | Edita os system prompts dos sith-agents |
-| `/order66` | Orquestração completa de desenvolvimento → plano de implementação, TDD, código, revisão |
+| `/interrogate` | Interroga e refina o plano do war-room |
+| `/order66` | Orquestração completa de desenvolvimento → TDD, código, revisão |
 | `/inquisitor` | Inspeção profunda de código → relatório com julgamento final |
+| `/mission` | Brainstorming compacto para tarefas menores |
+| `/sith-agents` | Edita os system prompts dos sith-agents |
+| `/verdict` | Verifica critérios de aceite de cards contra o código |
+| `/visual-fidelity` | Verifica fidelidade visual entre Figma e código |
 | `/guide` | Ajuda |
 
 ## Fluxo recomendado
@@ -60,55 +72,13 @@ Após a instalação, as skills ficam disponíveis em toda nova sessão do Claud
 
 Todos os arquivos gerados ficam em `.darkside/` na raiz de cada projeto.
 
-### Holocrons — `.darkside/holocrons/`
-
-Arquivos de conhecimento sobre o projeto. Escritos uma vez, atualizados quando o projeto muda.
-
-| Arquivo | Criado por | Conteúdo |
-|---------|-----------|----------|
-| `tech.md` | `/explore` | Stack, arquitetura, estrutura de pastas, convenções |
-
-### Holomaps — `.darkside/holomaps/`
-
-Documentos de discovery criados pelo `/quest`. Um arquivo por produto, módulo, feature ou estória.
-
-| Arquivo | Criado por | Conteúdo |
-|---------|-----------|----------|
-| `YYYY-MM-DD-<nome>.md` | `/quest` | Discovery adaptada ao nível: problema e North Star (OKR/KR), atores e impactos, escopo, alternativas, métricas, riscos, incrementos (ondas + MVP Canvas) e critérios de aceite por exemplos |
-
-### War Room — `.darkside/war-room/`
-
-Planos técnicos de engineering discovery criados pelo `/war-room`.
-
-| Arquivo | Criado por | Conteúdo |
-|---------|-----------|----------|
-| `YYYY-MM-DD-<plano>-plan.md` | `/war-room` | Entendimento funcional, impacto técnico e estratégia de implementação |
-
-### Sith Agents — `.darkside/sith-agents/`
-
-System prompts de agentes especialistas gerados pelo `/explore`. Editáveis via `/sith-agents`.
-
-| Arquivo | Especialidade |
-|---------|--------------|
-| `tdd.md` | Estratégia de testes, red-green-refactor, cobertura |
-| `engineer.md` | Decisões técnicas, trade-offs, fit arquitetural |
-| `coder.md` | Implementação limpa, convenções do projeto, nomenclatura |
-| `security.md` | OWASP, validação de input, autenticação, secrets |
-| `reviewer.md` | Correção, consistência, enforcement de padrões |
-
-### Imperial Orders — `.darkside/imperial-orders/`
-
-Documentos do ciclo completo de desenvolvimento, criados pelo `/order66`.
-
-| Arquivo | Conteúdo |
-|---------|----------|
-| `YYYY-MM-DD-<feature>-order.md` | Ordem imperial + tarefas de uma feature |
-| `fallen-orders/YYYY-MM-DD-<feature>-fallen-order.md` | Relatório de falha após 2 revisões rejeitadas |
-
-### The Grand Inquisitor — `.darkside/the-grand-inquisitor/`
-
-Relatórios de inspeção profunda criados pelo `/inquisitor`.
-
-| Arquivo | Conteúdo |
-|---------|----------|
-| `YYYY-MM-DD-<alvo>-report.md` | Veredictos de engenharia, segurança e cobertura + julgamento final |
+| Diretório | Criado por | Conteúdo |
+|-----------|-----------|----------|
+| `holocrons/` | `/explore` | `tech.md` — stack, arquitetura, convenções |
+| `holomaps/` | `/quest` | Discovery completo por tarefa |
+| `war-room/` | `/war-room` | Planos técnicos |
+| `sith-agents/` | `/explore` | System prompts dos agentes (tdd, engineer, coder, security, reviewer) |
+| `imperial-orders/` | `/order66` | Ordens de desenvolvimento + fallen-orders |
+| `the-grand-inquisitor/` | `/inquisitor` | Relatórios de inspeção |
+| `missions/` | `/mission` | Brainstorming compacto |
+| `verdicts/` | `/verdict`, `/visual-fidelity` | Verificação de critérios de aceite e fidelidade visual |

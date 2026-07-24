@@ -79,7 +79,7 @@ This plugin provides skills for standardized team development workflows.
   reverse tracing of the causal chain Defect→Infection→Failure, single hypothesis testing
   with circuit breaker), and fix plan with regression test specification. Generates a
   forensic report and offers execution via `/order66`. Saves to
-  `.darkside/forensics/YYYY-MM-DD-<name>-forensics.md`.
+  `.darkside/hunter/YYYY-MM-DD-<name>-hunter.md`.
   Invoke with: `/hunter`
 
 ## Storage
@@ -133,11 +133,11 @@ Engineering discovery plans written by `/war-room`.
 
 - `YYYY-MM-DD-<plan-name>-plan.md` — functional understanding + technical impact + implementation strategy
 
-### Forensics — `.darkside/forensics/`
+### Hunter — `.darkside/hunter/`
 
 Bug investigation reports written by `/hunter`.
 
-- `YYYY-MM-DD-<name>-forensics.md` — causal chain (defect → infection → failure) + symptoms + context + investigation + fix plan with regression test specification
+- `YYYY-MM-DD-<name>-hunter.md` — causal chain (defect → infection → failure) + symptoms + context + investigation + fix plan with regression test specification
 
 ### Verdicts — `.darkside/verdicts/`
 

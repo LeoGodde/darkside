@@ -58,7 +58,7 @@ If `.darkside/sith-agents/tdd.md` exists, read it for use in Phase 4.
 
 From the user's first description, derive a short name for the bug.
 
-Derive filename (suffix: `-forensics.md`). Create `.darkside/forensics/` and the report file silently with the initial structure:
+Derive filename (suffix: `-hunter.md`). Create `.darkside/hunter/` and the report file silently with the initial structure:
 
 ```markdown
 ⚠️ Hunter in progress — not completed.
@@ -86,30 +86,64 @@ Derive filename (suffix: `-forensics.md`). Create `.darkside/forensics/` and the
 
 ## Step 2 — Symptom Comprehension (Rubber Duck)
 
-Conduct a structured interrogation to force precise articulation of the problem. Ask one question at a time:
+Conduct a structured interrogation to force precise articulation of the problem. Each question must be **contextual** — elaborated based on the specific bug described and on previous answers. Follow the Interaction Rule.
 
-**Question 1:**
-> "O que deveria acontecer? Descreva o comportamento esperado com o máximo de detalhe."
+Cover these 5 areas, one per message. For each area, write a short paragraph analyzing what you understood so far, then present up to 3 options (A/B/C) tailored to the specific problem. Skip any area already answered in the user's initial description.
 
-**Question 2:**
-> "O que está acontecendo? Descreva o comportamento observado. Inclua erros, logs, screenshots ou respostas de API se tiver."
+**Area 1 — Expected behavior:**
+Write a paragraph restating what you think should happen based on the bug description. Then offer options:
 
-**Question 3:**
-> "Desde quando isso acontece? (data, deploy, commit, sprint, mudança específica)"
+> [Contextual paragraph based on the specific bug]
+>
+> **A.** [Hypothesis of expected behavior 1]
+> **B.** [Hypothesis of expected behavior 2]
+> **C.** [Hypothesis of expected behavior 3]
 
-**Question 4:**
-> "Com que frequência? Sempre, intermitente, sob carga, em horário específico?"
+**Area 2 — Observed behavior:**
+Write a paragraph about what seems to be going wrong. Then offer options:
 
-**Question 5:**
-> "Qual o impacto? Quem é afetado e existe algum workaround?"
+> [Contextual paragraph about what might be happening]
+>
+> **A.** [Possible observed behavior 1 — e.g., error message, wrong output]
+> **B.** [Possible observed behavior 2 — e.g., silent failure, partial result]
+> **C.** [Possible observed behavior 3 — e.g., intermittent crash, data corruption]
+
+**Area 3 — Timeline:**
+Write a paragraph about when this might have started. Then offer options:
+
+> [Contextual paragraph based on recent project activity]
+>
+> **A.** [Timeline hypothesis 1 — e.g., after last deploy]
+> **B.** [Timeline hypothesis 2 — e.g., after dependency update]
+> **C.** [Timeline hypothesis 3 — e.g., always existed, only noticed now]
+
+**Area 4 — Frequency:**
+Write a paragraph about the pattern of occurrence. Then offer options:
+
+> [Contextual paragraph about reproducibility]
+>
+> **A.** [Frequency hypothesis 1 — e.g., always, every request]
+> **B.** [Frequency hypothesis 2 — e.g., intermittent, under specific conditions]
+> **C.** [Frequency hypothesis 3 — e.g., only with certain data/users/load]
+
+**Area 5 — Impact:**
+Write a paragraph about the scope and severity. Then offer options:
+
+> [Contextual paragraph about who/what is affected]
+>
+> **A.** [Impact hypothesis 1 — e.g., all users blocked]
+> **B.** [Impact hypothesis 2 — e.g., subset of users, workaround exists]
+> **C.** [Impact hypothesis 3 — e.g., cosmetic, no data loss]
 
 **Rules:**
-- One question per message — wait for answer before the next
+- One area per message — wait for answer before the next
+- Options must be specific to the bug, never generic
+- The user can pick one option, combine elements, or provide their own answer
 - If the user answers vaguely ("não sei", "acho que..."), ask one follow-up to clarify
 - If the user tries to skip to the fix ("eu acho que o problema é X, só corrige"), resist: "Preciso entender o sintoma antes de investigar a causa."
-- Pre-fill: if the user already provided any of this information in their initial message, skip that question
+- Pre-fill: if the user already provided any of this information in their initial message, skip that area
 
-After all questions are answered, write into `## Symptoms`:
+After all areas are covered, write into `## Symptoms`:
 
 ```markdown
 ## Symptoms
@@ -125,29 +159,31 @@ After all questions are answered, write into `## Symptoms`:
 
 ## Step 3 — Scope and Context (Where and When)
 
-Investigate actively — combine code analysis with user questions.
+Investigate actively — combine code analysis with user questions. Follow the Interaction Rule for all questions.
 
 ### 3.1 — Recent Changes
 
 - Run `git log --oneline -20` on the current branch
 - Check for open branches that touch related files: `git branch --list` and inspect recent ones
 - Check recent merges: `git log --merges --oneline -10`
-- Ask the user:
 
-> "Houve alguma mudança recente que possa ter relação? Deploy, migração, atualização de dependência, feature flag?"
+Analyze the git history and present findings with options:
+
+> [Paragraph summarizing relevant recent changes found in git]
+>
+> **A.** [Most likely related change — e.g., specific commit/PR that touches affected area]
+> **B.** [Second candidate — e.g., dependency update, config change]
+> **C.** [No related change found — the bug may predate recent history]
 
 ### 3.2 — Error Environment
 
-Ask:
+Based on the symptoms and project context, ask with options:
 
-> "Onde isso acontece?"
+> [Contextual paragraph about where this type of bug typically manifests in this project]
 >
-> **A.** Produção
-> **B.** Staging / Homologação
-> **C.** Dev local
-> **D.** CI/CD
-> **E.** Todos os ambientes
-> **F.** Não sei
+> **A.** [Most likely environment — contextualized to the bug]
+> **B.** [Second likely environment]
+> **C.** [Third option or "all environments"]
 
 If the error is environment-specific, investigate configuration differences (env vars, feature flags, dependency versions, data).
 
@@ -158,6 +194,14 @@ Using `tech.md` as architectural context:
 - Identify which modules/services are involved based on the symptoms
 - Determine: frontend, backend, infra, or integration boundary?
 - List the key files most likely related to the bug
+
+Present the perimeter analysis with options:
+
+> [Paragraph describing the likely affected area based on symptoms and architecture]
+>
+> **A.** [Perimeter hypothesis 1 — e.g., isolated to module X]
+> **B.** [Perimeter hypothesis 2 — e.g., integration between X and Y]
+> **C.** [Perimeter hypothesis 3 — e.g., cross-cutting concern affecting multiple layers]
 
 Write into `## Context`:
 
@@ -361,7 +405,7 @@ Update status:
 
 Present a summary to the user:
 
-> "Investigação concluída. Relatório salvo em `.darkside/forensics/[filename]`.
+> "Investigação concluída. Relatório salvo em `.darkside/hunter/[filename]`.
 >
 > **Cadeia causal:**
 > - **Defeito:** [one line]
@@ -411,6 +455,18 @@ The agent must NEVER:
 | Skip regression test specification | Bugs without tests come back |
 | Ignore refuted hypotheses | Re-investigating the same path wastes time |
 | Implement the fix directly | The fix is executed by `/order66`, not by `/hunter` |
+
+---
+
+## Interaction Rule
+
+Every question to the user follows the same structure:
+
+1. A short paragraph providing context, analysis, or synthesis — specific to the bug being investigated
+2. Up to three options: **A**, **B**, **C** — elaborated based on the problem, never generic
+3. The user can pick one, combine elements, or provide their own answer
+4. If the user provides a free-form answer, incorporate it and move to the next step
+5. Never present generic/template options — every option must reflect the specific bug context
 
 ---
 

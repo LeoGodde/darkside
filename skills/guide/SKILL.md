@@ -25,3 +25,41 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 | `/visual-fidelity` | Verifica a fidelidade visual entre um design no Figma e a implementação no código. Inspeciona cores, tipografia, espaçamentos, componentes, imagens e layout tela a tela via MCP do Figma. Gera um relatório com percentual de similaridade e classifica cada elemento como ✅ Completo, ⚠️ Parcial ou ❌ Ausente. **Use para auditar a aderência da implementação front-end ao design antes do merge ou entrega.** |
 | `/hunter` | Investigação forense de bugs. Conduz debugging estruturado em 4 fases: compreensão dos sintomas (rubber duck), escopo e contexto (branches, ambiente, mudanças recentes), investigação profunda (observação, análise de padrões, rastreamento reverso da cadeia causal Defeito→Infecção→Falha), e plano de correção com especificação de testes de regressão. Gera relatório forense e oferece execução via `/order66`. **Use quando encontrar um bug, erro ou comportamento inesperado.** |
 | `/guide` | Este guia. |
+
+---
+
+## Fluxo recomendado
+
+```
+/explore → /quest (opcional) → /war-room → /order66 → /inquisitor
+
+Para bugs: /explore → /hunter → /order66
+```
+
+| Etapa | Skill | O que produz |
+|-------|-------|--------------|
+| 1. Mapear o projeto | `/explore` | `tech.md` + sith-agents |
+| 2. Discovery da tarefa | `/quest` | holomap |
+| 3. Plano técnico | `/war-room` | plan.md |
+| 4. Implementação | `/order66` | ordem imperial + tarefas + código revisado |
+| 5. Auditoria | `/inquisitor` | relatório com julgamento final |
+
+> `/order66` executa o `/war-room` automaticamente se nenhum plano for encontrado.
+
+---
+
+## Armazenamento
+
+Todos os arquivos gerados ficam em `.darkside/` na raiz do projeto.
+
+| Diretório | Criado por | Conteúdo |
+|-----------|-----------|----------|
+| `holocrons/` | `/explore` | `tech.md` — stack, arquitetura, convenções |
+| `holomaps/` | `/quest` | Discovery completo por tarefa |
+| `war-room/` | `/war-room` | Planos técnicos |
+| `sith-agents/` | `/explore` | System prompts dos agentes (tdd, engineer, coder, security, reviewer, debugger) |
+| `hunter/` | `/hunter` | Relatórios forenses de investigação de bugs |
+| `imperial-orders/` | `/order66` | Ordens de desenvolvimento + fallen-orders |
+| `the-grand-inquisitor/` | `/inquisitor` | Relatórios de inspeção |
+| `missions/` | `/mission` | Brainstorming compacto |
+| `verdicts/` | `/verdict`, `/visual-fidelity` | Verificação de critérios de aceite e fidelidade visual |

@@ -73,7 +73,7 @@ Wait for confirmation.
 
 ## Step 5: Generate sith agents
 
-Read `tech.md`. Write one system prompt per agent into `.darkside/sith-agents/`. Overwrite existing files silently. Write all 5 without asking.
+Read `tech.md`. Write one system prompt per agent into `.darkside/sith-agents/`. Overwrite existing files silently. Write all 6 without asking.
 
 Each agent follows this template — customize entirely based on the project:
 
@@ -94,3 +94,4 @@ Each agent follows this template — customize entirely based on the project:
 | `coder.md` | Coder | clean implementation, conventions, naming |
 | `security.md` | Security specialist | OWASP, input validation, auth, secrets |
 | `reviewer.md` | Code reviewer | correctness, consistency, standards |
+| `debugger.md` | Debug forensics specialist | root cause tracing, causal chain analysis, defect isolation, regression testing, defense-in-depth |

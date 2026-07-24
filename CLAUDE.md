@@ -9,7 +9,7 @@ This plugin provides skills for standardized team development workflows.
 
 - **explore** — Deep project analysis. Scans technology, architecture, packages,
   folder structure, and conventions. Saves findings to `.darkside/holocrons/tech.md`
-  and generates 5 specialist agent prompts in `.darkside/sith-agents/`.
+  and generates 6 specialist agent prompts in `.darkside/sith-agents/`.
   Invoke with: `/explore`
 
 - **quest** — Discovery & inception for a product, module, feature, or user story.
@@ -73,6 +73,15 @@ This plugin provides skills for standardized team development workflows.
   `.darkside/verdicts/YYYY-MM-DD-<name>-visual-fidelity.md`.
   Invoke with: `/visual-fidelity`
 
+- **hunter** — Bug forensics investigation. Conducts structured debugging through 4
+  phases: symptom comprehension (rubber duck interrogation), scope and context (branches,
+  environment, recent changes), deep investigation (pure observation, pattern analysis,
+  reverse tracing of the causal chain Defect→Infection→Failure, single hypothesis testing
+  with circuit breaker), and fix plan with regression test specification. Generates a
+  forensic report and offers execution via `/order66`. Saves to
+  `.darkside/forensics/YYYY-MM-DD-<name>-forensics.md`.
+  Invoke with: `/hunter`
+
 ## Storage
 
 ### Holocrons — `.darkside/holocrons/`
@@ -97,6 +106,7 @@ Editable via `/sith-agents`.
 - 💻 `coder.md` — Coder: clean implementation, project conventions, naming
 - 🔒 `security.md` — Security specialist: OWASP, input validation, auth, secrets
 - 🔍 `reviewer.md` — Code reviewer: correctness, consistency, standards enforcement
+- 🔬 `debugger.md` — Debug forensics specialist: root cause tracing, causal chain analysis, defect isolation
 
 ### Imperial Orders — `.darkside/imperial-orders/`
 
@@ -122,6 +132,12 @@ Brainstorming documents written by `/mission`.
 Engineering discovery plans written by `/war-room`.
 
 - `YYYY-MM-DD-<plan-name>-plan.md` — functional understanding + technical impact + implementation strategy
+
+### Forensics — `.darkside/forensics/`
+
+Bug investigation reports written by `/hunter`.
+
+- `YYYY-MM-DD-<name>-forensics.md` — causal chain (defect → infection → failure) + symptoms + context + investigation + fix plan with regression test specification
 
 ### Verdicts — `.darkside/verdicts/`
 

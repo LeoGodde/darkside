@@ -50,6 +50,7 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 | `/interrogate` | Interroga e refina o plano do war-room |
 | `/verdict` | Verifica critérios de aceite de cards contra o código |
 | `/visual-fidelity` | Verifica fidelidade visual entre Figma e código |
+| `/hunter` | Caçador de bug — Compreensão aprofundada |
 | `/guide` | Ajuda |
 
 ---

@@ -82,6 +82,14 @@ This plugin provides skills for standardized team development workflows.
   `.darkside/hunter/YYYY-MM-DD-<name>-hunter.md`.
   Invoke with: `/hunter`
 
+- **design-schematic** — Structured design discovery from a context document. Refines
+  ideas using Nielsen, Krug, IDEO and d.school heuristics, and generates three optimized
+  Figma Make prompts: Lo-Fi (validate idea and flow), Mid-Fi (validate with suggestions),
+  and Hi-Fi (final prototype). Covers accessibility, design system, visual hierarchy,
+  responsiveness, and error handling. Saves to
+  `.darkside/design-schematic/YYYY-MM-DD-<name>-design-schematic.md`.
+  Invoke with: `/design-schematic`
+
 ## Storage
 
 ### Holocrons — `.darkside/holocrons/`
@@ -145,3 +153,9 @@ Acceptance criteria coverage reports written by `/verdict`. Visual fidelity repo
 
 - `YYYY-MM-DD-<name>-verdict.md` — criteria per card + per-item code verification + overall summary + critical gaps
 - `YYYY-MM-DD-<name>-visual-fidelity.md` — design properties per screen + per-item code verification + similarity score + critical gaps
+
+### Design Schematic — `.darkside/design-schematic/`
+
+Optimized Figma Make prompts written by `/design-schematic`.
+
+- `YYYY-MM-DD-<name>-design-schematic.md` — context + discovery + design decisions + Lo-Fi, Mid-Fi, Hi-Fi prompts

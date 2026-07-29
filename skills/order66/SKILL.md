@@ -90,11 +90,95 @@ Format:
   - [ ] Step 2: Verify — run `[command]`, expected: `[output]`
 ```
 
-Say: "Tarefas definidas. Iniciando fase de testes."
+Say: "Tarefas definidas."
+
+---
+
+## Phase 2.5 — Execution Delegation
+
+Detect the current CLI name (e.g., "Claude Code", "Cursor", "Kimi"). Ask:
+
+> "Quem vai executar as fases de TDD e codificação?"
+>
+> **A.** Deepseek (reasonix)
+> **B.** Kimi (kimi)
+> **C.** <current CLI name> (continuar aqui)
+
+**If C:** proceed normally to Phase 3 (current behavior).
+
+**If A or B:**
+
+### 1. Check CLI availability
+
+Run `reasonix --version` or `kimi --version`. If not found:
+> "O CLI `[name]` não está instalado. Instale-o ou escolha outra opção."
+Re-ask the question.
+
+### 2. Annotate HEAD
+
+Before dispatching, record the current HEAD:
+```bash
+git -C "<project_dir>" rev-parse HEAD
+```
+
+### 3. Build and dispatch
+
+Build a self-contained execution prompt containing:
+- The project path
+- The full Tasks section from the order file
+- The TDD agent instructions (from `tdd.md`)
+- The Coder agent instructions (from `coder.md`)
+- The project conventions (from `tech.md`)
+- Clear instruction: "Execute all tasks using TDD — write failing tests first, then implement minimum code to pass. Run tests after each task. When all tests pass, report the final result."
+- **Git prohibition (always include in every prompt):** "IMPORTANTE: nunca rode 'git add', 'git commit', 'git push', ou qualquer variação — commitar/dar push é decisão exclusiva do usuário, fora desta tarefa, mesmo que os testes passem no final."
+
+**Reasonix:**
+```bash
+reasonix run --dir "<project_dir>" --output-format json --permission-mode auto --allowed-tools "Bash(test commands matching project stack)" "<prompt>"
+```
+- `--permission-mode auto`: required for headless execution.
+- `--allowed-tools`: restrict to read/test/lint commands only — **never include `git commit`/`git push`/`git add`**.
+- Reinforce the git prohibition both in `--allowed-tools` AND in the prompt text — defense in depth.
+- For subsequent corrections: `reasonix run --dir "<project_dir>" --continue --output-format json --permission-mode auto --allowed-tools "..." "<correction prompt>"`.
+
+**Kimi:**
+```bash
+kimi -w "<project_dir>" --yolo "<prompt>"
+```
+- `--yolo`: auto-approve all actions (headless).
+- Always include the git prohibition in the prompt — Kimi has no `--allowed-tools` flag, so the prompt is the only enforcement layer.
+- For subsequent corrections: `kimi -w "<project_dir>" --continue --yolo "<correction prompt>"`.
+
+Run in background and wait for completion notification — no polling or manual sleep.
+
+### 4. Review external CLI output
+
+**First, check for unauthorized commits:**
+```bash
+git -C "<project_dir>" log --oneline <annotated-HEAD>..HEAD
+```
+If any new commits appear: **stop immediately**. Do not review the rest, do not continue the cycle. Report to the user exactly which commits appeared (hash, message) and ask how to proceed. Never revert, reset, or push on your own.
+
+Only after confirming no unauthorized commits, review normally:
+```bash
+git -C "<project_dir>" status --short
+git -C "<project_dir>" diff
+```
+
+Read the full diff. Run the project's validation suite and check against the task acceptance criteria.
+
+### 5. Decide
+
+- **All passing** → proceed to Phase 5 (Review) in the current CLI.
+- **Simple fix** (typo, missing import, off-by-one): fix directly with Edit, re-run validation, re-check.
+- **Non-trivial issue**: write a specific correction prompt citing the concrete problem (failed test output, file:line, expected vs actual) and re-dispatch with `--continue`. Always re-include the git prohibition in correction prompts.
+- **Same problem persists after 2 correction cycles**: stop delegation, report to user, proceed to Phase 5 with current state.
 
 ---
 
 ## Phase 3 — TDD
+
+> Skip this phase if execution was delegated to an external CLI in Phase 2.5.
 
 Read `tdd.md` and act as the TDD specialist.
 
@@ -108,6 +192,8 @@ Do not proceed until every test fails.
 
 ## Phase 4 — Code
 
+> Skip this phase if execution was delegated to an external CLI in Phase 2.5.
+
 Read `coder.md` and act as the Coder.
 
 Implement minimum code to make all tests pass. Follow project conventions. No over-engineering. No changes outside scope.
@@ -117,6 +203,8 @@ Run tests after each task. Proceed to Phase 5 only when all pass.
 ---
 
 ## Phase 5 — Review
+
+If execution was delegated to an external CLI, read the order file and review all changes made by the external CLI before proceeding with the review report.
 
 Read `reviewer.md` and act as the Reviewer. Track iteration count (start at 1).
 

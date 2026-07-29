@@ -24,6 +24,7 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 | `/verdict` | Verifica se os critérios de aceite de cards (Jira, GitHub, Trello, etc.) estão atendidos no código. Lê o card, extrai ou cria critérios, valida com você e gera um relatório de cobertura por item. **Use para auditar a implementação contra os requisitos antes do merge.** |
 | `/visual-fidelity` | Verifica a fidelidade visual entre um design no Figma e a implementação no código. Inspeciona cores, tipografia, espaçamentos, componentes, imagens e layout tela a tela via MCP do Figma. Gera um relatório com percentual de similaridade e classifica cada elemento como ✅ Completo, ⚠️ Parcial ou ❌ Ausente. **Use para auditar a aderência da implementação front-end ao design antes do merge ou entrega.** |
 | `/hunter` | Investigação forense de bugs. Conduz debugging estruturado em 4 fases: compreensão dos sintomas (rubber duck), escopo e contexto (branches, ambiente, mudanças recentes), investigação profunda (observação, análise de padrões, rastreamento reverso da cadeia causal Defeito→Infecção→Falha), e plano de correção com especificação de testes de regressão. Gera relatório forense e oferece execução via `/order66`. **Use quando encontrar um bug, erro ou comportamento inesperado.** |
+| `/design-schematic` | Discovery de design estruturado a partir de um documento de contexto. Refina ideias com heurísticas de Nielsen, Krug, IDEO e d.school, e gera três prompts otimizados para o Figma Make: Lo-Fi (validar ideia e fluxo), Mid-Fi (validar com sugestões) e Hi-Fi (protótipo final). Contempla acessibilidade, design system, hierarquia visual, responsividade e tratamento de erros. **Use quando precisar gerar prompts de design para o Figma Make.** |
 | `/guide` | Este guia. |
 
 ---
@@ -63,3 +64,4 @@ Todos os arquivos gerados ficam em `.darkside/` na raiz do projeto.
 | `the-grand-inquisitor/` | `/inquisitor` | Relatórios de inspeção |
 | `missions/` | `/mission` | Brainstorming compacto |
 | `verdicts/` | `/verdict`, `/visual-fidelity` | Verificação de critérios de aceite e fidelidade visual |
+| `design-schematic/` | `/design-schematic` | Prompts Lo-Fi, Mid-Fi e Hi-Fi para Figma Make |

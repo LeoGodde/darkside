@@ -51,6 +51,7 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 | `/verdict` | Verifica critérios de aceite de cards contra o código |
 | `/visual-fidelity` | Verifica fidelidade visual entre Figma e código |
 | `/hunter` | Caçador de bug — Compreensão aprofundada |
+| `/design-schematic` | Design prompt engineering → prompts Lo-Fi, Mid-Fi, Hi-Fi para Figma Make |
 | `/guide` | Ajuda |
 
 ---

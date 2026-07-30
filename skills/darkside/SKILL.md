@@ -52,6 +52,7 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 | `/visual-fidelity` | Verifica fidelidade visual entre Figma e código |
 | `/hunter` | Caçador de bug — Compreensão aprofundada |
 | `/design-schematic` | Design prompt engineering → prompts Lo-Fi, Mid-Fi, Hi-Fi para Figma Make |
+| `/probe-droid` | Escaneia uma branch e gera notas de QA não-técnicas |
 | `/guide` | Ajuda |
 
 ---

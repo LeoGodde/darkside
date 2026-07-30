@@ -51,6 +51,7 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 | `/verdict` | Verifica critérios de aceite de cards contra o código |
 | `/visual-fidelity` | Verifica fidelidade visual entre Figma e código |
 | `/hunter` | Caçador de bug — Compreensão aprofundada |
+| `/probe-droid` | Escaneia uma branch e gera notas de QA não-técnicas |
 | `/guide` | Ajuda |
 
 ---

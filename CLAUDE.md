@@ -82,6 +82,14 @@ This plugin provides skills for standardized team development workflows.
   `.darkside/forensics/YYYY-MM-DD-<name>-forensics.md`.
   Invoke with: `/hunter`
 
+- **probe-droid** — Non-technical QA notes generator. Scans the current branch, a
+  branch given by the user, or the branch related to a card, and turns the diff
+  into plain-language test cases (scenario, steps, expected result). Shows the
+  notes to the user and, if a related card and a matching MCP integration are
+  both present, offers to post the notes as a card comment. Saves to
+  `.darkside/probe-droid/YYYY-MM-DD-<name>-qa-notes.md`.
+  Invoke with: `/probe-droid`
+
 ## Storage
 
 ### Holocrons — `.darkside/holocrons/`
@@ -145,3 +153,9 @@ Acceptance criteria coverage reports written by `/verdict`. Visual fidelity repo
 
 - `YYYY-MM-DD-<name>-verdict.md` — criteria per card + per-item code verification + overall summary + critical gaps
 - `YYYY-MM-DD-<name>-visual-fidelity.md` — design properties per screen + per-item code verification + similarity score + critical gaps
+
+### Probe Droid — `.darkside/probe-droid/`
+
+Non-technical QA notes written by `/probe-droid`.
+
+- `YYYY-MM-DD-<name>-qa-notes.md` — plain-language test cases (scenario + steps + acceptance criteria) grouped by feature/screen, plus the related card ID if detected

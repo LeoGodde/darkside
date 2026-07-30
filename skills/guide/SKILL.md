@@ -66,3 +66,4 @@ Todos os arquivos gerados ficam em `.darkside/` na raiz do projeto.
 | `missions/` | `/mission` | Brainstorming compacto |
 | `verdicts/` | `/verdict`, `/visual-fidelity` | Verificação de critérios de aceite e fidelidade visual |
 | `design-schematic/` | `/design-schematic` | Prompts Lo-Fi, Mid-Fi e Hi-Fi para Figma Make |
+| `probe-droid/` | `/probe-droid` | Notas de QA não-técnicas geradas a partir de uma branch |

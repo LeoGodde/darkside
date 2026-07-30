@@ -1,6 +1,6 @@
 ---
 name: forge
-description: Criação e edição de skills do Darkside — pergunta o que a skill deve fazer, aplica todos os padrões do plugin e gera os arquivos para Claude Code e Cursor simultaneamente.
+description: Criação e edição de skills do Darkside — pergunta o que a skill deve fazer, aplica todos os padrões do plugin e gera os arquivos para Claude Code, Cursor e Kimi simultaneamente.
 ---
 
 # Forge — Skill Builder
@@ -136,6 +136,18 @@ When a skill says "derive filename", apply these steps:
 
 ---
 
+### Kimi — `skills/<name>/SKILL.md` (in darkside-kimi)
+
+Kimi uses the same `skills/<name>/SKILL.md` format as Claude Code with identical frontmatter and shared rules reference. The skill file content is the same as Claude Code — copy it directly.
+
+**Kimi-specific constraints**
+- No `TaskCreate` / `TaskUpdate` — removed entirely
+- No subagents — all logic is inline
+- Inter-skill invocation: same as Claude Code (uses skill names directly)
+- Registration: add the new command to the routing table in `AGENTS.md`
+
+---
+
 ## Opening
 
 Ask:
@@ -211,7 +223,13 @@ Create `.cursor/rules/<name>.mdc` in `/Users/leogodde/PROJECTS/darkside-cursor/`
 - Replace subagent invocations with inline instructions
 - Update inter-skill references to use rule file format
 
-### Step 6 — Register in Cursor Router
+### Step 6 — Write Kimi Skill
+
+Create `skills/<name>/SKILL.md` in `/Users/leogodde/PROJECTS/darkside-kimi/` with the same content as the Claude Code version, adapted:
+- Remove TaskCreate/TaskUpdate
+- Remove subagent invocations — all logic inline
+
+### Step 7 — Register in Cursor Router
 
 Open `/Users/leogodde/PROJECTS/darkside-cursor/.cursor/rules/darkside.mdc`. Add the new command to the routing table:
 
@@ -221,14 +239,34 @@ Open `/Users/leogodde/PROJECTS/darkside-cursor/.cursor/rules/darkside.mdc`. Add 
 
 Skip this step if the skill is intentionally hidden (like `forge` itself).
 
-### Step 7 — Confirmation
+### Step 7.5 — Register in Kimi
+
+Open `/Users/leogodde/PROJECTS/darkside-kimi/AGENTS.md`. Add the new command to the routing table.
+
+Skip this step if the skill is intentionally hidden (like `forge` itself).
+
+### Step 8 — Register in Darkside & Guide
+
+Ask:
+
+> "Deseja adicionar a skill `/<name>` no `/darkside` (lista de skills) e no `/guide` (ajuda detalhada)?"
+>
+> **A.** Sim, adicionar em ambos
+> **B.** Não, manter oculta (como o `/forge`)
+
+If **A**: add the skill to the skill list table in `skills/darkside/SKILL.md`, `skills/guide/SKILL.md`, and `CLAUDE.md` — across all three platforms (Claude Code, Cursor, Kimi). Also add the storage directory entry in `/guide` and `CLAUDE.md` if the skill generates files.
+
+If **B**: skip — do not register.
+
+### Step 9 — Confirmation
 
 Say:
 
 > "Skill `/<name>` criada com sucesso.
 >
 > - `skills/<name>/SKILL.md` — Claude Code
-> - `.cursor/rules/<name>.mdc` — Cursor (Darkside Cursor atualizado)"
+> - `.cursor/rules/<name>.mdc` — Cursor (Darkside Cursor)
+> - `skills/<name>/SKILL.md` — Kimi (Darkside Kimi)"
 
 ---
 
@@ -268,6 +306,12 @@ Read `/Users/leogodde/PROJECTS/darkside-cursor/.cursor/rules/<name>.mdc`.
 
 Apply equivalent changes adapted for the Cursor format (inline shared rules, no TaskCreate/TaskUpdate, inline inter-skill instructions).
 
+### Step 5.5 — Apply to Kimi
+
+Read `/Users/leogodde/PROJECTS/darkside-kimi/skills/<name>/SKILL.md`.
+
+Apply equivalent changes (same content as Claude Code, no TaskCreate/TaskUpdate, no subagents).
+
 ### Step 6 — Confirmation
 
 Say:
@@ -275,4 +319,5 @@ Say:
 > "Skill `/<name>` atualizada.
 >
 > - `skills/<name>/SKILL.md` — Claude Code
-> - `.cursor/rules/<name>.mdc` — Cursor (Darkside Cursor atualizado)"
+> - `.cursor/rules/<name>.mdc` — Cursor (Darkside Cursor)
+> - `skills/<name>/SKILL.md` — Kimi (Darkside Kimi)"

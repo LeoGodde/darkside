@@ -79,8 +79,16 @@ This plugin provides skills for standardized team development workflows.
   reverse tracing of the causal chain Defect→Infection→Failure, single hypothesis testing
   with circuit breaker), and fix plan with regression test specification. Generates a
   forensic report and offers execution via `/order66`. Saves to
-  `.darkside/forensics/YYYY-MM-DD-<name>-forensics.md`.
+  `.darkside/hunter/YYYY-MM-DD-<name>-hunter.md`.
   Invoke with: `/hunter`
+
+- **design-schematic** — Structured design discovery from a context document. Refines
+  ideas using Nielsen, Krug, IDEO and d.school heuristics, and generates three optimized
+  Figma Make prompts: Lo-Fi (validate idea and flow), Mid-Fi (validate with suggestions),
+  and Hi-Fi (final prototype). Covers accessibility, design system, visual hierarchy,
+  responsiveness, and error handling. Saves to
+  `.darkside/design-schematic/YYYY-MM-DD-<name>-design-schematic.md`.
+  Invoke with: `/design-schematic`
 
 - **probe-droid** — Non-technical QA notes generator. Scans the current branch, a
   branch given by the user, or the branch related to a card, and turns the diff
@@ -141,11 +149,11 @@ Engineering discovery plans written by `/war-room`.
 
 - `YYYY-MM-DD-<plan-name>-plan.md` — functional understanding + technical impact + implementation strategy
 
-### Forensics — `.darkside/forensics/`
+### Hunter — `.darkside/hunter/`
 
 Bug investigation reports written by `/hunter`.
 
-- `YYYY-MM-DD-<name>-forensics.md` — causal chain (defect → infection → failure) + symptoms + context + investigation + fix plan with regression test specification
+- `YYYY-MM-DD-<name>-hunter.md` — causal chain (defect → infection → failure) + symptoms + context + investigation + fix plan with regression test specification
 
 ### Verdicts — `.darkside/verdicts/`
 
@@ -153,6 +161,12 @@ Acceptance criteria coverage reports written by `/verdict`. Visual fidelity repo
 
 - `YYYY-MM-DD-<name>-verdict.md` — criteria per card + per-item code verification + overall summary + critical gaps
 - `YYYY-MM-DD-<name>-visual-fidelity.md` — design properties per screen + per-item code verification + similarity score + critical gaps
+
+### Design Schematic — `.darkside/design-schematic/`
+
+Optimized Figma Make prompts written by `/design-schematic`.
+
+- `YYYY-MM-DD-<name>-design-schematic.md` — context + discovery + design decisions + Lo-Fi, Mid-Fi, Hi-Fi prompts
 
 ### Probe Droid — `.darkside/probe-droid/`
 

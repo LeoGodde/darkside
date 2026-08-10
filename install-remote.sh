@@ -116,5 +116,8 @@ _add_hook
 echo ""
 echo "✅ Darkside $VERSION installed. Open Claude Code and type /darkside to verify."
 echo ""
+echo "⚠ If you have existing projects using Darkside, run /explore in each one"
+echo "  to regenerate the sith-agents with the latest agent definitions."
+echo ""
 echo "To update in the future:"
 echo "  curl -fsSL https://raw.githubusercontent.com/$REPO/main/install-remote.sh | bash"

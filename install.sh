@@ -106,3 +106,6 @@ _add_hook
 
 echo ""
 echo "Done. Open Claude Code and type /darkside to verify."
+echo ""
+echo "⚠ If you have existing projects using Darkside, run /explore in each one"
+echo "  to regenerate the sith-agents with the latest agent definitions."

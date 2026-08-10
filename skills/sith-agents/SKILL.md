@@ -24,7 +24,8 @@ Read `.md` files from `.darkside/sith-agents/`. Display as numbered list:
 
 - `tdd.md` → 🧪 tdd
 - `engineer.md` → ⚙️ engineer
-- `coder.md` → 💻 coder
+- `coder-backend.md` → 💻 coder-backend
+- `coder-frontend.md` → 🎨 coder-frontend
 - `security.md` → 🔒 security
 - `reviewer.md` → 🔍 reviewer
 - Other `.md` → 🤖 [name]

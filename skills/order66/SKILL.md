@@ -13,7 +13,7 @@ Execute the full development lifecycle. Follow each phase in order. Do not skip 
 
 ## Prerequisites
 
-Check that `.darkside/sith-agents/` contains: `engineer.md`, `security.md`, `tdd.md`, `coder.md`, `reviewer.md`.
+Check that `.darkside/sith-agents/` contains: `engineer.md`, `security.md`, `tdd.md`, `reviewer.md`, and at least one of `coder-backend.md` or `coder-frontend.md`.
 
 If any are missing:
 > "Os seguintes sith-agents estão faltando: [list]. Rode `/explore` primeiro para gerá-los."
@@ -31,7 +31,8 @@ Each phase uses a specific model tier. When using subagents (Agent tool), pass t
 | Phase | Agent | Model |
 |-------|-------|-------|
 | Phase 1 — Order | engineer, security | `opus` |
-| Phase 2 — Tasks | — | `sonnet` |
+| Phase 2 — Tasks & Squads | — | `sonnet` |
+| Phase 2.5 — Execution Strategy | — | — |
 | Phase 3 — TDD | tdd | `sonnet` |
 | Phase 4 — Code | coder | `sonnet` |
 | Phase 5 — Review | reviewer | `sonnet` |
@@ -85,7 +86,7 @@ Wait for approval. If changes requested: update and ask again.
 
 ## Phase 2 — Tasks
 
-Break work into small ordered tasks. Write into `## Tasks`.
+Break work into small ordered tasks and organize them into **squads** — logical groups by domain or specialty. Write into `## Tasks`.
 
 Each task must contain:
 - Clear description
@@ -93,22 +94,69 @@ Each task must contain:
 - Complete code for every step — no summaries
 - Exact verification commands with expected output
 
-Format:
+Group tasks under squads. Each squad has a name and an associated agent type:
 
 ```markdown
 ## Tasks
+
+### Squad: Backend API
+**Agent:** coder-backend
 
 - [ ] **Task 1: [description]**
   - Files: `exact/path/to/file.ts`
   - [ ] Step 1: [action] — [code or command]
   - [ ] Step 2: Verify — run `[command]`, expected: `[output]`
+
+- [ ] **Task 2: [description]**
+  - Files: `exact/path/to/file.ts`
+  - [ ] Step 1: [action] — [code or command]
+  - [ ] Step 2: Verify — run `[command]`, expected: `[output]`
+
+### Squad: Login Screen
+**Agent:** coder-frontend
+
+- [ ] **Task 3: [description]**
+  - Files: `exact/path/to/component.tsx`
+  - [ ] Step 1: [action] — [code or command]
+  - [ ] Step 2: Verify — run `[command]`, expected: `[output]`
 ```
 
-Say: "Tarefas definidas."
+Squad naming guidelines:
+- Use clear, descriptive names reflecting the domain (e.g., "Backend API", "Login Screen", "Dashboard", "Security Hardening", "Refactoring")
+- Assign `coder-backend`, `coder-frontend`, or both based on the squad's scope
+- Keep squads independent when possible — minimize cross-squad file dependencies
+
+Present the proposed squads to the user:
+
+> "Organizei as tarefas nos seguintes squads:
+>
+> 1. **[Squad Name]** — [N] tarefas ([agent type])
+> 2. **[Squad Name]** — [N] tarefas ([agent type])
+> ...
+>
+> Deseja reorganizar, renomear ou fundir algum squad?"
+
+Wait for confirmation or adjustments. Iterate until confirmed.
+
+Say: "Tarefas e squads definidos."
 
 ---
 
-## Phase 2.5 — Execution Delegation
+## Phase 2.5 — Execution Strategy
+
+Ask:
+
+> "Como deseja executar os squads?"
+>
+> **A.** ⚡ **Multitask** — Para missões complexas que exigem múltiplas especialidades trabalhando simultaneamente. Convoca vários agentes como um esquadrão coordenado, permitindo que atuem em paralelo sobre diferentes frentes da missão. _Tempo & Tokens: Maior consumo de tokens e tempo devido à coordenação entre agentes._
+>
+> **B.** 🎯 **Singletask** — Para missões que podem ser divididas em etapas independentes ou dependentes. Os agentes são acionados sequencialmente, onde cada operativo conclui sua etapa antes que o próximo assuma a missão. _Tempo & Tokens: Menor consumo de tokens e tempo por reduzir a coordenação entre agentes._
+
+Record the chosen strategy. Proceed to Phase 2.7.
+
+---
+
+## Phase 2.7 — Execution Delegation
 
 Detect the current CLI name (e.g., "Claude Code", "Cursor", "Kimi"). Ask:
 
@@ -118,7 +166,9 @@ Detect the current CLI name (e.g., "Claude Code", "Cursor", "Kimi"). Ask:
 > **B.** Kimi K2.7 Coding (kimi)
 > **C.** <current CLI name> (continuar aqui)
 
-**If C:** proceed normally to Phase 3 (current behavior).
+**If C:** proceed normally to Phase 3.
+
+In **Multitask** mode, the CLI choice applies to all squads. In **Singletask** mode, the CLI choice applies to the squad being executed.
 
 **If A or B:**
 
@@ -141,7 +191,7 @@ Build a self-contained execution prompt containing:
 - The project path
 - The full Tasks section from the order file
 - The TDD agent instructions (from `tdd.md`) — include the full content and instruct: "Use these TDD agent instructions as your testing persona. Follow them exactly for test strategy, red-green-refactor cycle, and coverage requirements."
-- The Coder agent instructions (from `coder.md`) — include the full content and instruct: "Use these Coder agent instructions as your implementation persona. Follow them exactly for naming conventions, code structure, and project patterns."
+- The Coder agent instructions — include the full content of the applicable coder agent(s) based on the task scope: `coder-backend.md` for backend tasks, `coder-frontend.md` for frontend tasks, or both if the tasks span both layers. Instruct: "Use these Coder agent instructions as your implementation persona. Follow them exactly for naming conventions, code structure, and project patterns."
 - The project conventions (from `tech.md`)
 - Clear instruction: "Execute all tasks using TDD — write failing tests first, then implement minimum code to pass. Run tests after each task. When all tests pass, report the final result."
 - **Scope restriction (always include in every prompt):** "IMPORTANTE: implemente APENAS o que está descrito nas tarefas acima. Não adicione funcionalidades extras, não refatore código fora do escopo, não melhore código existente que não faz parte das tarefas. Sua implementação limita-se estritamente ao solicitado."
@@ -204,13 +254,34 @@ Read the full diff. Run the project's validation suite and check against the tas
 
 ## Phase 3 — TDD
 
-> Skip this phase if execution was delegated to an external CLI in Phase 2.5.
+> Skip this phase if execution was delegated to an external CLI in Phase 2.7.
 
 > Model: **sonnet** — when using subagents, set `model: "sonnet"`.
 
 Read `tdd.md` and act as the TDD specialist.
 
-1. Write all tests for all tasks
+### Multitask Mode
+
+For each squad, launch a subagent (Agent tool with `run_in_background: true`) that:
+1. Receives the TDD agent instructions (`tdd.md`) and the squad's tasks
+2. Writes all tests for the squad's tasks
+3. Runs all tests — they must all fail before proceeding
+4. If any passes: flags as false positive, fixes, re-runs
+
+All squad agents run in parallel. Wait for all to complete before proceeding.
+
+### Singletask Mode
+
+List the squads and ask:
+
+> "Qual squad deseja executar?"
+>
+> 1. **[Squad Name]** — [N] tarefas
+> 2. **[Squad Name]** — [N] tarefas
+> ...
+
+Execute TDD for the selected squad only:
+1. Write all tests for the squad's tasks
 2. Run all tests — they must all fail before proceeding
 3. If any passes: flag as false positive, fix, re-run
 
@@ -220,19 +291,40 @@ Do not proceed until every test fails.
 
 ## Phase 4 — Code
 
-> Skip this phase if execution was delegated to an external CLI in Phase 2.5.
+> Skip this phase if execution was delegated to an external CLI in Phase 2.7.
 
 > Model: **sonnet** — when using subagents, set `model: "sonnet"`.
 
-Read `coder.md` and act as the Coder.
+### Multitask Mode
 
-Implement minimum code to make all tests pass. Follow project conventions. No over-engineering. No changes outside scope.
+For each squad, launch a subagent (Agent tool with `run_in_background: true`) that:
+1. Receives the applicable coder agent instructions based on the squad's agent type (`coder-backend.md`, `coder-frontend.md`, or both)
+2. Implements minimum code to make the squad's tests pass
+3. Follows project conventions — no over-engineering, no changes outside scope
+4. Runs tests after each task
 
-Run tests after each task. Proceed to Phase 5 only when all pass.
+All squad agents run in parallel. Wait for all to complete. Run the full test suite to verify no cross-squad conflicts before proceeding to Phase 5.
+
+### Singletask Mode
+
+Read the applicable coder agent(s) for the current squad — `coder-backend.md` for backend squads, `coder-frontend.md` for frontend squads, or both if the squad spans both layers — and act as the Coder.
+
+Implement minimum code to make the squad's tests pass. Follow project conventions. No over-engineering. No changes outside scope.
+
+Run tests after each task. When the squad is complete, ask:
+
+> "Squad **[name]** concluído. Próximo passo?"
+>
+> **A.** Executar próximo squad: **[next squad name]**
+> **B.** Ir para a revisão (Phase 5)
+
+If **A**: return to Phase 3 for the next squad. If **B** or all squads done: proceed to Phase 5.
 
 ---
 
 ## Phase 5 — Review
+
+Review all executed squads together — regardless of execution mode (Multitask or Singletask) or delegation.
 
 If execution was delegated to an external CLI, read the order file and review all changes made by the external CLI before proceeding with the review report.
 
@@ -255,7 +347,7 @@ Approved / Rejected
 
 **Approved:** "Ordem imperial executada com sucesso. Arquivo em `.darkside/imperial-orders/[filename]`." Stop.
 
-**Rejected iteration 1:** read `coder.md`, fix blocking issues, run tests, return to Phase 5 as iteration 2.
+**Rejected iteration 1:** read the applicable coder agent(s), fix blocking issues, run tests, return to Phase 5 as iteration 2.
 
 **Rejected iteration 2:** create fallen-order report (see below). Stop.
 

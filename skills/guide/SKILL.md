@@ -26,6 +26,7 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 | `/hunter` | Investigação forense de bugs. Conduz debugging estruturado em 4 fases: compreensão dos sintomas (rubber duck), escopo e contexto (branches, ambiente, mudanças recentes), investigação profunda (observação, análise de padrões, rastreamento reverso da cadeia causal Defeito→Infecção→Falha), e plano de correção com especificação de testes de regressão. Gera relatório forense e oferece execução via `/order66`. **Use quando encontrar um bug, erro ou comportamento inesperado.** |
 | `/design-schematic` | Discovery de design estruturado a partir de um documento de contexto. Refina ideias com heurísticas de Nielsen, Krug, IDEO e d.school, e gera três prompts otimizados para o Figma Make: Lo-Fi (validar ideia e fluxo), Mid-Fi (validar com sugestões) e Hi-Fi (protótipo final). Contempla acessibilidade, design system, hierarquia visual, responsividade e tratamento de erros. **Use quando precisar gerar prompts de design para o Figma Make.** |
 | `/probe-droid` | Escaneia a branch atual, uma branch informada, ou a branch relacionada a um card, e gera casos de teste não-técnicos para QA a partir das mudanças encontradas. Ao final, oferece enviar as notas como comentário no card relacionado, caso exista e haja um MCP de gerenciamento de projeto conectado. **Use depois de implementar uma feature, para gerar o roteiro de testes que o QA vai executar.** |
+| `/spec-verdict` | Verifica se os critérios de aceite de um card (Jira, GitHub, Trello, etc.) ou fornecidos diretamente estão representados em um ou mais designs no Figma. Extrai os critérios via MCP do board ou aceita colagem direta, inspeciona os designs via MCP do Figma e classifica cada critério como ✅ Atendido, ⚠️ Parcial ou ❌ Ausente. **Use para validar se o design cobre os requisitos antes do desenvolvimento começar.** |
 | `/guide` | Este guia. |
 
 ---
@@ -59,11 +60,12 @@ Todos os arquivos gerados ficam em `.darkside/` na raiz do projeto.
 | `holocrons/` | `/explore` | `tech.md` — stack, arquitetura, convenções |
 | `holomaps/` | `/quest` | Discovery completo por tarefa |
 | `war-room/` | `/war-room` | Planos técnicos |
-| `sith-agents/` | `/explore` | System prompts dos agentes (tdd, engineer, coder, security, reviewer, debugger) |
+| `sith-agents/` | `/explore` | System prompts dos agentes (tdd, engineer, coder-backend, coder-frontend, security, reviewer, debugger) |
 | `hunter/` | `/hunter` | Relatórios forenses de investigação de bugs |
 | `imperial-orders/` | `/order66` | Ordens de desenvolvimento + fallen-orders |
 | `the-grand-inquisitor/` | `/inquisitor` | Relatórios de inspeção |
 | `missions/` | `/mission` | Brainstorming compacto |
 | `verdicts/` | `/verdict`, `/visual-fidelity` | Verificação de critérios de aceite e fidelidade visual |
+| `spec-verdicts/` | `/spec-verdict` | Verificação de critérios de aceite contra o design do Figma |
 | `design-schematic/` | `/design-schematic` | Prompts Lo-Fi, Mid-Fi e Hi-Fi para Figma Make |
 | `probe-droid/` | `/probe-droid` | Notas de QA não-técnicas geradas a partir de uma branch |

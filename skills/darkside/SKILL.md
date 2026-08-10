@@ -53,6 +53,7 @@ Display the following logo and skill list exactly as shown. Do not add commentar
 | `/hunter` | Caçador de bug — Compreensão aprofundada |
 | `/design-schematic` | Design prompt engineering → prompts Lo-Fi, Mid-Fi, Hi-Fi para Figma Make |
 | `/probe-droid` | Escaneia uma branch e gera notas de QA não-técnicas |
+| `/spec-verdict` | Verifica se critérios de aceite estão representados no design do Figma |
 | `/guide` | Ajuda |
 
 ---

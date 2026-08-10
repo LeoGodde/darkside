@@ -73,7 +73,13 @@ Wait for confirmation.
 
 ## Step 5: Generate sith agents
 
-Read `tech.md`. Write one system prompt per agent into `.darkside/sith-agents/`. Overwrite existing files silently. Write all 6 without asking.
+Read `tech.md`. Write one system prompt per agent into `.darkside/sith-agents/`. Overwrite existing files silently. Write all agents without asking.
+
+Detect whether the project has backend and/or frontend layers based on `tech.md`. Generate only the applicable coder agents:
+- If the project has a backend → generate `coder-backend.md`
+- If the project has a frontend → generate `coder-frontend.md`
+- If the project has both → generate both
+- If the distinction is unclear (e.g., full-stack monolith) → generate both
 
 Each agent follows this template — customize entirely based on the project:
 
@@ -91,7 +97,8 @@ Each agent follows this template — customize entirely based on the project:
 |------|------|-------|
 | `tdd.md` | TDD specialist | test strategy, red-green-refactor, coverage — **must enforce the Testing Conventions from `tech.md`**: same language for descriptions, same structural pattern, same naming conventions |
 | `engineer.md` | Software engineer | design decisions, trade-offs, architecture fit |
-| `coder.md` | Coder | clean implementation, conventions, naming |
+| `coder-backend.md` | Backend coder | clean implementation, conventions, naming, API design, data layer, service logic, error handling — specialized in the project's backend stack |
+| `coder-frontend.md` | Frontend coder | clean implementation, conventions, naming, design system adherence (tokens, spacing, typography, colors), component architecture (reuse existing components before creating new ones), visual consistency with established UI patterns, state management, accessibility, responsive behavior — specialized in the project's frontend stack |
 | `security.md` | Security specialist | OWASP, input validation, auth, secrets |
 | `reviewer.md` | Code reviewer | correctness, consistency, standards |
 | `debugger.md` | Debug forensics specialist | root cause tracing, causal chain analysis, defect isolation, regression testing, defense-in-depth |

@@ -98,6 +98,15 @@ This plugin provides skills for standardized team development workflows.
   `.darkside/probe-droid/YYYY-MM-DD-<name>-qa-notes.md`.
   Invoke with: `/probe-droid`
 
+- **spec-verdict** — Design × Acceptance Criteria verifier. Receives one or more
+  Figma design links and acceptance criteria from a task card (Jira, BusinessMap,
+  Trello, ClickUp, Asana, Azure Boards) or provided directly. Checks MCP availability
+  for the board, extracts the criteria, inspects the Figma designs via Figma MCP, and
+  classifies each criterion as ✅ Atendido, ⚠️ Parcial, or ❌ Ausente. Generates a
+  coverage report with overall percentage. Saves to
+  `.darkside/spec-verdicts/YYYY-MM-DD-<name>-spec-verdict.md`.
+  Invoke with: `/spec-verdict`
+
 ## Storage
 
 ### Holocrons — `.darkside/holocrons/`
@@ -119,7 +128,8 @@ Editable via `/sith-agents`.
 
 - 🧪 `tdd.md` — TDD specialist: test strategy, red-green-refactor, coverage
 - ⚙️ `engineer.md` — Software engineer: design decisions, trade-offs, architecture fit
-- 💻 `coder.md` — Coder: clean implementation, project conventions, naming
+- 💻 `coder-backend.md` — Backend coder: clean implementation, conventions, API design, data layer, service logic
+- 🎨 `coder-frontend.md` — Frontend coder: clean implementation, conventions, design system, component architecture, accessibility
 - 🔒 `security.md` — Security specialist: OWASP, input validation, auth, secrets
 - 🔍 `reviewer.md` — Code reviewer: correctness, consistency, standards enforcement
 - 🔬 `debugger.md` — Debug forensics specialist: root cause tracing, causal chain analysis, defect isolation
@@ -167,6 +177,12 @@ Acceptance criteria coverage reports written by `/verdict`. Visual fidelity repo
 Optimized Figma Make prompts written by `/design-schematic`.
 
 - `YYYY-MM-DD-<name>-design-schematic.md` — context + discovery + design decisions + Lo-Fi, Mid-Fi, Hi-Fi prompts
+
+### Spec Verdicts — `.darkside/spec-verdicts/`
+
+Design × Acceptance Criteria coverage reports written by `/spec-verdict`.
+
+- `YYYY-MM-DD-<name>-spec-verdict.md` — acceptance criteria per card + per-item design verification (✅ Atendido / ⚠️ Parcial / ❌ Ausente) + overall coverage percentage + critical gaps
 
 ### Probe Droid — `.darkside/probe-droid/`
 

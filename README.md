@@ -50,12 +50,13 @@ O mesmo comando sempre instala a versão mais recente. Quando uma nova versão e
 | `/sith-agents` | Edita os system prompts dos sith-agents |
 | `/verdict` | Verifica critérios de aceite de cards contra o código |
 | `/visual-fidelity` | Verifica fidelidade visual entre Figma e código |
+| `/scribe` | Gera, revisa e mantém documentação do projeto para desenvolvedores, usuários e clientes |
 | `/guide` | Ajuda |
 
 ## Fluxo recomendado
 
 ```
-/explore → /quest (opcional) → /war-room → /order66 → /inquisitor
+/explore → /quest (opcional) → /war-room → /order66 → /inquisitor → /scribe
 ```
 
 | Etapa | Skill | O que produz |
@@ -65,12 +66,14 @@ O mesmo comando sempre instala a versão mais recente. Quando uma nova versão e
 | 3. Plano técnico | `/war-room` | plan.md |
 | 4. Implementação | `/order66` | ordem imperial + tarefas + código revisado |
 | 5. Auditoria | `/inquisitor` | relatório com julgamento final |
+| 6. Documentação | `/scribe` | documentação para devs, usuários e clientes em `docs/` |
 
 > `/order66` executa o `/war-room` automaticamente se nenhum plano for encontrado.
+> `/scribe` não depende desse fluxo — pode ser chamado a qualquer momento.
 
 ## Armazenamento
 
-Todos os arquivos gerados ficam em `.darkside/` na raiz de cada projeto.
+Todos os arquivos internos do Darkside ficam em `.darkside/` na raiz de cada projeto. Documentação final para humanos, gerada por `/scribe`, fica em `docs/` (`docs/developers/`, `docs/users/`, `docs/clients/`).
 
 | Diretório | Criado por | Conteúdo |
 |-----------|-----------|----------|
@@ -82,3 +85,4 @@ Todos os arquivos gerados ficam em `.darkside/` na raiz de cada projeto.
 | `the-grand-inquisitor/` | `/inquisitor` | Relatórios de inspeção |
 | `missions/` | `/mission` | Brainstorming compacto |
 | `verdicts/` | `/verdict`, `/visual-fidelity` | Verificação de critérios de aceite e fidelidade visual |
+| `scribe/` | `/scribe` | Manifests internos de cada sessão de documentação |

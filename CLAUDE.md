@@ -31,7 +31,7 @@ This plugin provides skills for standardized team development workflows.
   Invoke with: `/order66`
 
 - **inquisitor** — Deep code inspection using engineer, security, and tdd agents.
-  Accepts a file, folder, or PR. Auto-discovers tests. Produces a report with
+  Accepts a file, folder, PR, or branch. Auto-discovers tests. Produces a report with
   Engineering, Security, and Test Coverage verdicts plus a Final Judgment level
   (Crítico / Alto Risco / Médio Risco / Baixo Risco).
   Invoke with: `/inquisitor`

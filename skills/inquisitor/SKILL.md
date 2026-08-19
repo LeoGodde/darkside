@@ -1,6 +1,6 @@
 ---
 name: inquisitor
-description: Inspeção profunda de código usando os sith-agents engineer, security e tdd. Aceita caminho de arquivo, pasta ou PR. Descobre testes automaticamente. Gera relatório estruturado com veredictos de Engenharia, Segurança e Cobertura de Testes, além do Julgamento Final em .darkside/the-grand-inquisitor/.
+description: Inspeção profunda de código usando os sith-agents engineer, security e tdd. Aceita caminho de arquivo, pasta, PR ou branch. Descobre testes automaticamente. Gera relatório estruturado com veredictos de Engenharia, Segurança e Cobertura de Testes, além do Julgamento Final em .darkside/the-grand-inquisitor/.
 ---
 
 # The Grand Inquisitor
@@ -26,11 +26,14 @@ If `.darkside/holocrons/tech.md` exists, read it as project context.
 
 ## Step 2: Collect target
 
-> "O que devo inspecionar? Informe um arquivo, pasta ou número de PR."
+> "O que devo inspecionar? Informe um arquivo, pasta, número de PR ou nome de branch."
 
 **File/folder:** read all source files (skip `node_modules`, `.git`, `dist`, `build`, `vendor`).
 
 **PR number:** run `gh pr diff <number>`. If unavailable, ask user to paste diff.
+
+**Branch:** run `git diff $(git merge-base main HEAD)..HEAD` to get the diff scoped to the branch. Run `git diff $(git merge-base main HEAD)..HEAD --name-only` to list changed files. If no branch name is given, use the current branch. If the current branch is `main`, ask:
+> "Você está na main. Informe o nome da branch que deseja inspecionar."
 
 ---
 
@@ -45,6 +48,7 @@ Search for related test files: `*.spec.*`, `*.test.*`, `__tests__/`, `tests/`, `
 - **File:** filename without extension → kebab-case
 - **Folder:** folder name → kebab-case
 - **PR:** `pr-<number>`
+- **Branch:** branch name → kebab-case (remove `feature/`, `fix/`, `bugfix/` prefixes if present)
 
 Prepend `YYYY-MM-DD-`, append `-report.md`. Create `.darkside/the-grand-inquisitor/` and the report file with empty sections silently.
 
@@ -190,3 +194,4 @@ If no: stop.
 - If Details table has no findings, write "No issues found"
 - Report created silently in Step 4, filled in Step 8
 - Source files are read-only — exception: Step 10 TODOs with explicit confirmation
+- For diffs (PR or branch), verify each reported file exists in the current workspace before listing it as a finding. Skip files that were deleted or do not exist on disk — they are out of scope.

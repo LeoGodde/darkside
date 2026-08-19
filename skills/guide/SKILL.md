@@ -27,6 +27,7 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 | `/design-schematic` | Discovery de design estruturado a partir de um documento de contexto. Refina ideias com heurísticas de Nielsen, Krug, IDEO e d.school, e gera três prompts otimizados para o Figma Make: Lo-Fi (validar ideia e fluxo), Mid-Fi (validar com sugestões) e Hi-Fi (protótipo final). Contempla acessibilidade, design system, hierarquia visual, responsividade e tratamento de erros. **Use quando precisar gerar prompts de design para o Figma Make.** |
 | `/probe-droid` | Escaneia a branch atual, uma branch informada, ou a branch relacionada a um card, e gera casos de teste não-técnicos para QA a partir das mudanças encontradas. Ao final, oferece enviar as notas como comentário no card relacionado, caso exista e haja um MCP de gerenciamento de projeto conectado. **Use depois de implementar uma feature, para gerar o roteiro de testes que o QA vai executar.** |
 | `/spec-verdict` | Verifica se os critérios de aceite de um card (Jira, GitHub, Trello, etc.) ou fornecidos diretamente estão representados em um ou mais designs no Figma. Extrai os critérios via MCP do board ou aceita colagem direta, inspeciona os designs via MCP do Figma e classifica cada critério como ✅ Atendido, ⚠️ Parcial ou ❌ Ausente. **Use para validar se o design cobre os requisitos antes do desenvolvimento começar.** |
+| `/scribe` | Gera, revisa e mantém documentação do projeto para desenvolvedores, usuários finais e clientes, a partir do código e do conhecimento produzido pelo Darkside. Determina audiência e escopo, investiga o estado real do projeto, distingue o que está implementado do que está apenas planejado, e produz documentação em `docs/`, aplicando os princípios do Google Developer Documentation Style Guide. **Use a qualquer momento para criar, atualizar ou revisar documentação — não só ao final do fluxo.** |
 | `/guide` | Este guia. |
 
 ---
@@ -34,7 +35,7 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 ## Fluxo recomendado
 
 ```
-/explore → /quest (opcional) → /war-room → /order66 → /inquisitor
+/explore → /quest (opcional) → /war-room → /order66 → /inquisitor → /scribe
 
 Para bugs: /explore → /hunter → /order66
 ```
@@ -46,14 +47,16 @@ Para bugs: /explore → /hunter → /order66
 | 3. Plano técnico | `/war-room` | plan.md |
 | 4. Implementação | `/order66` | ordem imperial + tarefas + código revisado |
 | 5. Auditoria | `/inquisitor` | relatório com julgamento final |
+| 6. Documentação | `/scribe` | documentação para devs, usuários e clientes em `docs/` |
 
 > `/order66` executa o `/war-room` automaticamente se nenhum plano for encontrado.
+> `/scribe` não depende desse fluxo — pode ser chamado a qualquer momento para documentar o projeto inteiro ou uma parte dele.
 
 ---
 
 ## Armazenamento
 
-Todos os arquivos gerados ficam em `.darkside/` na raiz do projeto.
+Todos os arquivos internos do Darkside ficam em `.darkside/` na raiz do projeto.
 
 | Diretório | Criado por | Conteúdo |
 |-----------|-----------|----------|
@@ -69,3 +72,16 @@ Todos os arquivos gerados ficam em `.darkside/` na raiz do projeto.
 | `spec-verdicts/` | `/spec-verdict` | Verificação de critérios de aceite contra o design do Figma |
 | `design-schematic/` | `/design-schematic` | Prompts Lo-Fi, Mid-Fi e Hi-Fi para Figma Make |
 | `probe-droid/` | `/probe-droid` | Notas de QA não-técnicas geradas a partir de uma branch |
+| `scribe/` | `/scribe` | Manifests internos de cada sessão de documentação (fontes consultadas, modelo de evidências, lacunas) |
+
+### Documentação para humanos — `docs/`
+
+`/scribe` é a única skill que escreve fora de `.darkside/`. A documentação final, destinada a pessoas, fica em `docs/` na raiz do projeto:
+
+| Diretório | Audiência |
+|-----------|-----------|
+| `docs/developers/` | Desenvolvedores |
+| `docs/users/` | Usuários finais |
+| `docs/clients/` | Clientes e stakeholders |
+
+`.darkside/` guarda conhecimento e artefatos internos do Darkside; `docs/` guarda documentação pronta para ser lida por humanos fora do fluxo do plugin.

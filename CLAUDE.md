@@ -98,6 +98,18 @@ This plugin provides skills for standardized team development workflows.
   `.darkside/probe-droid/YYYY-MM-DD-<name>-qa-notes.md`.
   Invoke with: `/probe-droid`
 
+- **scribe** — Documentation intelligence. Generates, reviews, and maintains
+  project documentation for developers, end users, and clients, using the
+  actual state of the codebase and Darkside's own knowledge (`tech.md`,
+  holomaps, war-room plans, imperial orders, inquisitor reports) as sources.
+  Distinguishes implemented behavior from planned-but-not-built behavior,
+  reshapes the same knowledge per audience instead of resizing it, and applies
+  the Google Developer Documentation Style Guide. Can be invoked at any point,
+  not only at the end of the development flow. Saves human-facing documentation
+  to `docs/developers/`, `docs/users/`, `docs/clients/`, and its own session
+  manifests to `.darkside/scribe/YYYY-MM-DD-<name>-scribe.md`.
+  Invoke with: `/scribe`
+
 - **spec-verdict** — Design × Acceptance Criteria verifier. Receives one or more
   Figma design links and acceptance criteria from a task card (Jira, BusinessMap,
   Trello, ClickUp, Asana, Azure Boards) or provided directly. Checks MCP availability
@@ -106,6 +118,16 @@ This plugin provides skills for standardized team development workflows.
   coverage report with overall percentage. Saves to
   `.darkside/spec-verdicts/YYYY-MM-DD-<name>-spec-verdict.md`.
   Invoke with: `/spec-verdict`
+
+## Documentation — `docs/`
+
+Human-facing documentation written by `/scribe`. Unlike every other Darkside output, this lives outside `.darkside/` — it's meant to be read by people outside the plugin's workflow, not by Darkside itself.
+
+- `docs/developers/` — developer documentation
+- `docs/users/` — end-user documentation
+- `docs/clients/` — client and stakeholder documentation
+
+Each populated directory gets a `README.md` index. Only directories actually needed are created.
 
 ## Storage
 
@@ -189,3 +211,9 @@ Design × Acceptance Criteria coverage reports written by `/spec-verdict`.
 Non-technical QA notes written by `/probe-droid`.
 
 - `YYYY-MM-DD-<name>-qa-notes.md` — plain-language test cases (scenario + steps + acceptance criteria) grouped by feature/screen, plus the related card ID if detected
+
+### Scribe — `.darkside/scribe/`
+
+Internal session manifests written by `/scribe`. Not documentation itself — the finished documentation lives in `docs/` (see above).
+
+- `YYYY-MM-DD-<name>-scribe.md` — audience, scope, mode, sources consulted, evidence model (implemented / documented / planned / inconsistent / unknown), files created/updated, unverifiable information, gaps found

@@ -14,7 +14,7 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 | Skill | Descrição |
 |-------|-----------|
 | `/explore` | Analisa o projeto em profundidade: stack, arquitetura, pastas e convenções. Gera um holocron e 6 agentes especialistas calibrados para o projeto. **Use na primeira vez que trabalhar em um projeto.** |
-| `/moff` | Assume o papel de Product Manager do projeto. No primeiro uso conduz o setup de governança: cliente, critérios verificáveis de sucesso, contrato de comunicação (reuniões, horário, contato principal, quem decide, SLA), capacidade do time, bases de conhecimento, gitflow, esteira de desenvolvimento, métricas e riscos — e gera 5 agentes de gestão calibrados. Depois opera em quatro modos: planejamento (backlog, releases, quebra, cards executáveis, sync com Jira), execução (puxa card → branch → design opcional → build → quality gate → PR → move card → deploy), relatório (status para o cliente, métricas com tendência, riscos re-pontuados, ajustes sugeridos, apresentação) e renegociação. **Use no início do projeto e a cada rodada de planejamento ou reunião com o cliente.** |
+| `/moff` | Assume o papel de Product Manager do projeto. Cuida do que nenhuma outra skill cuida — o contrato de expectativa, o backlog e seu sync com o tracker, as métricas e o registro de cada mudança de combinado; o resto ele delega para as skills do plugin. No primeiro uso conduz o setup de governança, que começa declarando a **forma do projeto** (quem recebe: cliente externo / stakeholder interno / ninguém; quem executa: você sozinho / time pequeno / papéis dedicados) — todo o resto se ramifica a partir daí, em vez de assumir. O charter cobre critérios verificáveis de sucesso, contrato de comunicação, capacidade, bases de conhecimento, gitflow, fluxo de desenvolvimento (modelo de entrega, um agrupamento, uma escala de estimativa, política de design), métricas, riscos e decisões em aberto. Depois opera em quatro modos: planejamento, execução (roteia para as outras skills), relatório e renegociação. **Use no início do projeto e a cada rodada de planejamento ou reunião.** |
 | `/quest` | Discovery e inception de um produto, módulo, feature ou estória. Classifica o nível do trabalho, investiga o código e conduz uma trilha adaptativa: problema e North Star (OKR/KR), atores e impactos, escopo, alternativas, métricas, riscos, incrementos (ondas + MVP) e validação por exemplos. Baseada em BABOK Agile Extension, Lean Inception e Impact Mapping. Responde "o quê e por quê" e alimenta o `/war-room`. **Use antes de planejar qualquer trabalho novo.** |
 | `/sith-agents` | Edita os system prompts dos agentes especialistas gerados pelo `/explore`. **Use quando quiser ajustar o comportamento de um agente.** |
 | `/order66` | Orquestra o ciclo completo de desenvolvimento: spec, plano, tarefas, TDD, código e revisão. **Use para executar uma feature de ponta a ponta.** |
@@ -46,14 +46,14 @@ Com gestão de projeto:
 
 | Etapa | Skill | O que produz |
 |-------|-------|--------------|
-| 0. Governança do projeto | `/moff` | charter + agentes de gestão + risk register |
+| 0. Governança do projeto | `/moff` | charter (forma do projeto + combinado) + risk register |
 | 1. Mapear o projeto | `/explore` | `tech.md` + sith-agents |
 | 2. Discovery da tarefa | `/quest` | holomap |
-| 3. Backlog e cards | `/moff` | releases + cards executáveis + issues no Jira |
+| 3. Backlog e cards | `/moff` | agrupamento + cards executáveis + ordem de execução + issues no tracker |
 | 4. Plano técnico | `/war-room` | plan.md |
 | 5. Implementação | `/order66` | ordem imperial + tarefas + código revisado |
 | 6. Auditoria | `/inquisitor` | relatório com julgamento final |
-| 7. Status e métricas | `/moff` | relatório do cliente + métricas com tendência |
+| 7. Status e métricas | `/moff` | relatório de status + métricas com tendência |
 
 > `/order66` executa o `/war-room` automaticamente se nenhum plano for encontrado.
 
@@ -66,7 +66,7 @@ Todos os arquivos gerados ficam em `.darkside/` na raiz do projeto.
 | Diretório | Criado por | Conteúdo |
 |-----------|-----------|----------|
 | `holocrons/` | `/explore` | `tech.md` — stack, arquitetura, convenções |
-| `moff/` | `/moff` | `charter.md`, `risk-register.md`, backlogs, `metrics/`, `experiments/` e `reports/` |
+| `moff/` | `/moff` | `charter.md`, `risk-register.md`, backlogs, `execution-log.jsonl`, `metrics/` e `reports/` |
 | `holomaps/` | `/quest` | Discovery completo por tarefa |
 | `war-room/` | `/war-room` | Planos técnicos |
 | `sith-agents/` | `/explore` | System prompts dos agentes (tdd, engineer, coder-backend, coder-frontend, security, reviewer, debugger) |

@@ -52,6 +52,7 @@ description: <one-line description in Brazilian Portuguese — used for skill di
 - First line: `⚠️ <Skill> in progress — not completed.`
 - Final line replacement: `✅ <Skill> completed — DD/MM/YYYY HH:MM`
 - Always write each section to the file before moving to the next
+- `✅` means the document is finished, not that the skill finished running. A skill whose output can carry unresolved items — open decisions, failed checks, unread sources — keeps `⚠️` with a counted number until they clear, and promotes the header in whichever mode next re-counts. `/moff` is the only current example. **Do not normalise it to the two-state form.**
 
 **Filename derivation** (from `_shared-rules.md`)
 1. Lowercase
@@ -148,6 +149,33 @@ Kimi uses the same `skills/<name>/SKILL.md` format as Claude Code with identical
 
 ---
 
+## Platform Targets
+
+Darkside ships to three platforms, but **only Claude Code is guaranteed to exist on a given machine.** Resolve the other two before writing anything, and never hard-code a path.
+
+Resolve in this order, stopping at the first hit:
+
+1. `~/.claude/darkside-config` — lines `CURSOR=<path>` and `KIMI=<path>`
+2. Siblings of the Claude Code repo root — `../darkside-cursor` and `../darkside-kimi`
+3. Not resolved
+
+Then verify each resolved path actually exists on disk. **A configured path that is missing is treated as unresolved**, and reported as a broken config rather than silently skipped — the two failures need different fixes.
+
+State the result once, before the first write:
+
+> "Plataformas encontradas: **Claude Code**. Cursor e Kimi não estão nesta máquina — vou gerar só o Claude Code."
+
+**An unresolved platform is skipped, never faked.** Skip its write step and its registration step, and leave it out of the final confirmation. Do not report a file as created when it was not. If the user wants the missing platforms, tell them to add the paths to `~/.claude/darkside-config`:
+
+```
+CURSOR=/path/to/darkside-cursor
+KIMI=/path/to/darkside-kimi
+```
+
+Every step below that writes to Cursor or Kimi is conditional on that platform having resolved.
+
+---
+
 ## Opening
 
 Ask:
@@ -217,7 +245,7 @@ Create `skills/<name>/SKILL.md` with the approved content. Say nothing — proce
 
 ### Step 5 — Write Cursor Rule
 
-Create `.cursor/rules/<name>.mdc` in `/Users/leogodde/PROJECTS/darkside-cursor/` with the Cursor-adapted version:
+**Only if Cursor resolved.** Create `.cursor/rules/<name>.mdc` under the resolved Cursor path, with the Cursor-adapted version:
 - Inline shared rules
 - Remove TaskCreate/TaskUpdate
 - Replace subagent invocations with inline instructions
@@ -225,13 +253,13 @@ Create `.cursor/rules/<name>.mdc` in `/Users/leogodde/PROJECTS/darkside-cursor/`
 
 ### Step 6 — Write Kimi Skill
 
-Create `skills/<name>/SKILL.md` in `/Users/leogodde/PROJECTS/darkside-kimi/` with the same content as the Claude Code version, adapted:
+**Only if Kimi resolved.** Create `skills/<name>/SKILL.md` under the resolved Kimi path, with the same content as the Claude Code version, adapted:
 - Remove TaskCreate/TaskUpdate
 - Remove subagent invocations — all logic inline
 
 ### Step 7 — Register in Cursor Router
 
-Open `/Users/leogodde/PROJECTS/darkside-cursor/.cursor/rules/darkside.mdc`. Add the new command to the routing table:
+**Only if Cursor resolved.** Open `.cursor/rules/darkside.mdc` under the resolved Cursor path. Add the new command to the routing table:
 
 ```
 | `/<name>` | `<name>.mdc` |
@@ -241,7 +269,7 @@ Skip this step if the skill is intentionally hidden (like `forge` itself).
 
 ### Step 7.5 — Register in Kimi
 
-Open `/Users/leogodde/PROJECTS/darkside-kimi/AGENTS.md`. Add the new command to the routing table.
+**Only if Kimi resolved.** Open `AGENTS.md` under the resolved Kimi path. Add the new command to the routing table.
 
 Skip this step if the skill is intentionally hidden (like `forge` itself).
 
@@ -254,19 +282,19 @@ Ask:
 > **A.** Sim, adicionar em ambos
 > **B.** Não, manter oculta (como o `/forge`)
 
-If **A**: add the skill to the skill list table in `skills/darkside/SKILL.md`, `skills/guide/SKILL.md`, and `CLAUDE.md` — across all three platforms (Claude Code, Cursor, Kimi). Also add the storage directory entry in `/guide` and `CLAUDE.md` if the skill generates files.
+If **A**: add the skill to the skill list table in `skills/darkside/SKILL.md`, `skills/guide/SKILL.md`, and `CLAUDE.md` — **on every platform that resolved**, and only those. Also add the storage directory entry in `/guide` and `CLAUDE.md` if the skill generates files.
 
 If **B**: skip — do not register.
 
 ### Step 9 — Confirmation
 
-Say:
+List **only the files actually written**, one line each, naming its platform. Then, if any platform was skipped, say which and why in one line — so an incomplete run never reads as a complete one:
 
 > "Skill `/<name>` criada com sucesso.
 >
 > - `skills/<name>/SKILL.md` — Claude Code
-> - `.cursor/rules/<name>.mdc` — Cursor (Darkside Cursor)
-> - `skills/<name>/SKILL.md` — Kimi (Darkside Kimi)"
+>
+> Cursor e Kimi não estão nesta máquina — nada foi gerado para eles."
 
 ---
 
@@ -302,22 +330,44 @@ Edit `skills/<name>/SKILL.md` with the approved changes. Proceed silently to Ste
 
 ### Step 5 — Apply to Cursor
 
-Read `/Users/leogodde/PROJECTS/darkside-cursor/.cursor/rules/<name>.mdc`.
+**Only if Cursor resolved.** Read `.cursor/rules/<name>.mdc` under the resolved Cursor path.
 
 Apply equivalent changes adapted for the Cursor format (inline shared rules, no TaskCreate/TaskUpdate, inline inter-skill instructions).
 
+If the rule file does not exist under a path that *did* resolve, the platforms have drifted — say so and offer to create it, rather than editing nothing and reporting success.
+
 ### Step 5.5 — Apply to Kimi
 
-Read `/Users/leogodde/PROJECTS/darkside-kimi/skills/<name>/SKILL.md`.
+**Only if Kimi resolved.** Read `skills/<name>/SKILL.md` under the resolved Kimi path.
 
-Apply equivalent changes (same content as Claude Code, no TaskCreate/TaskUpdate, no subagents).
+Apply equivalent changes (same content as Claude Code, no TaskCreate/TaskUpdate, no subagents). The same drift rule applies.
 
-### Step 6 — Confirmation
+### Step 6 — Propagate to the Registries
 
-Say:
+A skill is described in more places than its own file. Ask first whether this edit reaches any of them:
+
+> Does it change the skill's **description, storage layout, generated agents, name, or position in the flow**?
+
+If none of those, skip this step and say so — a wording fix inside a step needs no registry update. Otherwise update what the change actually touches:
+
+| Changed | Update |
+|---|---|
+| Description or purpose | skill table in `skills/darkside/SKILL.md` · skill table in `skills/guide/SKILL.md` · entry in `CLAUDE.md` |
+| Storage layout | storage table in `skills/guide/SKILL.md` · Storage section in `CLAUDE.md` |
+| Generated agents | sith-agents list in `CLAUDE.md` |
+| Position in the flow | flow diagram and stage table in `skills/guide/SKILL.md` |
+| Skill renamed | everything above, plus the routing tables on every resolved platform |
+
+Mirror the same updates on **every platform that resolved**, and only those.
+
+**A registry entry that contradicts its `SKILL.md` is worse than no entry.** The table is what people read first, and it is the half nobody re-reads after editing — which is exactly why it drifts.
+
+### Step 7 — Confirmation
+
+List **only the files actually edited**, and name any platform that was skipped:
 
 > "Skill `/<name>` atualizada.
 >
 > - `skills/<name>/SKILL.md` — Claude Code
-> - `.cursor/rules/<name>.mdc` — Cursor (Darkside Cursor)
-> - `skills/<name>/SKILL.md` — Kimi (Darkside Kimi)"
+>
+> Cursor e Kimi não estão nesta máquina — nada foi alterado neles."

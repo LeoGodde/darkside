@@ -28,6 +28,7 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 | `/probe-droid` | Escaneia a branch atual, uma branch informada, ou a branch relacionada a um card, e gera casos de teste não-técnicos para QA a partir das mudanças encontradas. Ao final, oferece enviar as notas como comentário no card relacionado, caso exista e haja um MCP de gerenciamento de projeto conectado. **Use depois de implementar uma feature, para gerar o roteiro de testes que o QA vai executar.** |
 | `/spec-verdict` | Verifica se os critérios de aceite de um card (Jira, GitHub, Trello, etc.) ou fornecidos diretamente estão representados em um ou mais designs no Figma. Extrai os critérios via MCP do board ou aceita colagem direta, inspeciona os designs via MCP do Figma e classifica cada critério como ✅ Atendido, ⚠️ Parcial ou ❌ Ausente. **Use para validar se o design cobre os requisitos antes do desenvolvimento começar.** |
 | `/scribe` | Gera, revisa e mantém documentação do projeto para desenvolvedores, usuários finais e clientes, a partir do código e do conhecimento produzido pelo Darkside. Determina audiência e escopo, investiga o estado real do projeto, distingue o que está implementado do que está apenas planejado, e produz documentação em `docs/`, aplicando os princípios do Google Developer Documentation Style Guide. **Use a qualquer momento para criar, atualizar ou revisar documentação — não só ao final do fluxo.** |
+| `/project-master` | Avaliação profunda e completa do código. Usa `tech.md` e os sith-agents como base, analisa code smells, segurança, complexidade, testes, débito técnico e arquitetura, e gera um scorecard com nota geral e relatório detalhado com issues priorizados. **Use para obter uma visão abrangente da saúde do projeto antes de uma refatoração, auditoria ou entrega.** |
 | `/guide` | Este guia. |
 
 ---
@@ -73,6 +74,7 @@ Todos os arquivos internos do Darkside ficam em `.darkside/` na raiz do projeto.
 | `design-schematic/` | `/design-schematic` | Prompts Lo-Fi, Mid-Fi e Hi-Fi para Figma Make |
 | `probe-droid/` | `/probe-droid` | Notas de QA não-técnicas geradas a partir de uma branch |
 | `scribe/` | `/scribe` | Manifests internos de cada sessão de documentação (fontes consultadas, modelo de evidências, lacunas) |
+| `project-master/` | `/project-master` | Scorecard + relatório de engenharia, segurança e testes |
 
 ### Documentação para humanos — `docs/`
 

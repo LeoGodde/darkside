@@ -98,6 +98,12 @@ This plugin provides skills for standardized team development workflows.
   `.darkside/probe-droid/YYYY-MM-DD-<name>-qa-notes.md`.
   Invoke with: `/probe-droid`
 
+- **project-master** — Comprehensive deep code evaluation. Uses `tech.md` and sith-agents
+  as context, then analyzes the entire codebase across 8 dimensions: code smells, security,
+  cognitive complexity, test coverage, duplication, technical debt, documentation, and
+  maintainability. Produces a scorecard with overall score and a prioritized report of issues.
+  Invoke with: `/project-master`
+
 - **scribe** — Documentation intelligence. Generates, reviews, and maintains
   project documentation for developers, end users, and clients, using the
   actual state of the codebase and Darkside's own knowledge (`tech.md`,
@@ -211,6 +217,12 @@ Design × Acceptance Criteria coverage reports written by `/spec-verdict`.
 Non-technical QA notes written by `/probe-droid`.
 
 - `YYYY-MM-DD-<name>-qa-notes.md` — plain-language test cases (scenario + steps + acceptance criteria) grouped by feature/screen, plus the related card ID if detected
+
+### Project Master — `.darkside/project-master/`
+
+Comprehensive code evaluation reports written by `/project-master`.
+
+- `YYYY-MM-DD-<project-name>-project-master.md` — scorecard (8 dimensions, overall score) + engineering, security, and test analysis + critical issues + recommended actions
 
 ### Scribe — `.darkside/scribe/`
 

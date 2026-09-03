@@ -1,6 +1,6 @@
 ---
 name: order66
-description: Orquestra o processo completo de desenvolvimento — lê o plano do war-room, gera a ordem imperial, quebra em tarefas, TDD, codificação e revisão com fallback para fallen-order em caso de falha repetida. Salva em .darkside/imperial-orders/.
+description: Orquestra o processo completo de desenvolvimento — lê a mission ou o plano do war-room, gera a ordem imperial, quebra em tarefas, TDD, codificação e revisão com fallback para fallen-order em caso de falha repetida. Salva em .darkside/imperial-orders/.
 ---
 
 # Order 66 — Development Orchestration
@@ -31,31 +31,46 @@ Each phase uses a specific model tier. When using subagents (Agent tool), pass t
 | Phase | Agent | Model |
 |-------|-------|-------|
 | Phase 1 — Order | engineer, security | `opus` |
-| Phase 2 — Tasks & Squads | — | `sonnet` |
-| Phase 2.5 — Execution Strategy | — | — |
+| Phase 2 — Tasks & Execution Strategy | — | `sonnet` |
 | Phase 3 — TDD | tdd | `sonnet` |
 | Phase 4 — Code | coder | `sonnet` |
 | Phase 5 — Review | reviewer | `sonnet` |
 
 ---
 
-## War Room Context
+## Source Context
 
-Look for plan files in `.darkside/war-room/`.
+Look for source files in `.darkside/missions/` and `.darkside/war-room/`.
 
-**If found:** identify the most recent. Ask:
+**If both found:** identify the most recent file in each directory. Ask:
+
+> "Encontrei contextos disponíveis:
+>
+> **A.** Mission: **`[mission filename]`**
+> **B.** War Room: **`[war-room filename]`**
+> **C.** Usar outro arquivo — me informe o caminho"
+
+- **A:** Read the mission file. Record the path.
+- **B:** Read the war-room plan. Record the path.
+- **C:** Ask for path, read, proceed.
+
+**If only missions found:** identify the most recent. Ask:
+
+> "Encontrei uma mission recente: **`[filename]`**
+>
+> **A.** Usar essa mission
+> **B.** Usar outro arquivo — me informe o caminho"
+
+**If only war-room found:** identify the most recent. Ask:
 
 > "Encontrei um plano recente: **`[filename]`**
 >
 > **A.** Usar esse plano
-> **B.** Usar outro plano — me informe o caminho"
+> **B.** Usar outro arquivo — me informe o caminho"
 
-- **A:** Read the plan. Record the path.
-- **B:** Ask for path, read, proceed as A.
+**If none found:** execute the full Mission skill inline. When complete:
 
-**If none found:** execute the full War Room skill inline (every step from Prerequisite through Section 3.5). When complete:
-
-> "O plano está salvo em `.darkside/war-room/[filename]`. Revise e confirme para continuar."
+> "A mission está salva em `.darkside/missions/[filename]`. Revise e confirme para continuar."
 
 Wait for confirmation.
 
@@ -69,7 +84,7 @@ Get name of the execution plan from the war-room plan file or mission plan file 
 
 Derive filename (suffix: `-order.md`). Create `.darkside/imperial-orders/` and the order file with empty sections (see Order File Structure) silently.
 
-Using the war-room plan and agents, generate a development order covering:
+Using the source context (mission or war-room plan) and agents, generate a development order covering:
 - High-level approach and architecture decisions
 - Main components to build
 - Implementation order with rationale
@@ -84,7 +99,7 @@ Wait for approval. If changes requested: update and ask again.
 
 ---
 
-## Phase 2 — Tasks
+## Phase 2 — Tasks & Execution Strategy
 
 Break work into small ordered tasks and organize them into **squads** — logical groups by domain or specialty. Write into `## Tasks`.
 
@@ -126,31 +141,17 @@ Squad naming guidelines:
 - Assign `coder-backend`, `coder-frontend`, or both based on the squad's scope
 - Keep squads independent when possible — minimize cross-squad file dependencies
 
-Present the proposed squads to the user:
+Present the tasks and ask for execution strategy:
 
-> "Organizei as tarefas nos seguintes squads:
+> "Organizei as tarefas:
 >
 > 1. **[Squad Name]** — [N] tarefas ([agent type])
 > 2. **[Squad Name]** — [N] tarefas ([agent type])
-> ...
 >
-> Deseja reorganizar, renomear ou fundir algum squad?"
-
-Wait for confirmation or adjustments. Iterate until confirmed.
-
-Say: "Tarefas e squads definidos."
-
----
-
-## Phase 2.5 — Execution Strategy
-
-Ask:
-
-> "Como deseja executar os squads?"
+> Como deseja executar?"
 >
-> **A.** ⚡ **Multitask** — Para missões complexas que exigem múltiplas especialidades trabalhando simultaneamente. Convoca vários agentes como um esquadrão coordenado, permitindo que atuem em paralelo sobre diferentes frentes da missão. _Tempo & Tokens: Maior consumo de tokens e tempo devido à coordenação entre agentes._
->
-> **B.** 🎯 **Singletask** — Para missões que podem ser divididas em etapas independentes ou dependentes. Os agentes são acionados sequencialmente, onde cada operativo conclui sua etapa antes que o próximo assuma a missão. _Tempo & Tokens: Menor consumo de tokens e tempo por reduzir a coordenação entre agentes._
+> **A.** ⚡ **Multitask** — múltiplos agentes em paralelo. _Maior consumo de tokens._
+> **B.** 🎯 **Singletask** — agentes sequenciais. _Menor consumo de tokens._
 
 Record the chosen strategy. Proceed to Phase 2.7.
 
@@ -272,20 +273,12 @@ All squad agents run in parallel. Wait for all to complete before proceeding.
 
 ### Singletask Mode
 
-List the squads and ask:
-
-> "Qual squad deseja executar?"
->
-> 1. **[Squad Name]** — [N] tarefas
-> 2. **[Squad Name]** — [N] tarefas
-> ...
-
-Execute TDD for the selected squad only:
+Execute TDD for each squad sequentially, in order:
 1. Write all tests for the squad's tasks
 2. Run all tests — they must all fail before proceeding
 3. If any passes: flag as false positive, fix, re-run
 
-Do not proceed until every test fails.
+Do not proceed to the next squad until every test in the current squad fails. After all squads are done, proceed to Phase 4.
 
 ---
 
@@ -307,18 +300,13 @@ All squad agents run in parallel. Wait for all to complete. Run the full test su
 
 ### Singletask Mode
 
-Read the applicable coder agent(s) for the current squad — `coder-backend.md` for backend squads, `coder-frontend.md` for frontend squads, or both if the squad spans both layers — and act as the Coder.
+Execute each squad sequentially, in order. For each squad:
 
-Implement minimum code to make the squad's tests pass. Follow project conventions. No over-engineering. No changes outside scope.
+1. Read the applicable coder agent(s) — `coder-backend.md` for backend squads, `coder-frontend.md` for frontend squads, or both if the squad spans both layers — and act as the Coder
+2. Implement minimum code to make the squad's tests pass. Follow project conventions. No over-engineering. No changes outside scope
+3. Run tests after each task
 
-Run tests after each task. When the squad is complete, ask:
-
-> "Squad **[name]** concluído. Próximo passo?"
->
-> **A.** Executar próximo squad: **[next squad name]**
-> **B.** Ir para a revisão (Phase 5)
-
-If **A**: return to Phase 3 for the next squad. If **B** or all squads done: proceed to Phase 5.
+After all squads are done, proceed to Phase 5.
 
 ---
 
@@ -386,7 +374,7 @@ Say: "Ordem imperial falhou após 2 iterações. Relatório salvo em `.darkside/
 ```markdown
 # [Feature Name]
 
-**War Room Plan:** [path to plan file]
+**Source:** [path to mission or war-room plan file]
 
 ## Order
 

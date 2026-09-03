@@ -25,10 +25,10 @@ This plugin provides skills for standardized team development workflows.
   asks which one to modify and what change to make, confirms, and applies.
   Invoke with: `/sith-agents`
 
-- **order66** — Full development orchestration. Reads a war-room plan, generates
-  the order (engineer + security), tasks, TDD, code, and review cycle. Saves to
-  `.darkside/imperial-orders/`. Creates fallen-order report on repeated review failure.
-  Invoke with: `/order66`
+- **order66** — Full development orchestration. Reads a mission or war-room plan,
+  generates the order (engineer + security), tasks, TDD, code, and review cycle.
+  Saves to `.darkside/imperial-orders/`. Creates fallen-order report on repeated
+  review failure. Invoke with: `/order66`
 
 - **inquisitor** — Deep code inspection using engineer, security, and tdd agents.
   Accepts a file, folder, PR, or branch. Auto-discovers tests. Produces a report with

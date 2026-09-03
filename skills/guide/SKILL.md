@@ -17,7 +17,7 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 | `/moff` | Assume o papel de Product Manager do projeto. Cuida do que nenhuma outra skill cuida — o contrato de expectativa, o backlog e seu sync com o tracker, as métricas e o registro de cada mudança de combinado; o resto ele delega para as skills do plugin. No primeiro uso conduz o setup de governança, que começa declarando a **forma do projeto** (quem recebe: cliente externo / stakeholder interno / ninguém; quem executa: você sozinho / time pequeno / papéis dedicados) — todo o resto se ramifica a partir daí, em vez de assumir. O charter cobre critérios verificáveis de sucesso, contrato de comunicação, capacidade, bases de conhecimento, gitflow, fluxo de desenvolvimento (modelo de entrega, um agrupamento, uma escala de estimativa, política de design), métricas, riscos e decisões em aberto. Depois opera em quatro modos: planejamento, execução (roteia para as outras skills), relatório e renegociação. **Use no início do projeto e a cada rodada de planejamento ou reunião.** |
 | `/quest` | Discovery e inception de um produto, módulo, feature ou estória. Classifica o nível do trabalho, investiga o código e conduz uma trilha adaptativa: problema e North Star (OKR/KR), atores e impactos, escopo, alternativas, métricas, riscos, incrementos (ondas + MVP) e validação por exemplos. Baseada em BABOK Agile Extension, Lean Inception e Impact Mapping. Responde "o quê e por quê" e alimenta o `/war-room`. **Use antes de planejar qualquer trabalho novo.** |
 | `/sith-agents` | Edita os system prompts dos agentes especialistas gerados pelo `/explore`. **Use quando quiser ajustar o comportamento de um agente.** |
-| `/order66` | Orquestra o ciclo completo de desenvolvimento: spec, plano, tarefas, TDD, código e revisão. **Use para executar uma feature de ponta a ponta.** |
+| `/order66` | Orquestra o ciclo completo de desenvolvimento: lê a mission ou o plano do war-room, gera a ordem, tarefas, TDD, código e revisão. **Use para executar uma feature de ponta a ponta.** |
 | `/inquisitor` | Inspeciona código com os olhos do engineer, security e tdd. Aceita arquivo, pasta ou PR e emite um Julgamento Final. **Use para auditar código antes do merge ou investigar uma área suspeita.** |
 | `/mission` | Quest compacto para tarefas menores. Cobre problema, objetivo, limites, solução, plano e riscos em 4 passos curtos. **Use quando quiser planejar uma tarefa que não precise de `/war-room`.** |
 | `/war-room` | Conduz um engineering discovery estruturado antes de implementar. Cobre entendimento funcional, impacto técnico e estratégia de implementação. Usa tech.md e quest como contexto. Gera um plano técnico completo. **Use antes do `/order66` para substituir a fase de spec.** |
@@ -37,7 +37,7 @@ Exiba o conteúdo abaixo exatamente como mostrado. Não adicione comentários an
 ## Fluxo recomendado
 
 ```
-/explore → /quest (opcional) → /war-room → /order66 → /inquisitor → /scribe
+/explore → /quest (opcional) → /mission ou /war-room → /order66 → /inquisitor → /scribe
 
 Para bugs: /explore → /hunter → /order66
 
@@ -58,7 +58,7 @@ Com gestão de projeto:
 | 7. Documentação | `/scribe` | documentação para devs, usuários e clientes em `docs/` |
 | 8. Status e métricas | `/moff` | relatório de status + métricas com tendência |
 
-> `/order66` executa o `/war-room` automaticamente se nenhum plano for encontrado.
+> `/order66` executa o `/mission` automaticamente se nenhum contexto (mission ou war-room) for encontrado.
 > `/scribe` não depende desse fluxo — pode ser chamado a qualquer momento para documentar o projeto inteiro ou uma parte dele.
 
 ---
